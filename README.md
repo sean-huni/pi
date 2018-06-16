@@ -17,7 +17,7 @@ A cloud-based web-project for monitoring and controlling household electric devi
     
     RUN apt-get update -y
 
-##Run CMD
+## Run CMD
 docker build -f Dockerfile -t jfrog-img . docker run --name='jfrog' -d -it -p 8083:8081 jfrog-img
 
 ## JFrog-Artifactory Dev-Configuration
