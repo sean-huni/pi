@@ -1,0 +1,85 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.jfrog.artifactory"
+
+group = 'io.home'
+version = '0.0.1'
+sourceCompatibility = 1.8
+
+allprojects {
+    apply plugin: "com.jfrog.artifactory"
+}
+
+artifactory {
+    contextUrl = "${artifactoryContextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+    publish {
+        repository {
+            repoKey = 'gradle-dev-local'
+            username = "${artifactoryUser}"
+            password = "${artifactoryPass}"
+            maven = true
+        }
+    }
+    resolve {
+        repository {
+            repoKey = 'gradle-dev'
+            username = "${artifactoryUser}"
+            password = "${artifactoryPass}"
+            maven = true
+        }
+    }
+}
+
+configurations {
+    providedRuntime
+}
+
+ext {
+    springBootAdminVersion = '2.0.0'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-aop')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('de.codecentric:spring-boot-admin-starter-client')
+    compile('de.codecentric:spring-boot-admin-starter-server')
+    compile('org.webjars:bootstrap:4.1.0')
+    compile('org.webjars:font-awesome:5.0.13')
+    // https://mvnrepository.com/artifact/org.webjars/jquery
+    compile ('org.webjars:jquery:3.3.1-1')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('com.h2database:h2')
+//    runtime('mysql:mysql-connector-java')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+    testCompile('org.springframework.security:spring-security-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
