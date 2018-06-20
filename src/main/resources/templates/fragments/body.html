@@ -8,7 +8,7 @@
         <h1>Landing Page</h1>
         <br/>
         <div th:class="jumbotron"> Hello Visitor,
-            Please <a th:href="@{/login}" href="/login">click here</a> to login.
+            Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
         </div>
     </sec:authorize>
 </div>
@@ -17,13 +17,13 @@
 <div th:fragment="login" th:class="container">
     <sec:authorize access="!hasAnyRole()">
         <h1>Login page</h1>
-        <p th:if="${loginError}" th:class="error">
-        <div class="alert alert-dismissible alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Authentication Failure</strong>. Please try again.
-        </div>
-        </p>
-        <form th:action="@{/login}" method="post">
+        <a th:if="${loginError}" th:class="error">
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Authentication Failure</strong>. Please try again.
+            </div>
+        </a>
+        <form th:action="@{/user/login}" method="post">
             <label for="username">Username</label>:
             <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
             <label for="password">Password</label>:

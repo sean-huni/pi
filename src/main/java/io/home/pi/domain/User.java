@@ -3,10 +3,7 @@ package io.home.pi.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * Project: RestfulDemo.
@@ -17,13 +14,13 @@ import javax.persistence.Transient;
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
+@Table(schema = "r_pi", name = "user")
 public class User {
 
-    //    @Id
+    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    private Integer id;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -37,7 +34,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-//                "id=" + id +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -17,12 +18,12 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @Entity
-@Table(name = "group_member")
+@Table(schema = "r_pi", name = "group_member")
 public class GroupMember {
-    //    @Id
+    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    private Integer id;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "group_num")
     private Integer groupNum;
     @Column(name = "username")
@@ -31,7 +32,7 @@ public class GroupMember {
     @Override
     public String toString() {
         return "GroupMember{" +
-//                "id=" + id +
+                "id=" + id +
                 ", groupNum=" + groupNum +
                 ", username='" + username + '\'' +
                 '}';

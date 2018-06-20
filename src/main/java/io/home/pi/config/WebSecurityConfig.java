@@ -1,6 +1,5 @@
 package io.home.pi.config;
 
-import io.home.pi.constant.SecurityCons;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static io.home.pi.constant.WebCons.*;
+import static io.home.pi.constant.SpringConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -23,14 +22,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", SecurityCons.URL_LOGIN_PAGE).permitAll()
+                .antMatchers("/", URL_LOGIN_PAGE).permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/pi").hasRole("USER")
                 .and()
                 .formLogin()
-                .loginPage(SecurityCons.URL_LOGIN_PAGE)
+                .loginPage(URL_LOGIN_PAGE)
                 .defaultSuccessUrl(URL_DEFAULT_AUTH_USER_PAGE, true)
                 .permitAll()
                 .and()

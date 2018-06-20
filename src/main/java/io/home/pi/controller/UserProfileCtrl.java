@@ -1,6 +1,6 @@
 package io.home.pi.controller;
 
-import io.home.pi.constant.WebCons;
+import io.home.pi.constant.SpringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class UserProfileCtrl {
         LOGGER.debug("User-Landing Authenticated Page Invoked...");
         ModelMap objectMap = new ModelMap();
 
-        objectMap.put("title", WebCons.PROFILE_PAGE_TITLE);
+        objectMap.put("title", SpringConstants.PROFILE_PAGE_TITLE);
         model.addAllAttributes(objectMap);
 
         return "index";
