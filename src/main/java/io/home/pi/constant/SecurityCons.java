@@ -9,4 +9,5 @@ package io.home.pi.constant;
  */
 public class SecurityCons {
     public static final String USER_ROLE_PREFIX = "ROLE_";
+    public static final String URL_LOGIN_PAGE = "/login";
 }

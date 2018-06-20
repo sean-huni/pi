@@ -3,7 +3,9 @@ package io.home.pi.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * PROJECT   :RestfulDemo
@@ -17,20 +19,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "group_member")
 public class GroupMember {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer pk;
-    @Column(name = "group_id")
-    private Integer groupId;
+    //    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    private Integer id;
+    @Column(name = "group_num")
+    private Integer groupNum;
     @Column(name = "username")
     private String username;
 
     @Override
     public String toString() {
         return "GroupMember{" +
-                "pk=" + pk +
-                ", groupId=" + groupId +
+//                "id=" + id +
+                ", groupNum=" + groupNum +
                 ", username='" + username + '\'' +
                 '}';
     }

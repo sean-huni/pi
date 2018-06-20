@@ -3,7 +3,10 @@ package io.home.pi.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +22,10 @@ import java.util.Set;
 @Entity
 @Table(name = "group_authority")
 public class GroupAuthority {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer pk;
+    //    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    private Integer id;
     @Column(name = "group_id")
     private Integer groupId;
     @Column(name = "authority")
@@ -31,8 +34,8 @@ public class GroupAuthority {
     @Override
     public String toString() {
         return "GroupAuthority{" +
-                "pk=" + pk +
-                ", groupId=" + groupId +
+//                "id=" + id +
+                ", groupNum=" + groupId +
                 ", authority='" + authority + '\'' +
                 ", users=" + users +
                 '}';

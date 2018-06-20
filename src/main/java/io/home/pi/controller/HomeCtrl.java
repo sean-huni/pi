@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * TIME      : 22:37
  */
 @Controller
-@RequestMapping(value = {"/"})
 public class HomeCtrl {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeCtrl.class);
 

@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,17 +44,6 @@ public class LoginServiceImpl implements UserDetailsService {
         this.userRepo = userRepo;
         this.groupMemberRepo = groupMemberRepo;
         this.groupAuthorityRepo = groupAuthorityRepo;
-    }
-
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
     }
 
     /**
@@ -87,7 +75,7 @@ public class LoginServiceImpl implements UserDetailsService {
             List<GroupAuthority> groupAuthorities = new ArrayList<>();
 
             for (GroupMember groupMember : groupMembers) {
-                groupAuthorities.addAll(groupAuthorityRepo.findByGroupId(groupMember.getGroupId()));
+                groupAuthorities.addAll(groupAuthorityRepo.findByGroupId(groupMember.getGroupNum()));
             }
 
             for (GroupAuthority userAuth : decodeHashMap(groupAuthorities)) {

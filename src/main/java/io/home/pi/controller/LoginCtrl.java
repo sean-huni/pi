@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  * TIME      : 21:10
  */
 @Controller
+@RequestMapping("/user")
 public class LoginCtrl {
     private static Logger LOGGER = LoggerFactory.getLogger(LoginCtrl.class);
 

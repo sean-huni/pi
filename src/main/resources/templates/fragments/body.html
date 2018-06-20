@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<body>
+
+<!--No-Auth - Landing Page-->
+<div th:fragment="no-auth" th:class="jumbotron">
+    <sec:authorize access="!hasAnyRole()">
+        <h1>Landing Page</h1>
+        <br/>
+        <div th:class="jumbotron"> Hello Visitor,
+            Please <a th:href="@{/login}" href="/login">click here</a> to login.
+        </div>
+    </sec:authorize>
+</div>
+
+<!--Login Page-->
+<div th:fragment="login" th:class="container">
+    <sec:authorize access="!hasAnyRole()">
+        <h1>Login page</h1>
+        <p th:if="${loginError}" th:class="error">
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Authentication Failure</strong>. Please try again.
+        </div>
+        </p>
+        <form th:action="@{/login}" method="post">
+            <label for="username">Username</label>:
+            <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+            <label for="password">Password</label>:
+            <input type="password" id="password" name="password"/> <br/>
+            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="submit" value="Login"/>
+        </form>
+    </sec:authorize>
+</div>
+
+<!--User-Landing/Dashboard Page-->
+<div th:fragment="auth" th:class="jumbotron" sec:authorize="hasRole('ROLE_USER')">
+    <h1>Landing Page</h1>
+    <br/>
+    <p>
+        Hi <span sec:authentication="name">Bob</span>. You're Inn!
+    </p>
+
+    <div class="temp">
+        Subtitle : <a th:text="${subtitle}"></a>
+        <br>
+        Message : <a th:text="${message}"></a>
+        <br>
+        <div class="page-information" role="document">
+            <div th:inline="text">Welcome : [[${#httpServletRequest.remoteUser}]]! |
+                <a href="javascript:formSubmit()">Logout</a>
+            </div>
+        </div>
+        Logged user: <span sec:authentication="name">Bob-Test</span>
+        <br>
+        Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
+    </div>
+</div>
+
+</body>
+</html>
