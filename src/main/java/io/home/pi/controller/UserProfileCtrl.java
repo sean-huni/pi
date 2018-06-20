@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.controller
  * USER      : sean
- * DATE      : 12-June-2018
- * TIME      : 22:37
+ * DATE      : 19-June-2018
+ * TIME      : 19:14
  */
 @Controller
-@RequestMapping(value = {"/"})
-public class HomeCtrl {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HomeCtrl.class);
+@RequestMapping("/pi")
+public class UserProfileCtrl {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileCtrl.class);
 
-    @RequestMapping("/")
-    public String homePage(Model model) {
-        LOGGER.debug("Home Page Invoked...");
+    @RequestMapping("/dashboard")
+    public String userProfilePage(Model model) {
+        LOGGER.debug("User-Landing Authenticated Page Invoked...");
         ModelMap objectMap = new ModelMap();
 
-        objectMap.put("title", WebCons.HOME_PAGE_TITLE);
+        objectMap.put("title", WebCons.PROFILE_PAGE_TITLE);
         model.addAllAttributes(objectMap);
 
         return "index";
