@@ -15,31 +15,24 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "user")
-public class User {
-
+@Table(schema = "r_pi", name = "group_member")
+public class GrpMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "group_id")
+    private Integer group_id;
+
     @Column(name = "username")
     private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "enabled")
-    private Boolean enabled;
-
-    @Transient
-    private String token;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "GrpMember{" +
                 "id=" + id +
+                ", group_id=" + group_id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", token='" + token + '\'' +
                 '}';
     }
 }

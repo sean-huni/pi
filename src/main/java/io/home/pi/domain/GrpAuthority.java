@@ -8,19 +8,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * PROJECT   :RestfulDemo
- * PACKAGE   :com.site.model
- * USER      :s34n
- * DATE      :2016/03/14
- * TIME      :10:37 AM
+ * PROJECT   :pi
+ * PACKAGE   :io.home.pi.domain
+ * USER      :Sean
+ * DATE      :2018/06/14
+ * TIME      :21:40
  */
 @Setter
 @Getter
 @Entity
 @Table(schema = "r_pi", name = "group_authority")
-public class GroupAuthority {
+public class GrpAuthority {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "group_id")
@@ -30,9 +30,9 @@ public class GroupAuthority {
 
     @Override
     public String toString() {
-        return "GroupAuthority{" +
+        return "GrpAuthority{" +
                 "id=" + id +
-                ", groupNum=" + groupId +
+                ", group_id=" + groupId +
                 ", authority='" + authority + '\'' +
                 ", users=" + users +
                 '}';
