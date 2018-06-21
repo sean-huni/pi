@@ -32,6 +32,9 @@ public class User {
     @Transient
     private String token;
 
+    @ManyToOne
+    private Grp grp;
+
     @Override
     public String toString() {
         return "User{" +
@@ -40,6 +43,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", token='" + token + '\'' +
+                ", grp=" + grp +
                 '}';
     }
 }

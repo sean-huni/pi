@@ -2,8 +2,8 @@ package io.home.pi.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.home.pi.domain.Grp;
 import io.home.pi.domain.GrpAuthority;
-import io.home.pi.domain.GrpMember;
 import io.home.pi.repo.GroupAuthorityRepo;
 import io.home.pi.repo.GroupMemberRepo;
 import io.home.pi.repo.UserRepo;
@@ -71,11 +71,11 @@ public class LoginServiceImpl implements UserDetailsService {
     private List<GrantedAuthority> getGrantedAuthorities(io.home.pi.domain.User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {
-            List<GrpMember> grpMembers = groupMemberRepo.findByUsername(user.getUsername());
+            List<Grp> grps = groupMemberRepo.findByUsername(user.getUsername());
             List<GrpAuthority> groupAuthorities = new ArrayList<>();
 
-            for (GrpMember grpMember : grpMembers) {
-                groupAuthorities.addAll(groupAuthorityRepo.findByGroupId(grpMember.getGroup_id()));
+            for (Grp grp : grps) {
+                groupAuthorities.addAll(groupAuthorityRepo.findByGroupId(grp.getGrp_name()));
             }
 
             for (GrpAuthority userAuth : decodeHashMap(groupAuthorities)) {

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,29 +16,25 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "group_authority")
+@Table(schema = "r_pi", name = "grp_authority")
 public class GrpAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "group_id")
-    private Integer groupId;
-    @Column(name = "authority")
-    private String authority;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Grp grp;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp_authority")
+    private Set<Authority> authorities;
 
     @Override
     public String toString() {
         return "GrpAuthority{" +
                 "id=" + id +
-                ", group_id=" + groupId +
-                ", authority='" + authority + '\'' +
-                ", users=" + users +
+                ", grp=" + grp +
+                ", authorities=" + authorities +
                 '}';
     }
-
-    //    @ManyToMany(mappedBy="groupAuthorities")
-    @Transient
-    private Set<User> users = new HashSet<>();
-
 }
