@@ -3,8 +3,6 @@ package io.home.pi.repo;
 import io.home.pi.domain.GrpAuthority;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.repo
@@ -13,5 +11,5 @@ import java.util.List;
  * TIME      : 23:24
  */
 public interface GroupAuthorityRepo extends CrudRepository<GrpAuthority, Integer> {
-    List<GrpAuthority> findByGroupId(Integer groupId);
+
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "grp_authority")
+@Table(schema = "rpi", name = "grp_authority")
 public class GrpAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,8 @@ public class GrpAuthority {
     @OneToOne(cascade = CascadeType.ALL)
     private Grp grp;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp_authority")
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp_authority")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Authority> authorities;
 
     @Override

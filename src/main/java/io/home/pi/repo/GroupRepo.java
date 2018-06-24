@@ -1,6 +1,6 @@
 package io.home.pi.repo;
 
-import io.home.pi.domain.User;
+import io.home.pi.domain.Grp;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * TIME      : 20:16
  */
 @Repository
-public interface GroupRepo extends CrudRepository<User, Integer> {
-    User findByUsername(String username);
+public interface GroupRepo extends CrudRepository<Grp, Integer> {
+
 }

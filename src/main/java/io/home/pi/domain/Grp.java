@@ -16,14 +16,14 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "grp")
+@Table(schema = "rpi", name = "grp")
 public class Grp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "grp_name")
-    private String grp_name;
+    @Column(name = "name")
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp")
     private Set<User> users;
@@ -35,7 +35,7 @@ public class Grp {
     public String toString() {
         return "Grp{" +
                 "id=" + id +
-                ", grp_name='" + grp_name + '\'' +
+                ", name='" + name + '\'' +
                 ", users=" + users +
                 ", grpAuthority=" + grpAuthority +
                 '}';

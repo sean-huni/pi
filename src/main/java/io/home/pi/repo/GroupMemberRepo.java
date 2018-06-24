@@ -3,8 +3,6 @@ package io.home.pi.repo;
 import io.home.pi.domain.Grp;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.repo
@@ -13,5 +11,5 @@ import java.util.List;
  * TIME      : 23:38
  */
 public interface GroupMemberRepo extends CrudRepository<Grp, Integer> {
-    List<Grp> findByUsername(String username);
+
 }

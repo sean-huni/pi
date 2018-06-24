@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * PROJECT   :pi
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "user")
+@Table(schema = "rpi", name = "user")
 public class User {
 
     @Id
@@ -33,7 +34,7 @@ public class User {
     private String token;
 
     @ManyToOne
-    private Grp grp;
+    private List<Grp> grps;
 
     @Override
     public String toString() {
@@ -43,7 +44,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", token='" + token + '\'' +
-                ", grp=" + grp +
+                ", grp=" + grps +
                 '}';
     }
 }

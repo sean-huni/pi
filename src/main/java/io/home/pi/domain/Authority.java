@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(schema = "r_pi", name = "authority")
+@Table(schema = "rpi", name = "authority")
 public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
