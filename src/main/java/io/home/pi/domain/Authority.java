@@ -21,8 +21,9 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "level")
-    private String level;
+    private Enum level;
 
     @Override
     public String toString() {

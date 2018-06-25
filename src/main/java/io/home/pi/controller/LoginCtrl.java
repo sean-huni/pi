@@ -21,7 +21,7 @@ public class LoginCtrl {
 
     @RequestMapping("/login")
     public ModelAndView loginPage(ModelAndView modelAndView){
-        LOGGER.info("login-page invoked...");
+        LOGGER.debug("login-page invoked...");
         ModelMap modelMap = new ModelMap();
 
         modelMap.addAttribute("title", "Login-Page");
