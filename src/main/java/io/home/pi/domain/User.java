@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * PROJECT   :pi
@@ -33,8 +33,8 @@ public class User {
     @Transient
     private String token;
 
-    @ManyToOne
-    private List<Grp> grps;
+    @ManyToOne(targetEntity = Grp.class, fetch = FetchType.LAZY)
+    private Set<Grp> grps;
 
     @Override
     public String toString() {

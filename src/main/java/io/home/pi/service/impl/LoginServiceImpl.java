@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.home.pi.domain.Grp;
 import io.home.pi.domain.GrpAuthority;
+import io.home.pi.domain.User;
 import io.home.pi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -56,15 +56,15 @@ public class LoginServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<io.home.pi.domain.User> userOptional = Optional.ofNullable(userService.findByUsername(username));
+        Optional<User> userOptional = Optional.ofNullable(userService.findByUsername(username));
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException("Username & Password doesn't exist!");
         }
-        return new User(userOptional.get().getUsername(), userOptional.get().getPassword(), getGrantedAuthorities(userOptional.get()));
+        return new org.springframework.security.core.userdetails.User(userOptional.get().getUsername(), userOptional.get().getPassword(), getGrantedAuthorities(userOptional.get()));
     }
 
 
-    private List<GrantedAuthority> getGrantedAuthorities(io.home.pi.domain.User user) {
+    private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {
             List<GrpAuthority> groupAuthorities = new ArrayList<>();

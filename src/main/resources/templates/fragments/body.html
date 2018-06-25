@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
 <body>
 
 <!--No-Auth - Landing Page-->
@@ -17,10 +18,10 @@
 <div th:fragment="login" th:class="container">
     <sec:authorize access="!${hasAnyRole()}">
         <h1>Login page</h1>
-        <a th:if="${loginError}" th:class="error">
-            <div th:class="alert alert-dismissible alert-danger">
+        <a th:if="${param.error}" th:class="error">
+            <div th:class="alert-danger">
                 <button th:type="button" th:class="close" data-dismiss="alert">&times;</button>
-                <strong>Authentication Failure</strong>. Please try again.
+                <strong>Authentication Failure</strong>. Invalid Username and Password.
             </div>
         </a>
         <form th:action="@{/user/login}" method="post">

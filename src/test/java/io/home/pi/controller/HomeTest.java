@@ -1,9 +1,5 @@
 package io.home.pi.controller;
 
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi
@@ -12,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * TIME      : 00:40
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class HomeTest {
 }

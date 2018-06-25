@@ -72,3 +72,7 @@ gradle-app.setting
 .idea/modules/
 .idea/vcs.xml
 
+.idea/artifacts/
+.idea/compiler.xml
+.idea/misc.xml
+.idea/modules.xml

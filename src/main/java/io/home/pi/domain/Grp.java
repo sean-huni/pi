@@ -25,7 +25,7 @@ public class Grp {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp")
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
     private Set<User> users;
 
     @OneToOne(cascade = CascadeType.ALL)
