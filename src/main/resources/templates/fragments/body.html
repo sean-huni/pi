@@ -2,20 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
 
-<!--No-Auth - Landing Page-->
-<div th:fragment="no-auth" th:class="jumbotron">
-    <sec:authorize access="!${hasAnyRole()}">
-        <h1>Landing Page</h1>
-        <br/>
-        <div th:class="jumbotron"> Hello Visitor,
-            Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
-        </div>
-    </sec:authorize>
-</div>
-
 <!--Login Page-->
 <div th:fragment="login" th:class="container">
-    <sec:authorize access="!${hasAnyRole()}">
+    <div sec:authorize="!isAuthenticated()">
         <h1>Login page</h1>
         <a th:if="${param.error}" th:class="error">
             <div th:class="alert-danger">
@@ -29,33 +18,52 @@
             <label for="password">Password</label>:
             <input type="password" id="password" name="password"/> <br/>
             <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-            <input type="submit" value="Login"/>
+            <div id="row-btn" role="row">
+                <input type="submit" th:value="Login" class="btn btn-primary"/>
+            </div>
         </form>
-    </sec:authorize>
+    </div>
 </div>
 
-<!--User-Landing/Dashboard Page-->
-<div th:fragment="auth" th:class="jumbotron" sec:authorize="hasRole('ROLE_USER')">
-    <h1>Landing Page</h1>
-    <br/>
-    <p>
-        Hi <span sec:authentication="name">Bob</span>. You're Inn!
-    </p>
 
-    <div class="temp">
-        Subtitle : <a th:text="${subtitle}"></a>
-        <br>
-        Message : <a th:text="${message}"></a>
-        <br>
-        <div class="page-information" role="document">
-            <div th:inline="text">Welcome : [[${#httpServletRequest.remoteUser}]]! |
-                <a href="javascript:formSubmit()">Logout</a>
-            </div>
+<!--No-Auth - Landing Page-->
+<div th:fragment="no-auth" th:class="jumbotron">
+    <div sec:authorize="!isAuthenticated()">
+        <h1>Landing Page</h1>
+        <br/>
+        <div th:class="jumbotron"> Hello Visitor,
+            Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
         </div>
-        Logged user: <span sec:authentication="name">Bob-Test</span>
-        <br>
-        Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
     </div>
+</div>
+
+
+<!--User-Landing/Dashboard Page-->
+<div th:fragment="auth" th:class="jumbotron">
+    <!--Loading Protected Landing page...-->
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <h1>Landing Page</h1>
+        <br/>
+        <p>
+            Hi <span sec:authentication="name">Bob</span>. You're Inn!
+        </p>
+
+        <div class="temp">
+            Subtitle : <a th:text="${subtitle}"></a>
+            <br>
+            Message : <a th:text="${message}"></a>
+            <br>
+            <div class="page-information" role="document">
+                <div th:inline="text">Welcome : [[${#httpServletRequest.remoteUser}]]! |
+                    <a href="javascript:formSubmit()">Logout</a>
+                </div>
+            </div>
+            Logged user: <span sec:authentication="name">Bob-Test</span>
+            <br>
+            Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
+        </div>
+    </div>
+
 </div>
 
 </body>

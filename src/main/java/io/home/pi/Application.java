@@ -17,8 +17,8 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     public static void main(String[] args) {
         // Launch the application
-        LOGGER.debug("LAUNCHING...");
+        LOGGER.info("LAUNCHING...");
         SpringApplication.run(Application.class, args);
-        LOGGER.debug("LAUNCHING SEQUENCE COMPLETED!");
+        LOGGER.info("LAUNCHING SEQUENCE COMPLETED!");
     }
 }

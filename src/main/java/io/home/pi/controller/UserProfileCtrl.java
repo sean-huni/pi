@@ -26,6 +26,7 @@ public class UserProfileCtrl {
         ModelMap objectMap = new ModelMap();
 
         objectMap.put("title", SpringConstants.PROFILE_PAGE_TITLE);
+        objectMap.put("message", "You've just been logged-In!");
         model.addAllAttributes(objectMap);
 
         return "index";

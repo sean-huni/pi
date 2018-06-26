@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static io.home.pi.constant.SpringConstants.EXTERNAL_URL_RESOURCES;
+import static io.home.pi.constant.SpringConstants.INTERNAL_URL_RESOURCES;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.config
@@ -26,9 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/public/**", "/static/**", "/webjars/**")
-                .addResourceLocations("classpath:/public/")
-                .addResourceLocations("classpath:/static/")
-                .addResourceLocations("classpath:/webjars/");
+        registry.addResourceHandler(EXTERNAL_URL_RESOURCES)
+                .addResourceLocations(INTERNAL_URL_RESOURCES);
     }
 }

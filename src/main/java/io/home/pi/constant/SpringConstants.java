@@ -11,6 +11,9 @@ public class SpringConstants {
     public static final String HOME_PAGE_TITLE = "Pi Home";
     public static final String PROFILE_PAGE_TITLE = "User Profile";
 
+    public static final String PI = "/pi/**";
+    public static final String AUTHORITY_USER = "USER";
+
     public static final String USER_ROLE_PREFIX = "ROLE_";
     public static final String URL_LOGIN_PAGE = "/user/login";
     public static final String URL_DEFAULT_AUTH_USER_PAGE = "/pi/dashboard";
@@ -21,5 +24,20 @@ public class SpringConstants {
     public static final String KEY_REMEMBER_ME = "uniqueAndSecret";
     public static final String PARAM_REMEMBER_ME = "remember-me";
     public static final String COOKIE_REMEMBER_ME = "remember-me";
+
+    private static final String URL_RESOURCES_CSS = "css/**";
+    private static final String URL_RESOURCES_PUB = "public/**";
+    private static final String URL_RESOURCES_STATIC = "static/**";
+    private static final String URL_RESOURCES_WEBJAR = "/webjars/**";
+    private static final String URL_RESOURCES_H2 = "/h2";
+    private static final String URL_RESOURCES_ROOT = "/";
+    public static final String[] EXTERNAL_URL_RESOURCES = {URL_RESOURCES_CSS, URL_RESOURCES_PUB,
+            URL_RESOURCES_STATIC, URL_RESOURCES_WEBJAR, URL_RESOURCES_H2,
+            URL_RESOURCES_ROOT};
+    private static final String URL_INTERNAL_RESOURCES_PUB = "classpath:/public/";
+    private static final String URL_INTERNAL_RESOURCES_STATIC = "classpath:/static/";
+    private static final String URL_INTERNAL_RESOURCES_WEBJAR = "classpath:/META-INF/resources/webjars/";
+    public static final String[] INTERNAL_URL_RESOURCES = {
+            URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR,};
 
 }
