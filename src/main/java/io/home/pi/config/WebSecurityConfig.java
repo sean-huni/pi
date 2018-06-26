@@ -1,9 +1,13 @@
 package io.home.pi.config;
 
+import io.home.pi.service.impl.LoginServiceImpl;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static io.home.pi.constant.SpringConstants.*;
 
@@ -11,12 +15,11 @@ import static io.home.pi.constant.SpringConstants.*;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Bean
-//    ServletRegistrationBean h2servletRegistration(){
-//        ServletRegistrationBean registrationBean = new ServletRegistrationBean();
-//        registrationBean.addUrlMappings("/console/*");
-//        return registrationBean;
-//    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

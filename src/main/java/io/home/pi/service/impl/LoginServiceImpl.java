@@ -1,7 +1,5 @@
 package io.home.pi.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.home.pi.domain.GrpAuth;
 import io.home.pi.domain.User;
 import io.home.pi.service.UserService;
@@ -85,22 +83,5 @@ public class LoginServiceImpl implements UserDetailsService {
         }
 
         return authorities;
-    }
-
-
-    private List<GrpAuth> decodeHashMap(List<GrpAuth> authorities) {
-        List<GrpAuth> authoritiesArrayList = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            List<GrpAuth> groupAuthorities = mapper.convertValue(authorities,
-                    new TypeReference<List<GrpAuth>>() {
-                    });
-
-            authoritiesArrayList.addAll(groupAuthorities);
-        } catch (IllegalArgumentException ex) {
-            LOGGER.error("Cannot fetch groupAuthorities: ", ex);
-        }
-        return authoritiesArrayList;
     }
 }
