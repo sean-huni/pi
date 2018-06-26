@@ -1,6 +1,6 @@
 package io.home.pi.repo;
 
-import io.home.pi.domain.GrpAuthority;
+import io.home.pi.domain.GrpAuth;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -10,6 +10,6 @@ import org.springframework.data.repository.CrudRepository;
  * DATE      : 19-June-2018
  * TIME      : 23:24
  */
-public interface GroupAuthorityRepo extends CrudRepository<GrpAuthority, Integer> {
+public interface GroupAuthorityRepo extends CrudRepository<GrpAuth, Integer> {
 
 }

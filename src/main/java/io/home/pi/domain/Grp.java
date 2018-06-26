@@ -4,14 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
- * PROJECT   :pi
- * PACKAGE   :io.home.pi.domain
- * USER      :Sean
- * DATE      :2018/06/14
- * TIME      :21:40
+ * PROJECT   : pi
+ * PACKAGE   : io.home.pi.domain
+ * USER      : sean
+ * DATE      : 25-June-2018
+ * TIME      : 20:38
  */
 @Setter
 @Getter
@@ -22,22 +21,16 @@ public class Grp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "name")
+
+    //    @Enumerated(EnumType.STRING)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
-
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
-    private Set<User> users;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private GrpAuthority grpAuthority;
 
     @Override
     public String toString() {
         return "Grp{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
-                ", grpAuthority=" + grpAuthority +
+                ", name=" + name +
                 '}';
     }
 }

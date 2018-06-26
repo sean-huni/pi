@@ -15,19 +15,24 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(schema = "rpi", name = "authority")
-public class Authority {
+@Table(schema = "rpi", name = "auth")
+public class Auth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "level")
-    private Enum level;
+
+    //    @Enumerated(EnumType.STRING)
+    @Column(name = "level", nullable = false, length = 50)
+    private String level;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private GrpAuth grpAuth;
 
     @Override
     public String toString() {
-        return "Authority{" +
+        return "Auth{" +
                 "id=" + id +
                 ", level='" + level + '\'' +
                 '}';
