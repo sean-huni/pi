@@ -16,26 +16,28 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(schema = "rpi", name = "grp_authority")
-public class GrpAuthority {
+@Table(schema = "rpi", name = "team")
+public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     private Grp grp;
 
-    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp_authority")
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Authority> authorities;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private GrpAuth grpAuth;
+
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
+    private Set<User> users;
 
     @Override
     public String toString() {
-        return "GrpAuthority{" +
+        return "Team{" +
                 "id=" + id +
                 ", grp=" + grp +
-                ", authorities=" + authorities +
+                ", grpAuth=" + grpAuth +
                 '}';
     }
 }

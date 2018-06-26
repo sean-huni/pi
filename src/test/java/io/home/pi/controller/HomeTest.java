@@ -1,5 +1,8 @@
 package io.home.pi.controller;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi
@@ -11,4 +14,5 @@ package io.home.pi.controller;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class HomeTest {
+
 }

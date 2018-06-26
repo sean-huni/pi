@@ -1,9 +1,6 @@
 package io.home.pi.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.home.pi.domain.Grp;
-import io.home.pi.domain.GrpAuthority;
+import io.home.pi.domain.GrpAuth;
 import io.home.pi.domain.User;
 import io.home.pi.service.UserService;
 import org.slf4j.Logger;
@@ -67,15 +64,14 @@ public class LoginServiceImpl implements UserDetailsService {
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {
-            List<GrpAuthority> groupAuthorities = new ArrayList<>();
+            List<GrpAuth> groupAuthorities = new ArrayList<>();
 
-            for (Grp grp : user.getGrps()) {
-                groupAuthorities.add(grp.getGrpAuthority());
-            }
+            groupAuthorities.add(user.getTeam().getGrpAuth());
 
-            for (GrpAuthority userAuth : decodeHashMap(groupAuthorities)) {
-                LOGGER.info("User Authority: " + userAuth.toString());
-                authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities()));
+
+            for (GrpAuth userAuth : groupAuthorities) {
+                LOGGER.info("User Auth: " + userAuth.toString());
+                authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -87,22 +83,5 @@ public class LoginServiceImpl implements UserDetailsService {
         }
 
         return authorities;
-    }
-
-
-    private List<GrpAuthority> decodeHashMap(List<GrpAuthority> authorities) {
-        List<GrpAuthority> authoritiesArrayList = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            List<GrpAuthority> groupAuthorities = mapper.convertValue(authorities,
-                    new TypeReference<List<GrpAuthority>>() {
-                    });
-
-            authoritiesArrayList.addAll(groupAuthorities);
-        } catch (IllegalArgumentException ex) {
-            LOGGER.error("Cannot fetch groupAuthorities: ", ex);
-        }
-        return authoritiesArrayList;
     }
 }
