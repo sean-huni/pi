@@ -1,11 +1,17 @@
 package io.home.pi.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import static io.home.pi.constant.SpringConstants.EXTERNAL_URL_RESOURCES;
+import static io.home.pi.constant.SpringConstants.INTERNAL_URL_RESOURCES;
 
 /**
  * PROJECT   : pi
@@ -26,9 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/public/**", "/static/**", "/webjars/**")
-                .addResourceLocations("classpath:/public/")
-                .addResourceLocations("classpath:/static/")
-                .addResourceLocations("classpath:/webjars/");
+        registry.addResourceHandler(EXTERNAL_URL_RESOURCES)
+                .addResourceLocations(INTERNAL_URL_RESOURCES);
     }
 }

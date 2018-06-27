@@ -1,8 +1,8 @@
 package io.home.pi.config;
 
-import io.home.pi.service.impl.LoginServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +13,7 @@ import static io.home.pi.constant.SpringConstants.*;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -24,16 +25,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf()
-                .and()
+
                 .authorizeRequests()
-                .antMatchers("/", URL_LOGIN_PAGE).permitAll()
-                .anyRequest().permitAll()
+                .antMatchers(URL_LOGIN_PAGE)
+
+                .permitAll() //Adding this line solved it
                 .and()
-                .authorizeRequests().antMatchers("/h2").permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/pi").hasRole("USER")
+                .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)
                 .and()
                 .formLogin()
                 .loginPage(URL_LOGIN_PAGE)
@@ -46,18 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl(URL_LOGOUT)
                 .logoutSuccessUrl(URL_LOGOUT_SUCCESSFUL)
-                .deleteCookies(COOKIES_SESSION)
+                .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
                 .and()
-                .rememberMe()
-                .key(KEY_REMEMBER_ME)
-                .rememberMeParameter(PARAM_REMEMBER_ME)
-                .rememberMeCookieName(COOKIE_REMEMBER_ME)
-                .tokenValiditySeconds(180)
-                .and()
-                .authorizeRequests().antMatchers("/").permitAll().and()
-                .authorizeRequests().antMatchers("/console/**").permitAll()
-                .and().csrf().disable()
+                .csrf().disable()
                 .headers().frameOptions().disable();
     }
 }
