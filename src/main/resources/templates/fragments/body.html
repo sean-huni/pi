@@ -8,18 +8,27 @@
         <h1>Login page</h1>
         <a th:if="${param.error}" th:class="error">
             <div th:class="alert-danger">
-                <button th:type="button" th:class="close" data-dismiss="alert">&times;</button>
-                <strong>Authentication Failure</strong>. Invalid Username and Password.
+                <div id="error-label" th:class="col-md-3">
+                    <button th:type="button" th:class="close" data-dismiss="alert">&times;</button>
+                    <strong>Authentication Failure</strong>. Invalid Username and Password.
+                </div>
             </div>
         </a>
         <form th:action="@{/user/login}" method="post">
-            <label for="username">Username</label>:
-            <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
-            <label for="password">Password</label>:
-            <input type="password" id="password" name="password"/> <br/>
+            <div role="row">
+                <label for="username">Username</label>:
+                <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+            </div>
+            <div role="row">
+                <label for="password">Password</label>:
+                <input type="password" id="password" name="password"/> <br/>
+            </div>
             <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
             <div id="row-btn" role="row">
-                <input type="submit" th:value="Login" class="btn btn-primary"/>
+                <div th:class="col-md-5">
+                    <input type="button" value="Password Rest" class="btn btn-warning col-4"/>
+                    <input type="submit" th:value="Login" class="btn btn-primary col-2 btn-spacing"/>
+                </div>
             </div>
         </form>
     </div>
@@ -28,8 +37,9 @@
 
 <!--No-Auth - Landing Page-->
 <div th:fragment="no-auth" th:class="jumbotron">
+    <div>I'm here!!!'</div>
     <div sec:authorize="!isAuthenticated()">
-        <h1>Landing Page</h1>
+        <h1>Home Page</h1>
         <br/>
         <div th:class="jumbotron"> Hello Visitor,
             Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
@@ -41,7 +51,7 @@
 <!--User-Landing/Dashboard Page-->
 <div th:fragment="auth" th:class="jumbotron">
     <!--Loading Protected Landing page...-->
-    <div sec:authorize="hasRole('ROLE_USER')">
+    <div sec:authorize="hasRole('USER')">
         <h1>Landing Page</h1>
         <br/>
         <p>
@@ -63,7 +73,6 @@
             Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
         </div>
     </div>
-
 </div>
 
 </body>
