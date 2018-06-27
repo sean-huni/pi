@@ -69,3 +69,10 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 /gradle.properties
+.idea/modules/
+.idea/vcs.xml
+
+.idea/artifacts/
+.idea/compiler.xml
+.idea/misc.xml
+.idea/modules.xml

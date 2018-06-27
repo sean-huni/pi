@@ -1,14 +1,12 @@
 package io.home.pi.controller;
 
-import io.home.pi.constant.WebCons;
+import io.home.pi.constant.SpringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * PROJECT   : pi
@@ -18,19 +16,17 @@ import java.util.Map;
  * TIME      : 22:37
  */
 @Controller
-@RequestMapping(value = {"/pi**"})
 public class HomeCtrl {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeCtrl.class);
 
-    @RequestMapping("/index")
-    public ModelAndView homePage() {
-        LOGGER.info("Home Page Invoked...");
+    @RequestMapping("/")
+    public String homePage(Model model) {
+        LOGGER.debug("Home Page Invoked...");
+        ModelMap objectMap = new ModelMap();
 
-        Map<String, Object> objectMap = new HashMap<>();
-        objectMap.put("title", WebCons.HOME_PAGE_TITLE);
+        objectMap.put("title", SpringConstants.HOME_PAGE_TITLE);
+        model.addAllAttributes(objectMap);
 
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addAllObjects(objectMap);
-        return modelAndView;
+        return "index";
     }
 }
