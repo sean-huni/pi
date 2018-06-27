@@ -23,7 +23,7 @@
                 <label for="password">Password</label>:
                 <input type="password" id="password" name="password"/> <br/>
             </div>
-            <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <div id="row-btn" role="row">
                 <div th:class="col-md-5">
                     <input type="button" value="Password Rest" class="btn btn-warning col-4"/>
@@ -58,7 +58,7 @@
             Hi <span sec:authentication="name">Bob</span>. You're Inn!
         </p>
 
-        <div class="temp">
+        <div class="temp" th:with="logoutUrl=${'/j_spring_security_logout'}">
             Subtitle : <a th:text="${subtitle}"></a>
             <br>
             Message : <a th:text="${message}"></a>
@@ -71,6 +71,10 @@
             Logged user: <span sec:authentication="name">Bob-Test</span>
             <br>
             Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
+
+            <form th:type="hidden" th:action="${logoutUrl}" th:method="post" th:id="logoutForm">
+                <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
         </div>
     </div>
 </div>

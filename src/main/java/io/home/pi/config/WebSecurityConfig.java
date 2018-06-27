@@ -28,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers(URL_LOGIN_PAGE)
-
                 .permitAll() //Adding this line solved it
                 .and()
                 .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)
@@ -47,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
                 .and()
-                .csrf().disable()
+                .csrf().and()
                 .headers().frameOptions().disable();
     }
 }
