@@ -31,12 +31,15 @@ public class SpringConstants {
     private static final String URL_RESOURCES_WEBJAR = "/webjars/**";
     private static final String URL_RESOURCES_H2 = "/h2";
     private static final String URL_RESOURCES_ROOT = "/";
-    public static final String[] EXTERNAL_URL_RESOURCES = {URL_RESOURCES_CSS, URL_RESOURCES_PUB,
-            URL_RESOURCES_STATIC, URL_RESOURCES_WEBJAR, URL_RESOURCES_H2,
-            URL_RESOURCES_ROOT};
+
     private static final String URL_INTERNAL_RESOURCES_PUB = "classpath:/public/";
     private static final String URL_INTERNAL_RESOURCES_STATIC = "classpath:/static/";
     private static final String URL_INTERNAL_RESOURCES_WEBJAR = "classpath:/META-INF/resources/webjars/";
+
+    public static final String[] EXTERNAL_URL_RESOURCES = {URL_RESOURCES_CSS, URL_RESOURCES_PUB,
+            URL_RESOURCES_STATIC, URL_RESOURCES_WEBJAR, URL_RESOURCES_H2, URL_RESOURCES_H2 + "**",
+            URL_RESOURCES_ROOT};
+
     public static final String[] INTERNAL_URL_RESOURCES = {
             URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR,};
 

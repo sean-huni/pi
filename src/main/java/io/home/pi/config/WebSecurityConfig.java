@@ -2,7 +2,6 @@ package io.home.pi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,7 +12,6 @@ import static io.home.pi.constant.SpringConstants.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -46,7 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
                 .and()
-                .csrf().and()
-                .headers().frameOptions().disable();
+                .csrf().disable()
+//                .and()
+                .headers().frameOptions().disable(); //h2 DB won't work with frameOptions & CSRF enabled.
     }
 }

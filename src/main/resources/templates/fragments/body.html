@@ -23,7 +23,7 @@
                 <label for="password">Password</label>:
                 <input type="password" id="password" name="password"/> <br/>
             </div>
-            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
             <div id="row-btn" role="row">
                 <div th:class="col-md-5">
                     <input type="button" value="Password Rest" class="btn btn-warning col-4"/>
@@ -37,7 +37,6 @@
 
 <!--No-Auth - Landing Page-->
 <div th:fragment="no-auth" th:class="jumbotron">
-    <div>I'm here!!!'</div>
     <div sec:authorize="!isAuthenticated()">
         <h1>Home Page</h1>
         <br/>
@@ -73,7 +72,7 @@
             Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
 
             <form th:type="hidden" th:action="${logoutUrl}" th:method="post" th:id="logoutForm">
-                <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
             </form>
         </div>
     </div>
