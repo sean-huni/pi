@@ -14,7 +14,6 @@ import static io.home.pi.constant.SpringConstants.*;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -43,6 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl(URL_LOGOUT_SUCCESSFUL)
                 .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
+                .and()
+                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(180)//.userDetailsService()
                 .and()
                 .csrf().disable()
 //                .and()

@@ -23,11 +23,19 @@
                 <label for="password">Password</label>:
                 <input type="password" id="password" name="password"/> <br/>
             </div>
+            <div class="col-md-auto offset-md-1">
+                <input th:id="remember-me" th:type="checkbox" th:name="remember-me"/>
+                <label th:for="remember-me">
+                    <a data-toggle="tooltip" title="Remember me on this computer">Remember-Me</a>
+                </label>
+            </div>
             <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
             <div id="row-btn" role="row">
-                <div th:class="col-md-5">
-                    <input type="button" value="Password Rest" class="btn btn-warning col-4"/>
-                    <input type="submit" th:value="Login" class="btn btn-primary col-2 btn-spacing"/>
+                <div class="col-xs-12 col-sm-8 col-md-5">
+                    <input type="button" value="Password Reset"
+                           class="btn btn-warning col-xs-auto col-sm-auto col-md-6"/>
+                    <input type="submit" th:value="Login"
+                           class="btn btn-primary col-xs-auto col-sm-auto col-md-4 btn-spacing"/>
                 </div>
             </div>
         </form>
