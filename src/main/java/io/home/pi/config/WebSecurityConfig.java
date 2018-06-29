@@ -49,4 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
                 .headers().frameOptions().disable(); //h2 DB won't work with frameOptions & CSRF enabled.
     }
+
+
 }

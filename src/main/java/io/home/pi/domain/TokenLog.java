@@ -19,10 +19,10 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @Table(schema = "rpi", name = "token_log")
-public class PersistentLogin {
+public class TokenLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 

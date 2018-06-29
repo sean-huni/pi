@@ -1,41 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
 <body>
 
 <!--Login Page-->
 <div th:fragment="login" th:class="container">
     <div sec:authorize="!isAuthenticated()">
-        <h1>Login page</h1>
-        <a th:if="${param.error}" th:class="error">
-            <div th:class="alert-danger">
-                <div id="error-label" th:class="col-md-3">
-                    <button th:type="button" th:class="close" data-dismiss="alert">&times;</button>
+        <h3>Login</h3>
+        <a th:if="${param.error}" class="col-12">
+            <div class="alert alert-dismissible alert-danger error col-xs-5 col-md-8 col-lg-6">
+                <div>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Authentication Failure</strong>. Invalid Username and Password.
                 </div>
             </div>
         </a>
         <form th:action="@{/user/login}" method="post">
             <div role="row">
-                <label for="username">Username</label>:
+                <label for="username" class="hidden-sm-down">Username</label>:
                 <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
             </div>
-            <div role="row">
-                <label for="password">Password</label>:
-                <input type="password" id="password" name="password"/> <br/>
+            <div th:role="row" id="password-div">
+                <label th:for="password" th:class="hidden-sm-down">Password</label>:
+                <input th:type="password" th:id="password" th:name="password" style="margin-left: 6px;"/> <br/>
             </div>
-            <div class="col-md-auto offset-md-1">
+            <div id="checkbox-div" th:role="row">
                 <input th:id="remember-me" th:type="checkbox" th:name="remember-me"/>
                 <label th:for="remember-me">
-                    <a data-toggle="tooltip" title="Remember me on this computer">Remember-Me</a>
+                    <a th:data-toggle="tooltip" id="remember-me-text"
+                       title="Remember me on this computer">Remember-Me</a>
                 </label>
             </div>
             <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-            <div id="row-btn" role="row">
-                <div class="col-xs-12 col-sm-8 col-md-5">
-                    <input type="button" value="Password Reset"
-                           class="btn btn-warning col-xs-auto col-sm-auto col-md-6"/>
-                    <input type="submit" th:value="Login"
-                           class="btn btn-primary col-xs-auto col-sm-auto col-md-4 btn-spacing"/>
+            <div th:id="row-btn" th:role="row">
+                <div>
+                    <input type="button" value="Password Reset" class="btn btn-warning"/>
+                    <!--<div class="col-auto " ></div>-->
+                    <input th:type="submit" th:value="Login" class="btn btn-primary btn-spacing"/>
                 </div>
             </div>
         </form>

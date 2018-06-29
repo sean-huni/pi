@@ -1,6 +1,5 @@
 package io.home.pi.service;
 
-import io.home.pi.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -9,7 +8,7 @@ import java.util.Optional;
 public interface CRUDService<T> {
     Iterable<?> findAll();
 
-    Optional<User> findById(Integer id);
+    Optional<?> findById(Integer id);
 
     void delete(Integer id);
 
