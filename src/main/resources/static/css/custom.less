@@ -1,6 +1,8 @@
 @btnTopMargin: 1rem;
 @btnSpacing: 50px;
 @labelMarginSpacing: 10px;
+@checkboxSize: 20px;
+@checkboxFontSize: 18px;
 
 #row-btn {
   margin-top: @btnTopMargin;
@@ -13,4 +15,27 @@
 #error-label {
   margin-top: @labelMarginSpacing;
   margin-bottom: @labelMarginSpacing - 5;
+}
+
+#password-div {
+  margin-top: @labelMarginSpacing;
+}
+
+#remember-me { //Checkbox
+  width: @checkboxSize;
+  height: @checkboxSize;
+}
+
+#remember-me-text {
+  font-size: @checkboxFontSize;
+}
+
+#checkbox-div {
+  margin-top: 20px;
+  margin-left: 80px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-variant: small-caps !important;
+  text-rendering: auto;
 }

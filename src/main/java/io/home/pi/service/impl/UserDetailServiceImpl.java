@@ -28,13 +28,13 @@ import static io.home.pi.constant.SpringConstants.USER_ROLE_PREFIX;
  */
 
 @Service
-public class LoginServiceImpl implements UserDetailsService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServiceImpl.class);
+public class UserDetailServiceImpl implements UserDetailsService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailServiceImpl.class);
 
     private final UserService userService;
 
     @Autowired
-    public LoginServiceImpl(UserService userService) {
+    public UserDetailServiceImpl(UserService userService) {
         this.userService = userService;
     }
 
@@ -84,4 +84,6 @@ public class LoginServiceImpl implements UserDetailsService {
 
         return authorities;
     }
+
+
 }

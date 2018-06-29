@@ -1,5 +1,7 @@
 package io.home.pi.config;
 
+import io.home.pi.service.impl.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,16 +9,35 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import static io.home.pi.constant.SpringConstants.*;
 
 @Configuration
 @EnableWebSecurity
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private PersistentTokenRepository persistenceTokenRepository;
+
+    private UserDetailServiceImpl userDetailsService;
+
+    @Autowired
+    public WebSecurityConfig(PersistentTokenRepository persistenceTokenRepository, UserDetailServiceImpl userDetailsService) {
+        this.persistenceTokenRepository = persistenceTokenRepository;
+        this.userDetailsService = userDetailsService;
+    }
+
+//    @Bean
+//    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+//        PersistentTokenBasedRememberMeServices persistenceTokenBasedservice = new PersistentTokenBasedRememberMeServices("rememberme", userDetailsService, persistenceTokenRepository);
+//        persistenceTokenBasedservice.setAlwaysRemember(true);
+//        return persistenceTokenBasedservice;
+//    }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -44,8 +65,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
                 .and()
+                .rememberMe().rememberMeCookieName("rememberme").tokenValiditySeconds(180)
+                .tokenRepository(persistenceTokenRepository)
+                .alwaysRemember(true)
+                .useSecureCookie(true).userDetailsService(userDetailsService)
+                .and()
                 .csrf().disable()
-//                .and()
                 .headers().frameOptions().disable(); //h2 DB won't work with frameOptions & CSRF enabled.
     }
+
+
 }

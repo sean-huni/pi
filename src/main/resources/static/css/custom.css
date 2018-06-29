@@ -1,7 +1,1 @@
-#row-btn {
-    margin-top: 1rem
-}
-
-.btn-spacing {
-    margin-left: 50px
-}
+#row-btn{margin-top:1rem}.btn-spacing{margin-left:50px}#error-label{margin-top:10px;margin-bottom:5px}#password-div{margin-top:10px}#remember-me{width:20px;height:20px}#remember-me-text{font-size:18px}#checkbox-div{margin-top:20px;margin-left:80px}h1,h2,h3,h4,h5,h6{font-variant:small-caps !important;text-rendering:auto}
