@@ -4,6 +4,8 @@ import io.home.pi.domain.TokenLog;
 import io.home.pi.repo.TokenLogRepo;
 import io.home.pi.service.TokenLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
  * DATE      : 29-June-2018
  * TIME      : 01:22
  */
+@Service
 public class TokenLogServiceImpl implements TokenLogService {
 
     private TokenLogRepo tokenLogRepo;
@@ -28,7 +31,18 @@ public class TokenLogServiceImpl implements TokenLogService {
     @Override
     public Optional<TokenLog> findByUsername(String username) {
         assertNotNull(username);
-        return Optional.ofNullable(tokenLogRepo.findByUsername(username));
+        return Optional.of(tokenLogRepo.findByUsername(username));
+    }
+
+    @Override
+    public Optional<TokenLog> findBySeries(String series) {
+        return Optional.of(tokenLogRepo.findBySeries(series));
+    }
+
+    @Override
+    @Transactional
+    public void deleteByUsername(String username) {
+        tokenLogRepo.deleteByUsername(username);
     }
 
     @Override

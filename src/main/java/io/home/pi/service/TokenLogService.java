@@ -13,4 +13,8 @@ import java.util.Optional;
  */
 public interface TokenLogService extends CRUDService<TokenLog> {
     Optional<TokenLog> findByUsername(String username);
+
+    Optional<TokenLog> findBySeries(String series);
+
+    void deleteByUsername(String username);
 }

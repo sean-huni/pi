@@ -21,12 +21,22 @@ import java.sql.Timestamp;
 @Table(schema = "rpi", name = "token_log")
 public class TokenLog {
 
+    public TokenLog() {
+        //Default Constructor
+    }
+
+    public TokenLog(String username, @NotNull String series, @NotNull String token, @NotNull Timestamp timestamp) {
+        this.username = username;
+        this.series = series;
+        this.token = token;
+        this.timestamp = timestamp;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
     @Column(name = "username")
     private String username;
 
