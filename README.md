@@ -8,7 +8,6 @@ A cloud-based web-project for monitoring and controlling household electric devi
 # Git Branching Strategy
 - [Using the Successful-branching model](http://nvie.com/posts/a-successful-git-branching-model/)
 ![Successful Git Branching Model](https://raw.githubusercontent.com/sean-huni/pi/dev/git_model.png "Git Branching Model")
-Using the Successful-branching model
 
 # Anticipated in future releases
 - Build pipeline making use of Blue Ocean (Jenkins) with Jacoco & Sonarqube.
