@@ -3,11 +3,17 @@ A cloud-based web-project for monitoring and controlling household electric devi
 
 # Dependencies
 - JFrog Artifactory - for storing & managing dependencies locally.
-- Invokes RESTful requests that shall utilise Microservices written in Python 3
+
+
+# Git Branching Strategy
+- [Using the Successful-branching model](http://nvie.com/posts/a-successful-git-branching-model/)
+![Successful Git Branching Model](https://raw.githubusercontent.com/sean-huni/pi/dev/git-model.png "Git Branching Model")
+Using the Successful-branching model
 
 # Anticipated in future releases
 - Build pipeline making use of Blue Ocean (Jenkins) with Jacoco & Sonarqube.
-- Switching over from JQuery in favour of frontend frameworks such as Vue.
+- Switching over from JQuery in favour of frontend frameworks such as Vue/Angular.
+- Invoking requests to monitor & control devices via a REST-Endpoint written in python 3.
 
 # JFrog-Artifactory Dependency config
 ## Dockerfile
@@ -26,4 +32,4 @@ Create a gradle.properties file (in the project root-dir) with the following att
 - artifactoryPass=admin
 - artifactoryContextUrl=http://localhost:8083/artifactory
   
-On the web-console initialise gradle Jfrog plugin. username & password: admin
+On the web-console initialise gradle Jfrog plugin. Default username & password: admin
