@@ -43,4 +43,5 @@ public class SpringConstants {
     public static final String[] INTERNAL_URL_RESOURCES = {
             URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR,};
 
+    public static final String URL_LOGIN_ERROR_TRUE = "/user/login?error=true";
 }

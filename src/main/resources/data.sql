@@ -18,6 +18,5 @@ insert into rpi.team (grp_id, grp_auth_id) values (1, 1);
 insert into rpi.user (username, password, enabled, team_id)
 values ('demo@email.com', '$2a$10$.R9eHFOfpQDa.BEmkUUdVegl/5XUQ8ELXaKFz/7QJmqunjbVyg/0y', true, 1);
 
-
-insert into RPI.TOKEN_LOG (id,series, timestamp, token, username)
-values(1, 'KDRbKsElGjpY0abA1vwZUQ==', CURRENT_TIMESTAMP(), '83AjDxYvEBxDgLMJLNzkaA==', 'demo@email.com');
+-- insert into RPI.TOKEN_LOG (id,series, timestamp, token, username)
+-- values(1, 'KDRbKsElGjpY0abA1vwZUQ==', CURRENT_TIMESTAMP(), '83AjDxYvEBxDgLMJLNzkaA==', 'demo@email.com');

@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,14 +31,16 @@ import static io.home.pi.constant.SpringConstants.USER_ROLE_PREFIX;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailServiceImpl.class);
-
     private final UserService userService;
+    private HttpServletRequest request;
+    private LoginAttemptService loginAttemptService;
 
     @Autowired
-    public UserDetailServiceImpl(UserService userService) {
+    public UserDetailServiceImpl(HttpServletRequest request, LoginAttemptService loginAttemptService, UserService userService) {
+        this.request = request;
+        this.loginAttemptService = loginAttemptService;
         this.userService = userService;
     }
-
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -52,8 +55,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
      *                                   GrantedAuthority
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, SecurityException {
+        String ip = getClientIP(request);
+        if (loginAttemptService.isBlocked(ip)) {
+            throw new SecurityException("blocked");
+        }
+
         Optional<User> userOptional = Optional.ofNullable(userService.findByUsername(username));
+
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException("Username & Password doesn't exist!");
         }
@@ -68,10 +77,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             groupAuthorities.add(user.getTeam().getGrpAuth());
 
-
             for (GrpAuth userAuth : groupAuthorities) {
                 LOGGER.info("User Auth: " + userAuth.toString());
-                authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
+                while (userAuth.getAuthorities().iterator().hasNext()) {
+                    authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
+                }
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -83,6 +93,21 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         return authorities;
+    }
+
+
+    private String getClientIP(HttpServletRequest request) {
+        String clientIP;
+        String xfHeader = request.getHeader("X-Fowarded-For");
+        if (xfHeader == null) {
+            String remoteIP = request.getRemoteAddr();
+            LOGGER.info("Remote-IP: {}", remoteIP);
+            return remoteIP;
+        }
+
+        clientIP = xfHeader.split(",")[0];
+        LOGGER.info("Client-IP: {}", clientIP);
+        return clientIP;
     }
 
 
