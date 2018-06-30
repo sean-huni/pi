@@ -1,6 +1,8 @@
 package io.home.pi.service.impl;
 
-import org.springframework.cglib.core.internal.LoadingCache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -17,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class LoginAttemptService {
 
-    private final int MAX_ATTEMPT = 10;
+    private final int MAX_ATTEMPT = 3;
     private LoadingCache<String, Integer> attemptsCache;
 
     public LoginAttemptService() {

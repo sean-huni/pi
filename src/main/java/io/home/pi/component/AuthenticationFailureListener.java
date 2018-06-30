@@ -16,15 +16,13 @@ import org.springframework.stereotype.Component;
  * CELL    : +27-78-683-1982
  */
 @Component
-public class AuthenticationFailureListener
-        implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
+public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
     @Autowired
     private LoginAttemptService loginAttemptService;
 
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
-        WebAuthenticationDetails auth = (WebAuthenticationDetails)
-                e.getAuthentication().getDetails();
+        WebAuthenticationDetails auth = (WebAuthenticationDetails) e.getAuthentication().getDetails();
 
         loginAttemptService.loginFailed(auth.getRemoteAddress());
     }

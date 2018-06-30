@@ -1,5 +1,6 @@
 package io.home.pi.config;
 
+import io.home.pi.component.CustomAuthenticationFailureHandler;
 import io.home.pi.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import static io.home.pi.constant.SpringConstants.*;
 
@@ -23,10 +23,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailServiceImpl userDetailsService;
 
+    private CustomAuthenticationFailureHandler authenticationFailureHandler;
+
     @Autowired
-    public WebSecurityConfig(PersistentTokenRepository persistenceTokenRepository, UserDetailServiceImpl userDetailsService) {
+    public WebSecurityConfig(PersistentTokenRepository persistenceTokenRepository, UserDetailServiceImpl userDetailsService, CustomAuthenticationFailureHandler authenticationFailureHandler) {
         this.persistenceTokenRepository = persistenceTokenRepository;
         this.userDetailsService = userDetailsService;
+        this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
 //    @Bean
@@ -54,6 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage(URL_LOGIN_PAGE)
                 .defaultSuccessUrl(URL_DEFAULT_AUTH_USER_PAGE, true)
+//                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
                 .permitAll()
                 .and()
                 .sessionManagement()

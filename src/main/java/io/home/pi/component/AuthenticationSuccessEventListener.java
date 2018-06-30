@@ -16,15 +16,13 @@ import org.springframework.stereotype.Component;
  * CELL    : +27-78-683-1982
  */
 @Component
-public class AuthenticationSuccessEventListener
-        implements ApplicationListener<AuthenticationSuccessEvent> {
+public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
     @Autowired
     private LoginAttemptService loginAttemptService;
 
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
-        WebAuthenticationDetails auth = (WebAuthenticationDetails)
-                e.getAuthentication().getDetails();
+        WebAuthenticationDetails auth = (WebAuthenticationDetails) e.getAuthentication().getDetails();
 
         loginAttemptService.loginSucceeded(auth.getRemoteAddress());
     }

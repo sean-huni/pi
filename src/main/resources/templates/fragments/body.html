@@ -11,7 +11,8 @@
             <div class="alert alert-dismissible alert-danger error col-xs-5 col-md-8 col-lg-6">
                 <div>
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Authentication Failure</strong>. Invalid Username and Password.
+                    <strong>Authentication Failure</strong>. <i th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">Invalid
+                    Username and Password.</i>
                 </div>
             </div>
         </a>
@@ -22,7 +23,7 @@
             </div>
             <div th:role="row" id="password-div">
                 <label th:for="password" th:class="hidden-sm-down">Password</label>:
-                <input th:type="password" th:id="password" th:name="password" style="margin-left: 6px;"/> <br/>
+                <input th:type="password" th:id="password" th:name="password"/> <br/>
             </div>
             <div id="checkbox-div" th:role="row">
                 <input th:id="remember-me" th:type="checkbox" th:name="remember-me"/>
@@ -60,7 +61,7 @@
 <div th:fragment="auth" th:class="jumbotron">
     <!--Loading Protected Landing page...-->
     <div sec:authorize="hasRole('USER')">
-        <h1>Landing Page</h1>
+        <h1>Profile</h1>
         <br/>
         <p>
             Hi <span sec:authentication="name">Bob</span>. You're Inn!
