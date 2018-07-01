@@ -1,5 +1,7 @@
 package io.home.pi.constant;
 
+import java.util.Arrays;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi
@@ -17,6 +19,8 @@ public class SpringConstants {
     public static final String USER_ROLE_PREFIX = "ROLE_";
     public static final String URL_LOGIN_PAGE = "/user/login";
     public static final String URL_REG_LISTENER = "/registrationConfirm";
+    public static final String URL_REG_NEW_USER = "/register/user";
+    public static final String URL_FORGOT_PASSWORD = "/user/forgot-password";
     public static final String URL_DEFAULT_AUTH_USER_PAGE = "/pi/dashboard";
     public static final String URL_INVALID_SESSION = "/user/login";
     public static final String URL_LOGOUT = "/j_spring_security_logout";
@@ -42,9 +46,11 @@ public class SpringConstants {
             URL_RESOURCES_ROOT};
 
     public static final String[] INTERNAL_URL_RESOURCES = {
-            URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR,};
+            URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR};
 
-//    public static final String[] SECURITY_PERMIT_ALL_URLS = {URL_REG_LISTENER};
+    public static final String SECURITY_PERMIT_ALL_URLS = Arrays.toString(
+            new String[]{URL_REG_LISTENER, URL_FORGOT_PASSWORD, URL_REG_NEW_USER})
+            .replace("[", "").replace("]", "");
 
     public static final String URL_LOGIN_ERROR_TRUE = "/user/login?error=true";
 }

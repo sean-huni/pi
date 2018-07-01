@@ -1,10 +1,19 @@
 package io.home.pi.web.controller;
 
+import io.home.pi.web.dto.UserDTO;
+import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import static io.home.pi.constant.SpringConstants.URL_FORGOT_PASSWORD;
+import static io.home.pi.constant.SpringConstants.URL_REG_NEW_USER;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * PROJECT   : pi
@@ -16,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @Controller
 @RequestMapping("/user")
-public class LoginCtrl {
+public class LoginCtrl extends SuperCtrl {
 
     @RequestMapping("/login")
     public ModelAndView loginPage(ModelAndView modelAndView){
@@ -26,8 +35,20 @@ public class LoginCtrl {
         modelMap.addAttribute("title", "Login");
         modelMap.addAttribute("username-label", "username");
         modelMap.addAttribute("password-label", "password");
+        modelMap.addAttribute("forgotPassUri", URL_FORGOT_PASSWORD);
+        modelMap.addAttribute("userRegUri", URL_REG_NEW_USER);
         modelAndView.setViewName("login");
         modelAndView.addAllObjects(modelMap);
         return modelAndView;
+    }
+
+    //FixMe: Define the implementation!
+    @RequestMapping(value = "/forgot-password", method = POST)
+    public GenericResponse forgotPassword(@Valid final UserDTO account, final HttpServletRequest request) {
+
+        log.info("Registering user account with information: {}", account);
+        log.info("URL-Request Passed: {}", getAppUrl(request));
+
+        return new GenericResponse("success");
     }
 }

@@ -25,8 +25,8 @@ import javax.validation.Valid;
  */
 @Slf4j
 @Controller
-@RequestMapping("/reg")
-public class UserRegCtrl {
+@RequestMapping("/register")
+public class UserRegCtrl extends SuperCtrl {
     private UserRegService userRegService;
 
     @Autowired
@@ -38,7 +38,7 @@ public class UserRegCtrl {
     }
 
     // Registration
-    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse registerUserAccount(@Valid final UserDTO accountDto, final HttpServletRequest request) {
         log.debug("Registering user account with information: {}", accountDto);
@@ -46,9 +46,5 @@ public class UserRegCtrl {
         final User registered = userRegService.registerNewUserAccount(accountDto);
         eventPublisher.publishEvent(new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request)));
         return new GenericResponse("success");
-    }
-
-    private final String getAppUrl(final HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }
