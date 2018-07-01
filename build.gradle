@@ -69,13 +69,15 @@ dependencies {
     compile('net.sargue:mailgun:1.5.0')
     compile('com.google.guava:guava:25.1-jre')
     compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('javax.xml.bind:jaxb-api')
     compile('org.webjars:bootstrap:4.1.0')
     compile('org.webjars:font-awesome:5.0.13')
     compile('org.webjars:jquery:3.3.1-1')
+    compile('org.projectlombok:lombok:1.18.0')
+
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
-    compile('org.projectlombok:lombok')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')

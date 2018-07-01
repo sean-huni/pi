@@ -2,6 +2,7 @@ package io.home.pi.task;
 
 import io.home.pi.persistence.repo.TokenLogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,10 @@ import java.time.Instant;
  * TIME      : 06:25
  */
 @Service
-@Transactional
+@PropertySource("classpath:application.properties")
 public class TokensPurgeTask {
 
-    final TokenLogRepo tokenRepository;
+    private TokenLogRepo tokenRepository;
 
     @Autowired
     public TokensPurgeTask(TokenLogRepo tokenRepository) {
@@ -28,6 +29,7 @@ public class TokensPurgeTask {
     }
 
     @Scheduled(cron = "${purge.cron.expression}")
+    @Transactional
     public void purgeExpired() {
 
         Timestamp now = Timestamp.from(Instant.now());

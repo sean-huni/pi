@@ -11,12 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import static io.home.pi.constant.SpringConstants.*;
 
 @Configuration
 @EnableWebSecurity
-
+@EnableTransactionManagement
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private PersistentTokenRepository persistenceTokenRepository;
