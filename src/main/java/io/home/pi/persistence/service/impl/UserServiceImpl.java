@@ -1,7 +1,7 @@
 package io.home.pi.service.impl;
 
 import io.home.pi.domain.User;
-import io.home.pi.repo.UserRepo;
+import io.home.pi.persistence.repo.UserRepo;
 import io.home.pi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

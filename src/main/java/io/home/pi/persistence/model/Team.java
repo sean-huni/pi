@@ -1,4 +1,4 @@
-package io.home.pi.domain;
+package io.home.pi.model;
 
 import lombok.Getter;
 import lombok.Setter;

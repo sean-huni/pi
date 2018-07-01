@@ -1,8 +1,8 @@
-package io.home.pi.service.impl;
+package io.home.pi.persistence.impl;
 
 import io.home.pi.domain.TokenLog;
-import io.home.pi.repo.TokenLogRepo;
-import io.home.pi.service.TokenLogService;
+import io.home.pi.persistence.service.TokenLogService;
+import io.home.pi.persistence.repo.TokenLogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

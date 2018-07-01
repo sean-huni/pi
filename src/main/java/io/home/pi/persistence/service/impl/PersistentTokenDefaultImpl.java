@@ -1,9 +1,9 @@
-package io.home.pi.service.impl;
+package io.home.pi.persistence.repo.impl;
 
-import io.home.pi.converter.PersistentTokenToTokenLog;
-import io.home.pi.converter.TokenLogToPersistentToken;
-import io.home.pi.domain.TokenLog;
-import io.home.pi.service.TokenLogService;
+import io.home.pi.converter.PersistentTokenToTokenLogComponent;
+import io.home.pi.converter.TokenLogToPersistentTokenComponent;
+import io.home.pi.persistence.model.TokenLog;
+import io.home.pi.persistence.service.TokenLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -21,18 +21,21 @@ import java.util.Date;
  * CELL    : +27-78-683-1982
  */
 @Service
-public class PersistentTokenRepositoryImpl implements PersistentTokenRepository {
-
+public class PersistentTokenDefaultImpl implements PersistentTokenRepository {
+    private TokenLogToPersistentTokenComponent persistentToken;
     private TokenLogService tokenLogService;
+    private PersistentTokenToTokenLogComponent tokenLogConverter;
 
     @Autowired
-    public PersistentTokenRepositoryImpl(TokenLogService tokenLogService) {
+    public PersistentTokenDefaultImpl(PersistentTokenToTokenLogComponent tokenLogConverter, TokenLogService tokenLogService, TokenLogToPersistentTokenComponent persistentToken) {
         this.tokenLogService = tokenLogService;
+        this.persistentToken = persistentToken;
+        this.tokenLogConverter = tokenLogConverter;
     }
 
     @Override
     public void createNewToken(PersistentRememberMeToken token) {
-        tokenLogService.saveOrUpdate(new PersistentTokenToTokenLog().convert(token));
+        tokenLogService.saveOrUpdate(tokenLogConverter.convert(token));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class PersistentTokenRepositoryImpl implements PersistentTokenRepository 
 
     @Override
     public PersistentRememberMeToken getTokenForSeries(String seriesId) {
-        return new TokenLogToPersistentToken().convert(tokenLogService.findBySeries(seriesId).get());
+        return persistentToken.convert(tokenLogService.findBySeries(seriesId).get());
     }
 
     @Override

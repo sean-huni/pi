@@ -1,4 +1,4 @@
-package io.home.pi.domain;
+package io.home.pi.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +22,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "name")
+    private String name;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -39,6 +41,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +

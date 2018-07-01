@@ -1,8 +1,10 @@
-package io.home.pi.converter;
+package io.home.pi.component.converter.impl;
 
+import io.home.pi.component.converter.TokenLogToPersistentTokenComponent;
 import io.home.pi.domain.TokenLog;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
+import org.springframework.stereotype.Component;
 
 /**
  * PACKAGE : io.home.pi.converter
@@ -12,7 +14,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentReme
  * E-MAIL  : kudzai@tangentsolutions.co.za
  * CELL    : +27-78-683-1982
  */
-public class TokenLogToPersistentToken implements Converter<TokenLog, PersistentRememberMeToken> {
+@Component
+public class TokenLogToPersistentToken implements Converter<TokenLog, PersistentRememberMeToken>, TokenLogToPersistentTokenComponent {
     /**
      * Convert the source object of type {@code S} to target type {@code T}.
      *
@@ -21,7 +24,7 @@ public class TokenLogToPersistentToken implements Converter<TokenLog, Persistent
      * @throws IllegalArgumentException if the source cannot be converted to the desired target type
      */
     @Override
-    public PersistentRememberMeToken convert(TokenLog source) {
+    public PersistentRememberMeToken convert(TokenLog source) throws IllegalArgumentException{
         return new PersistentRememberMeToken(source.getUsername(), source.getSeries(), source.getToken(), source.getTimestamp());
     }
 }

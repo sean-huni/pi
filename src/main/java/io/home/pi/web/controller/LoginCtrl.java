@@ -1,7 +1,6 @@
 package io.home.pi.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
  * DATE      : 19-June-2018
  * TIME      : 21:10
  */
+@Slf4j
 @Controller
 @RequestMapping("/user")
 public class LoginCtrl {
-    private static Logger LOGGER = LoggerFactory.getLogger(LoginCtrl.class);
 
     @RequestMapping("/login")
     public ModelAndView loginPage(ModelAndView modelAndView){
-        LOGGER.debug("login-page invoked...");
+        log.debug("login-page invoked...");
         ModelMap modelMap = new ModelMap();
 
-        modelMap.addAttribute("title", "Login-Page");
+        modelMap.addAttribute("title", "Login");
         modelMap.addAttribute("username-label", "username");
         modelMap.addAttribute("password-label", "password");
         modelAndView.setViewName("login");
