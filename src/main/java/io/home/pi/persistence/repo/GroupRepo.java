@@ -1,6 +1,6 @@
-package io.home.pi.repo;
+package io.home.pi.persistence.repo;
 
-import io.home.pi.domain.Team;
+import io.home.pi.persistence.model.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

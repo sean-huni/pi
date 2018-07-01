@@ -1,8 +1,8 @@
 package io.home.pi.service.impl;
 
-import io.home.pi.domain.GrpAuth;
-import io.home.pi.domain.User;
-import io.home.pi.service.UserService;
+import io.home.pi.persistence.model.GrpAuth;
+import io.home.pi.persistence.model.User;
+import io.home.pi.persistence.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,9 +79,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             for (GrpAuth userAuth : groupAuthorities) {
                 LOGGER.info("User Auth: " + userAuth.toString());
-                while (userAuth.getAuthorities().iterator().hasNext()) {
-                    authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
-                }
+                authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

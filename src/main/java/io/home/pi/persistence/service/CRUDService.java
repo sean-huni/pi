@@ -1,4 +1,4 @@
-package io.home.pi.service;
+package io.home.pi.persistence.service;
 
 import org.springframework.stereotype.Service;
 

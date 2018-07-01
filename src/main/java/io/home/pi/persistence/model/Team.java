@@ -1,4 +1,4 @@
-package io.home.pi.model;
+package io.home.pi.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;

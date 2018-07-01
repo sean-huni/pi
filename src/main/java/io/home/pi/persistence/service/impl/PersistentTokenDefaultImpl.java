@@ -1,4 +1,4 @@
-package io.home.pi.persistence.repo.impl;
+package io.home.pi.persistence.service.impl;
 
 import io.home.pi.converter.PersistentTokenToTokenLogComponent;
 import io.home.pi.converter.TokenLogToPersistentTokenComponent;

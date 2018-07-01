@@ -1,7 +1,7 @@
 package io.home.pi.controller.service;
 
-import io.home.pi.domain.User;
-import io.home.pi.service.UserService;
+import io.home.pi.persistence.model.User;
+import io.home.pi.persistence.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

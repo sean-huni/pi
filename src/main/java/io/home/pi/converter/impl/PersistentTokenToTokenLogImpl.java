@@ -1,7 +1,7 @@
-package io.home.pi.component.converter.impl;
+package io.home.pi.converter.impl;
 
-import io.home.pi.component.converter.PersistentTokenToTokenLogComponent;
-import io.home.pi.domain.TokenLog;
+import io.home.pi.converter.PersistentTokenToTokenLogComponent;
+import io.home.pi.persistence.model.TokenLog;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Component;

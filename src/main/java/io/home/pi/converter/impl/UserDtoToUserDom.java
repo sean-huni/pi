@@ -1,8 +1,8 @@
-package io.home.pi.component.converter.impl;
+package io.home.pi.converter.impl;
 
-import io.home.pi.component.converter.UserDtoToUserDomComponent;
-import io.home.pi.domain.User;
-import io.home.pi.model.UserDTO;
+import io.home.pi.converter.UserDtoToUserDomComponent;
+import io.home.pi.persistence.model.User;
+import io.home.pi.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,8 +33,8 @@ public class UserDtoToUserDom implements Converter<UserDTO, User>, UserDtoToUser
      * @throws IllegalArgumentException if the source cannot be converted to the desired target type
      */
     @Override
-    public User convert(UserDTO source) throws IllegalArgumentException{
-        User user = new User();
+    public User convert(final UserDTO source) throws IllegalArgumentException {
+        final User user = new User();
         user.setName(source.getName());
         user.setUsername(source.getUsername());
         user.setPassword(passwordEncoder.encode(source.getPassword()));

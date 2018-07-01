@@ -1,4 +1,4 @@
-package io.home.pi.web.util;
+package io.home.pi.mail;
 
 import io.home.pi.web.exception.CustomMailException;
 
@@ -10,5 +10,5 @@ import io.home.pi.web.exception.CustomMailException;
  * TIME      : 07:38
  */
 public interface MailGunService {
-    void sendEmail(String name, String from, String msg, String sbj) throws CustomMailException;
+    void sendEmail(String name, String toEmail, String msg, String sbj) throws CustomMailException;
 }

@@ -1,4 +1,4 @@
-package io.home.pi.util;
+package io.home.pi.web.util;
 
 import lombok.Getter;
 import org.springframework.validation.FieldError;

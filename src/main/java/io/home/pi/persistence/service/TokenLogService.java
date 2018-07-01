@@ -1,7 +1,6 @@
-package io.home.pi.persistence;
+package io.home.pi.persistence.service;
 
-import io.home.pi.domain.TokenLog;
-import io.home.pi.service.CRUDService;
+import io.home.pi.persistence.model.TokenLog;
 
 import java.util.Optional;
 

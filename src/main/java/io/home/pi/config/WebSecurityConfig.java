@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
 
                 .authorizeRequests()
-                .antMatchers(URL_LOGIN_PAGE)
+                .antMatchers(URL_LOGIN_PAGE, URL_REG_LISTENER)
                 .permitAll() //Adding this line solved it
                 .and()
                 .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)

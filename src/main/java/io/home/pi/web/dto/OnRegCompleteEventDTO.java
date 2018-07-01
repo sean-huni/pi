@@ -1,6 +1,6 @@
-package io.home.pi.dto;
+package io.home.pi.web.dto;
 
-import io.home.pi.domain.User;
+import io.home.pi.persistence.model.User;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;

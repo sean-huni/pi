@@ -1,5 +1,6 @@
-package io.home.pi.mail;
+package io.home.pi.mail.impl;
 
+import io.home.pi.mail.MailGunService;
 import io.home.pi.web.exception.CustomMailException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,26 +34,29 @@ public class MailGunImpl implements MailGunService {
     private String apiKey;
 
     @Override
-    public void sendEmail(String name, String from, String msg, String sbj) throws CustomMailException {
+    public void sendEmail(String name, String toEmail, String msg, String sbj) throws CustomMailException {
         try {
-            configAndSendMail(name, from, msg, sbj);
+
+            final Mail mail = configAndBuildMail(name, toEmail, msg, sbj);
+
+            log.info("Sending Mail...");
+            mail.send();
+            log.info("Mail Sent!!!");
         } catch (Exception ex) {
             throw new CustomMailException(ex.getMessage(), ex);
         }
     }
 
-    private void configAndSendMail(String name, String from, String msg, String sbj) throws Exception {
+    private Mail configAndBuildMail(String name, String toEmail, String msg, String sbj) {
         log.info("Configuring MailGun...");
-        Configuration configuration = new Configuration(domain, apiKey, from);
+        Configuration configuration = new Configuration(domain, apiKey, toEmail);
         log.info("Configuration completed!!!");
 
-        log.info("Sending Mail...");
-        Mail.using(configuration)
-                .to(webMasterEmail)
-                .from(name, from)
+        return Mail.using(configuration)
+                .to(toEmail)
+                .from(name, webMasterEmail)
                 .subject(sbj)
                 .text(msg)
-                .build().send();
-        log.info("Mail Sent!!!");
+                .build();
     }
 }

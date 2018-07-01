@@ -1,6 +1,6 @@
-package io.home.pi.repo;
+package io.home.pi.persistence.repo;
 
-import io.home.pi.domain.Auth;
+import io.home.pi.persistence.model.Auth;
 import org.springframework.data.repository.CrudRepository;
 
 /**

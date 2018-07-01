@@ -1,9 +1,9 @@
-package io.home.pi.controller;
+package io.home.pi.web.controller;
 
-import io.home.pi.web.dto.OnRegCompleteEventDTO;
-import io.home.pi.domain.User;
-import io.home.pi.web.dto.UserDTO;
+import io.home.pi.persistence.model.User;
 import io.home.pi.service.UserRegService;
+import io.home.pi.web.dto.OnRegCompleteEventDTO;
+import io.home.pi.web.dto.UserDTO;
 import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

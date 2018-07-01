@@ -1,4 +1,4 @@
-package io.home.pi.dto;
+package io.home.pi.web.dto;
 
 import io.home.pi.validator.ValidEmail;
 import lombok.Getter;

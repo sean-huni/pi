@@ -1,8 +1,13 @@
-package io.home.pi.repo;
+package io.home.pi.persistence.repo;
 
-import io.home.pi.domain.TokenLog;
+import io.home.pi.persistence.model.TokenLog;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Timestamp;
+import java.util.stream.Stream;
 
 /**
  * PROJECT   : pi
@@ -18,4 +23,12 @@ public interface TokenLogRepo extends CrudRepository<TokenLog, Integer> {
     TokenLog findBySeries(String series);
 
     void deleteByUsername(String username);
+
+    Stream<TokenLog> findAllByExpiryDateLessThan(Timestamp now);
+
+    void deleteByExpiryDateLessThan(Timestamp now);
+
+    @Modifying
+    @Query("delete from TokenLog t where t.expiryDate <= ?1")
+    void deleteAllExpiredSince(Timestamp now);
 }

@@ -2,6 +2,7 @@ package io.home.pi.component;
 
 import io.home.pi.constant.SpringConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
@@ -22,16 +23,16 @@ import java.util.Locale;
  * DATE      : 29-June-2018
  * TIME      : 20:09
  */
+@Qualifier(value = "live")
 @Component("authenticationFailureHandler")
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private MessageSource messageSource;
-
-    @Autowired
     private LocaleResolver localeResolver;
 
     @Autowired
-    public CustomAuthenticationFailureHandler(MessageSource messageSource) {
+    public CustomAuthenticationFailureHandler(MessageSource messageSource, LocaleResolver localeResolver) {
         this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
 

@@ -1,7 +1,7 @@
-package io.home.pi.component.converter;
+package io.home.pi.converter;
 
-import io.home.pi.domain.User;
-import io.home.pi.model.UserDTO;
+import io.home.pi.persistence.model.User;
+import io.home.pi.web.dto.UserDTO;
 
 /**
  * PROJECT   : pi
@@ -11,5 +11,5 @@ import io.home.pi.model.UserDTO;
  * TIME      : 14:19
  */
 public interface UserDtoToUserDomComponent {
-    User convert(UserDTO source) throws IllegalArgumentException;
+    User convert(final UserDTO source) throws IllegalArgumentException;
 }

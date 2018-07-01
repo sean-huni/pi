@@ -1,4 +1,4 @@
-package io.home.pi.controller;
+package io.home.pi.web.controller;
 
 import io.home.pi.constant.SpringConstants;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package io.home.pi.exception;
+package io.home.pi.web.exception;
 
 /**
  * PROJECT   : pi

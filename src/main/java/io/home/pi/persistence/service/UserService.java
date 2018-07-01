@@ -1,6 +1,6 @@
-package io.home.pi.service;
+package io.home.pi.persistence.service;
 
-import io.home.pi.domain.User;
+import io.home.pi.persistence.model.User;
 
 /**
  * PROJECT   : pi
