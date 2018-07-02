@@ -40,7 +40,7 @@ public class PersistentTokenDefaultImpl implements PersistentTokenRepository {
 
     @Override
     public void updateToken(String series, String tokenValue, Date lastUsed) {
-        tokenLogService.saveOrUpdate(new TokenLog(null, series, tokenValue, new Timestamp(lastUsed.getTime())));
+        tokenLogService.saveOrUpdate(new TokenLog("", series, tokenValue, new Timestamp(lastUsed.getTime())));
     }
 
     @Override

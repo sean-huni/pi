@@ -33,13 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
-//    @Bean
-//    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
-//        PersistentTokenBasedRememberMeServices persistenceTokenBasedservice = new PersistentTokenBasedRememberMeServices("rememberme", userDetailsService, persistenceTokenRepository);
-//        persistenceTokenBasedservice.setAlwaysRemember(true);
-//        return persistenceTokenBasedservice;
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -55,14 +48,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)
                 .and()
-                .formLogin()
+                .formLogin().passwordParameter(PARAM_PASS_FIELD)
                 .loginPage(URL_LOGIN_PAGE)
                 .defaultSuccessUrl(URL_DEFAULT_AUTH_USER_PAGE, true)
 //                .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .permitAll()
                 .and()
-                .sessionManagement()
+                .sessionManagement()    //.maximumSessions(1).expiredUrl(URL_LOGOUT_SUCCESSFUL)
+                //   .and()
                 .invalidSessionUrl(URL_INVALID_SESSION)
                 .and()
                 .logout()
@@ -71,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies(COOKIES_SESSION).clearAuthentication(true)
                 .permitAll()
                 .and()
-                .rememberMe().rememberMeCookieName("rememberme").tokenValiditySeconds(180)
+                .rememberMe().rememberMeCookieName(COOKIE_REMEMBER_ME).tokenValiditySeconds(180)
                 .tokenRepository(persistenceTokenRepository)
                 .alwaysRemember(true)
                 .useSecureCookie(true).userDetailsService(userDetailsService)
@@ -79,6 +73,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .headers().frameOptions().disable(); //h2 DB won't work with frameOptions & CSRF enabled.
     }
-
-
 }

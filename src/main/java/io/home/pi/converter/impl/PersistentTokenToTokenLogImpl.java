@@ -2,6 +2,8 @@ package io.home.pi.converter.impl;
 
 import io.home.pi.converter.PersistentTokenToTokenLogComponent;
 import io.home.pi.persistence.model.TokenLog;
+import io.home.pi.persistence.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,13 @@ import java.sql.Timestamp;
  */
 @Component
 public class PersistentTokenToTokenLogImpl implements Converter<PersistentRememberMeToken, TokenLog>, PersistentTokenToTokenLogComponent {
+    private UserService userService;
+
+    @Autowired
+    public PersistentTokenToTokenLogImpl(UserService userService) {
+        this.userService = userService;
+    }
+
     /**
      * Convert the source object of type {@code S} to target type {@code T}.
      *
@@ -28,6 +37,8 @@ public class PersistentTokenToTokenLogImpl implements Converter<PersistentRememb
     @Override
     public TokenLog convert(PersistentRememberMeToken source) throws IllegalArgumentException{
         Timestamp timestamp = new Timestamp(source.getDate().getTime());
-        return new TokenLog(source.getUsername(), source.getSeries(), source.getTokenValue(), timestamp);
+        TokenLog tokenLog = new TokenLog(source.getUsername(), source.getSeries(), source.getTokenValue(), timestamp);
+        tokenLog.setUser(userService.findByUsername(source.getUsername()));
+        return tokenLog;
     }
 }
