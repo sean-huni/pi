@@ -18,16 +18,19 @@ import java.util.stream.Collectors;
 public class GenericResponse {
     private String message;
     private String error;
+    private Boolean isSuccess;
 
-    public GenericResponse(final String message) {
+    public GenericResponse(final String message, final Boolean isSuccess) {
         super();
         this.message = message;
+        this.isSuccess = isSuccess;
     }
 
-    public GenericResponse(final String message, final String error) {
+    public GenericResponse(final String message, final String error, final Boolean isSuccess) {
         super();
         this.message = message;
         this.error = error;
+        this.isSuccess = isSuccess;
     }
 
     public GenericResponse(List<ObjectError> allErrors, String error) {

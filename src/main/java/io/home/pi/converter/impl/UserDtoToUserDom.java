@@ -35,9 +35,9 @@ public class UserDtoToUserDom implements Converter<UserDTO, User>, UserDtoToUser
     @Override
     public User convert(final UserDTO source) throws IllegalArgumentException {
         final User user = new User();
-        user.setName(source.getName());
+        user.setName(source.getFirstName());
         user.setUsername(source.getUsername());
-        user.setPassword(passwordEncoder.encode(source.getPassword()));
+        user.setPassword(passwordEncoder.encode(source.getPass()));
 
         return user;
     }

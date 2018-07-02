@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 public class UserDTO {
 
     @NotNull
-    private String name;
+    private String firstName;
 
     @ValidEmail
     @NotNull
@@ -30,14 +30,18 @@ public class UserDTO {
     private String username;
 
     @NotNull
-    private String password;
+    private String pass;
+
+    @NotNull
+    private String pass2;
 
     @Override
     public String toString() {
         return "UserDTO{" +
-                "name='" + name + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", pass='" + pass + '\'' +
+                ", pass2='" + pass2 + '\'' +
                 '}';
     }
 }

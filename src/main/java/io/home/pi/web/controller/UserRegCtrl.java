@@ -41,10 +41,11 @@ public class UserRegCtrl extends SuperCtrl {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse registerUserAccount(@Valid final UserDTO accountDto, final HttpServletRequest request) {
-        log.debug("Registering user account with information: {}", accountDto);
+        log.info("Registering user account with information: {}", accountDto);
 
         final User registered = userRegService.registerNewUserAccount(accountDto);
         eventPublisher.publishEvent(new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request)));
-        return new GenericResponse("success");
+        log.info("Registration Email Sent!!!");
+        return new GenericResponse("success", true);
     }
 }
