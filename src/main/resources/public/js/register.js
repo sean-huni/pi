@@ -11,25 +11,13 @@ $(document).ready(
 
         $("#btnRegisterUser").click(
             function (e) {
-                e.preventDefault();
                 var jsonObjStr = JSONifyREQ();
-                console.log(jsonObjStr);
+
+                e.preventDefault();
+                $("#btnRegisterUser").prop("disabled", true);
+
+                console.log("JSON REQ: ", jsonObjStr);
                 ajxUsrRegister(jsonObjStr);
-                // $.post('/register/user', {
-                //     dataType: "json",
-                //     contentType: "application/json;charset=UTF-8",
-                //     // headers: {
-                //     //     'Content-Type': 'application/json;charset=UTF-8'
-                //     // },
-                //     data: jsonObjStr
-                // }, function (data, status) {
-                //     if (data.isSuccess == true) {
-                //         showSuccessPopup("Registration Email Sent!", data.message);
-                //         clearRegistrationFormData();
-                //     } else {
-                //         showErrPopup("System Failure", "Unexpected response from the system.");
-                //     }
-                // });
             }
         );
     }
@@ -37,40 +25,28 @@ $(document).ready(
 
 
 function ajxUsrRegister(jsonObjStr) {
-    // $.ajax({
-    //     type: "POST",
-    //     contentType: 'application/json',
-    //     url: '/register/user',
-    //     dataType: 'json',
-    //     async: false,
-    //     data: jsonObjStr,
-    //     success: function (respObj) {
-    //         if (respObj.isSuccess == true) {
-    //             showSuccessPopup("Registration Email Sent!", respObj.message);
-    //             clearRegistrationFormData();
-    //         } else {
-    //             showErrPopup("System Failure", "Unexpected response from the system.");
-    //         }
-    //     }
-    // });
-
-
     $.ajax({
-        url: '/register/user',
         type: 'POST',
+        url: '/register/user',
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
+        contentType: 'application/json;charset=utf-8',
         data: jsonObjStr,
-        success: function (data, status, jQxhr) {
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            console.log("SUCCESS : ", data);
             if (data.isSuccess == true) {
                 showSuccessPopup("Registration Email Sent!", data.message);
                 clearRegistrationFormData();
             } else {
-                showErrPopup("System Failure", "Unexpected response from the system.");
+                showErrPopup("Unexpected Response", "Unexpected response from the system.");
             }
+            $("#btnRegisterUser").prop("disabled", false);
         },
-        error: function (jqXhr, textStatus, errorThrown) {
-            console.log(errorThrown);
+        error: function (error) {
+            showErrPopup("System Failure", "Unexpected response from the system.");
+            console.log("Error: ", error);
+            $("#btnRegisterUser").prop("disabled", false);
         }
     });
 }

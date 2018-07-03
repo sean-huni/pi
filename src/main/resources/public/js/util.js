@@ -26,7 +26,7 @@ function clearRegistrationFormData() {
 function JSONifyREQ() {
     var array = [];
     array.push({
-        UserDTO: {
+        userDTO: {
             firstName: $("#txtRegFirstName").val(),
             username: $("#txtRegUsername").val(),
             pass: $("#txtRegPassword").val(),

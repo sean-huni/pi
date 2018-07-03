@@ -53,9 +53,4 @@ public class SpringConstants {
             .replace("[", "").replace("]", "");
 
     public static final String URL_LOGIN_ERROR_TRUE = "/user/login?error=true";
-
-    public static void main(String[] args) {
-        System.out.println();
-    }
-
 }
