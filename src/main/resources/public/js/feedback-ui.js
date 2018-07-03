@@ -1,3 +1,29 @@
+/**
+ * Shows a modal popup message, using the genericPopup div. A single OK button is presented to the user.
+ * @param title     message box title
+ * @param message   message content
+ */
+function showSuccessPopup(title, message) {
+    $('#successTitle').text(title);
+    $('#successMsg').html(message.replace("\n", "<br/>"));
+
+    $('#successPopup').modal('show');
+}
+
+
+/**
+ * Shows an error message popup. Box will have a red title.
+ * @param title     message box title
+ * @param message   message content
+ */
+function showErrPopup(title, message) {
+    $('#errorTitle').text(title);
+    $('#errorMsg').html(message != null ? message.replace("\n", "<br/>") : '');
+
+    $('#errorPopup').modal('show');
+}
+
+
 function showSuccess(msg) {
     $('#errorbox').hide();
     $('#successhtml').html(msg);
@@ -40,9 +66,3 @@ function errorProc(responseObj) {
     showError(responseObj.message);
     showErrorFields(responseObj.errors);
 }
-
-$(document).ready(function () {
-    $('.alert .close').live("click", function (e) {
-        $(this).parent().hide();
-    });
-});

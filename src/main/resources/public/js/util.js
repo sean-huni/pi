@@ -28,9 +28,9 @@ function JSONifyREQ() {
     array.push({
         UserDTO: {
             firstName: $("#txtRegFirstName").val(),
-            username: $("#txtRegFirstName").val(),
-            pass: $("#txtRegFirstName").val(),
-            pass2: $("#txtRegFirstName").val()
+            username: $("#txtRegUsername").val(),
+            pass: $("#txtRegPassword").val(),
+            pass2: $("#txtRegPassword2").val()
         }
     });
     return JSON.stringify(array);

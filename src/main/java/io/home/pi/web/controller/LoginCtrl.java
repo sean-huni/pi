@@ -49,6 +49,6 @@ public class LoginCtrl extends SuperCtrl {
         log.info("Registering user account with information: {}", account);
         log.info("URL-Request Passed: {}", getAppUrl(request));
 
-        return new GenericResponse("success");
+        return new GenericResponse("success", true);
     }
 }

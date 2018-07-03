@@ -25,18 +25,26 @@
                     <form th:name="registrationForm" th:id="registrationForm" class="form-horizontal"
                           th:action="${userRegUri}" th:method="post">
                         <fieldset>
-                            <div class="row ml-auto">
+                            <div class="row ml-4">
                                 <label th:id="regModalNameLabel" class="control-label"
                                        for="txtRegFirstName">Name:</label>
                                 <input type="text" name="txtRegFirstName" class="input-xlarge ml-2"
                                        id="txtRegFirstName">
                             </div>
-                            <div id="rowRegTxtLbl" class="row ml-auto">
-                                <label th:id="regModalUsernameLabel" class="control-label"
-                                       for="txtRegUsername">Email:</label>
+                            <div id="rowRegUsernameTxtLbl" class="row ml-4 rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegUsername">Email:</label>
                                 <input type="text" name="txtRegUsername" class="input-xlarge ml-2" id="txtRegUsername">
                             </div>
-                            <!--<span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null and session[SPRING_SECURITY_LAST_EXCEPTION].message != null}" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}">Invalid credentials</span>-->
+                            <div id="rowRegPass1TxtLbl" class="row ml-auto rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegPassword">Password:</label>
+                                <input type="password" name="txtRegPassword" class="input-xlarge ml-2"
+                                       id="txtRegPassword">
+                            </div>
+                            <div id="rowRegPass2TxtLbl" class="row ml-3 rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegPassword2">Confirm:</label>
+                                <input type="password" name="txtRegPassword2" class="input-xlarge ml-2"
+                                       id="txtRegPassword2">
+                            </div>
                         </fieldset>
                     </form>
                 </div>

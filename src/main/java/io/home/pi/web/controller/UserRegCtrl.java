@@ -8,6 +8,7 @@ import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,17 +29,16 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class UserRegCtrl extends SuperCtrl {
     private UserRegService userRegService;
-
-    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public void setUserRegService(UserRegService userRegService) {
+    public UserRegCtrl(UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
         this.userRegService = userRegService;
+        this.eventPublisher = eventPublisher;
     }
 
     // Registration
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public GenericResponse registerUserAccount(@Valid final UserDTO accountDto, final HttpServletRequest request) {
         log.info("Registering user account with information: {}", accountDto);
