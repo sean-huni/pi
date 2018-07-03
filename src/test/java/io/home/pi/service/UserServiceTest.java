@@ -1,4 +1,4 @@
-package io.home.pi.controller.service;
+package io.home.pi.service;
 
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.UserService;

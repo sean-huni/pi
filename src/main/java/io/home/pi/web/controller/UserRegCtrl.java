@@ -9,9 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,14 +41,19 @@ public class UserRegCtrl extends SuperCtrl {
     }
 
     // Registration
-    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public GenericResponse registerUserAccount(@Valid final UserDTO accountDto, final HttpServletRequest request) {
-        log.info("Registering user account with information: {}", accountDto);
+    public ResponseEntity<GenericResponse> registerUserAccount(@Valid @RequestBody final UserDTO userDTO, final HttpServletRequest request, Errors errors) {
+        log.info("Registering user account with information: {}", userDTO);
 
-        final User registered = userRegService.registerNewUserAccount(accountDto);
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(new GenericResponse(errors.getAllErrors(), "Errors Found"));
+        }
+
+        final User registered = userRegService.registerNewUserAccount(userDTO);
         eventPublisher.publishEvent(new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request)));
         log.info("Registration Email Sent!!!");
-        return new GenericResponse("success", true);
+
+        return ResponseEntity.ok(new GenericResponse("success", true));
     }
 }

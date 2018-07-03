@@ -42,7 +42,7 @@ public class TokenLog {
 
     @NotNull
     @Column(name = "lastUpdated")
-    private Timestamp lastUpdated;
+    private Timestamp lastUpdated = new Timestamp(new Date().getTime());
 
     @Column(name = "expiryDate")
     private Timestamp expiryDate;
@@ -82,7 +82,7 @@ public class TokenLog {
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(new Date().getTime());
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-        return (Timestamp) new Date(cal.getTime().getTime());
+        return new Timestamp(cal.getTime().getTime());
     }
 
     public void updateToken(final String token) {

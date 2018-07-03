@@ -3,6 +3,7 @@ package io.home.pi.web.controller;
 import io.home.pi.web.dto.UserDTO;
 import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,11 +45,11 @@ public class LoginCtrl extends SuperCtrl {
 
     //FixMe: Define the implementation!
     @RequestMapping(value = "/forgot-pass", method = POST)
-    public GenericResponse forgotPassword(@Valid final UserDTO account, final HttpServletRequest request) {
+    public ResponseEntity<GenericResponse> forgotPassword(@Valid final UserDTO account, final HttpServletRequest request) {
 
         log.info("Registering user account with information: {}", account);
         log.info("URL-Request Passed: {}", getAppUrl(request));
 
-        return new GenericResponse("success", true);
+        return ResponseEntity.ok(new GenericResponse("success", true));
     }
 }

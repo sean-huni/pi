@@ -1,5 +1,9 @@
 package io.home.pi.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.home.pi.validator.ValidEmail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,20 +23,27 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonDeserialize
+@JsonRootName(value = "userDTO")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserDTO {
 
     @NotNull
+    @JsonProperty("firstName")
     private String firstName;
 
     @ValidEmail
     @NotNull
     @Size(min = 1, message = "{Size.userDto.email}")
+    @JsonProperty("username")
     private String username;
 
     @NotNull
+    @JsonProperty("pass")
     private String pass;
 
     @NotNull
+    @JsonProperty("pass2")
     private String pass2;
 
     @Override
