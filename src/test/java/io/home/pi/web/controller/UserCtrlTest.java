@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * CELL    : +27-78-683-1982
  */
 
-
+//FixMe: Write through tests to test with Mockito.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserCtrlTest {

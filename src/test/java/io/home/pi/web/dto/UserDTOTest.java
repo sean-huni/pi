@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.springframework.test.util.AssertionErrors.assertTrue;
+
 /**
  * PACKAGE : io.home.pi.web.dto
  * USER    : Kudzai Sean Huni
@@ -31,6 +33,7 @@ public class UserDTOTest {
         log.info("userDTO Cleanup...");
     }
 
+    //FixMe: hashcode test is failing. Solution: Provide custom implementation.
     @Test
     public void testJsonUserDTO() throws IOException {
         UserDTO userDTO = new UserDTO();
@@ -44,8 +47,7 @@ public class UserDTOTest {
         String jsonStr = "{\"firstName\":\"Sean\",\"username\":\"sean2kay@gmail.com\",\"pass\":\"password1\",\"pass2\":\"password1\"}";
 
         UserDTO userDTO2 = new ObjectMapper().readValue(jsonStr, UserDTO.class);
-        System.out.println(userDTO2.toString());
 
+        assertTrue("UserDTO Objects are not Equal!", userDTO.hashCode() == userDTO2.hashCode());
     }
-
 }
