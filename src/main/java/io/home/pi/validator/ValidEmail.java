@@ -1,5 +1,7 @@
 package io.home.pi.validator;
 
+import io.home.pi.validator.impl.EmailValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;

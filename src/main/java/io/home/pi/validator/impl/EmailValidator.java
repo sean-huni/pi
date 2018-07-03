@@ -1,4 +1,6 @@
-package io.home.pi.validator;
+package io.home.pi.validator.impl;
+
+import io.home.pi.validator.ValidEmail;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
