@@ -32,7 +32,7 @@ function ajxUsrRegister(jsonObjStr) {
         contentType: 'application/json;charset=utf-8',
         data: jsonObjStr,
         cache: false,
-        timeout: 600000,
+        timeout: 10000,
         success: function (data) {
             console.log("SUCCESS : ", data);
             if (data.isSuccess == true) {

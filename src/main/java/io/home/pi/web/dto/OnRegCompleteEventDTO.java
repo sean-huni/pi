@@ -1,8 +1,8 @@
 package io.home.pi.web.dto;
 
 import io.home.pi.persistence.model.User;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEvent;
 
@@ -15,9 +15,9 @@ import java.util.Locale;
  * DATE      : 30-June-2018
  * TIME      : 16:11
  */
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @Slf4j
-@Getter
+@Data
 @SuppressWarnings("serial")
 public class OnRegCompleteEventDTO extends ApplicationEvent {
 
@@ -30,7 +30,6 @@ public class OnRegCompleteEventDTO extends ApplicationEvent {
         this.user = user;
         this.locale = locale;
         this.appUrl = appUrl;
-        log.debug("OnRegistrationCompleteEvent: {}", toString());
+        log.info("OnRegistrationCompleteEvent: {}", toString());
     }
-
 }

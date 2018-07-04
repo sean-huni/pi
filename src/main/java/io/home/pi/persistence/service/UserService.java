@@ -2,6 +2,8 @@ package io.home.pi.persistence.service;
 
 import io.home.pi.persistence.model.User;
 
+import java.util.Optional;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.service
@@ -12,4 +14,6 @@ import io.home.pi.persistence.model.User;
 
 public interface UserService extends CRUDService<User> {
     User findByUsername(String username);
+
+    Optional<User> findByToken(String token);
 }

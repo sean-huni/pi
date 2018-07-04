@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -21,6 +22,8 @@ public interface TokenLogRepo extends CrudRepository<TokenLog, Integer> {
     TokenLog findByUsername(String username);
 
     TokenLog findBySeries(String series);
+
+    Optional<TokenLog> findByToken(String token);
 
     void deleteByUsername(String username);
 

@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Arrays;
+
+import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR;
+import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR_ERRORS;
 
 /**
  * PROJECT   : pi
@@ -47,13 +51,19 @@ public class UserRegCtrl extends SuperCtrl {
         log.info("Registering user account with information: {}", userDTO);
 
         if (errors.hasErrors()) {
+            log.warn(DEBUG_LINE_SEPARATOR, "Errors!");
+            log.warn(DEBUG_LINE_SEPARATOR_ERRORS, Arrays.toString(errors.getAllErrors().toArray()));
             return ResponseEntity.badRequest().body(new GenericResponse(errors.getAllErrors(), "Errors Found"));
         }
 
         final User registered = userRegService.registerNewUserAccount(userDTO);
-        eventPublisher.publishEvent(new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request)));
+        OnRegCompleteEventDTO onRegCompleteEventDTO = new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request));
+        log.info(DEBUG_LINE_SEPARATOR, onRegCompleteEventDTO);
+        eventPublisher.publishEvent(onRegCompleteEventDTO);
         log.info("Registration Email Sent!!!");
 
         return ResponseEntity.ok(new GenericResponse("success", true));
     }
+
+
 }

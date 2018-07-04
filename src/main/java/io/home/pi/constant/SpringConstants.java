@@ -10,6 +10,8 @@ import java.util.Arrays;
  * TIME      : 01:37
  */
 public class SpringConstants {
+    public static final String DEBUG_LINE_SEPARATOR = "\n\n****************** {} *******************\n\n";
+    public static final String DEBUG_LINE_SEPARATOR_ERRORS = "\n\n******************\n\n {} \n\n*******************\n\n";
     public static final String HOME_PAGE_TITLE = "Pi Home";
     public static final String PROFILE_PAGE_TITLE = "User Profile";
 
@@ -18,7 +20,7 @@ public class SpringConstants {
 
     public static final String USER_ROLE_PREFIX = "ROLE_";
     public static final String URL_LOGIN_PAGE = "/user/login";
-    public static final String URL_REG_LISTENER = "/registrationConfirm";
+    public static final String URL_REG_LISTENER = "/confirm.html";
     public static final String URL_REG_NEW_USER = "/register/user";
     public static final String URL_FORGOT_PASS = "/user/forgot-pass";
     public static final String URL_DEFAULT_AUTH_USER_PAGE = "/pi/dashboard";

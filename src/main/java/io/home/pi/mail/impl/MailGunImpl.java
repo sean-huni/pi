@@ -2,7 +2,6 @@ package io.home.pi.mail.impl;
 
 import io.home.pi.mail.MailGunService;
 import io.home.pi.web.exception.CustomMailException;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sargue.mailgun.Configuration;
 import net.sargue.mailgun.Mail;
@@ -19,9 +18,8 @@ import org.springframework.stereotype.Component;
  */
 
 @Slf4j
-@PropertySource("classpath:application.properties")
 @Component
-@NoArgsConstructor
+@PropertySource("classpath:/application.properties")
 public class MailGunImpl implements MailGunService {
 
     @Value("${mail.webmaster}")

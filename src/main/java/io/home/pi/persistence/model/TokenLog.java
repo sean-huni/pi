@@ -32,8 +32,8 @@ public class TokenLog {
     @Column(name = "username")
     private String username;
 
-    @NotNull
-    @Column(name = "series", unique = true)
+    //    @NotNull
+//    @Column(name = "series", unique = true)
     private String series;
 
     @NotNull

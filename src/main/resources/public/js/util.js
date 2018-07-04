@@ -18,8 +18,8 @@ function passwordReset() {
 function clearRegistrationFormData() {
     $("#txtRegFirstName").val("");
     $("#txtRegUsername").val("");
-    $("#txtRegPass").val("");
-    $("#txtRegPass2").val("");
+    $("#txtRegPassword").val("");
+    $("#txtRegPassword2").val("");
 }
 
 /**

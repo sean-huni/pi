@@ -15,4 +15,6 @@ public interface UserRegService {
     User registerNewUserAccount(UserDTO userAccount) throws UserAlreadyExistException;
 
     void createVerificationTokenForUser(final User user, final String token);
+
+    String validateVerificationToken(String token);
 }

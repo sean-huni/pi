@@ -11,6 +11,9 @@ import io.home.pi.web.exception.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Optional;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.service.impl
@@ -20,7 +23,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserRegServiceImpl implements UserRegService {
-    private final TokenLogRepo tokenLogRepo;
+    private static final String TOKEN_INVALID = "invalidToken";
+    private static final String TOKEN_EXPIRED = "expired";
+    private static final String TOKEN_VALID = "valid";
+
+    private TokenLogRepo tokenLogRepo;
     private UserDtoToUserDomComponent userDtoToUserDomComponent;
     private UserService userService;
 
@@ -47,6 +54,26 @@ public class UserRegServiceImpl implements UserRegService {
     public void createVerificationTokenForUser(final User user, final String token) {
         final TokenLog myToken = new TokenLog(token, user);
         tokenLogRepo.save(myToken);
+    }
+
+    @Override
+    public String validateVerificationToken(String token) {
+        final Optional<TokenLog> verifyToken = tokenLogRepo.findByToken(token);
+        if (!verifyToken.isPresent()) {
+            return TOKEN_INVALID;
+        }
+
+        final User user = verifyToken.map(TokenLog::getUser).orElse(new User());
+        final Calendar cal = Calendar.getInstance();
+        if ((verifyToken.get().getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            tokenLogRepo.delete(verifyToken.get());
+            return TOKEN_EXPIRED;
+        }
+
+        user.setEnabled(true);
+        // tokenRepository.delete(verifyToken);
+        userService.saveOrUpdate(user);
+        return TOKEN_VALID;
     }
 
     private boolean emailExist(final String email) {

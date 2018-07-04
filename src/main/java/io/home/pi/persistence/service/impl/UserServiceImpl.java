@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByToken(String token) {
+        return userRepo.findByToken(token);
+    }
+
+    @Override
     public Iterable<?> findAll() {
         return userRepo.findAll();
     }

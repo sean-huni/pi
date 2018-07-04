@@ -6,6 +6,58 @@
 <body>
 
 <%--Modals for Popups--%>
+
+<div class="modal fade" id="successPopup" style="min-width: inherit;" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <button class="close" data-dismiss="modal"><i class="fa fa-times fa-3x" aria-hidden="true"></i>
+                </button>
+                <h3>
+                    <i class="fa fa-smile-o faa-flash animated" aria-hidden="true"></i>
+                    <i id="successTitle" style="font-style: inherit;"></i>
+                    * dev
+
+                </h3>
+            </div>
+            <div class="modal-body">
+                <p id="successMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success faa-parent animated-hover" data-dismiss="modal"
+                        aria-hidden="true"
+                        style="font-size: large">
+                    <i class="fa fa-thumbs-o-up faa-bounce" aria-hidden="true"></i> OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorPopup" style="min-width: inherit;" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button class="close" data-dismiss="modal"><i class="fa fa-times fa-3x" aria-hidden="true"></i>
+                </button>
+                <h3>
+                    <i class="fa fa-frown-o faa-flash animated" aria-hidden="true"></i>
+                    <i id="errorTitle" style="font-style: inherit;"></i>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <p id="errorMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger faa-parent animated-hover" data-dismiss="modal" aria-hidden="true"
+                        style="font-size: large">
+                    <i class="fa fa-thumbs-o-down faa-bounce" aria-hidden="true"></i> OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal hide fade" id="genericPopup" style="min-width: 400px;">
     <div class="modal-header btn-info">
         <button class="close" data-dismiss="modal">x</button>
