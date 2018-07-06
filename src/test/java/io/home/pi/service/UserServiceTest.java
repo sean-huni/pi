@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.Optional;
+
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
@@ -26,17 +29,32 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 public class UserServiceTest {
     private UserService userService;
 
+    private final String FAKE_TOKEN = "";
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     @Test
-    public void dryTest() {
-        User user = userService.findByUsername("demo@email.com");
+    public void findByUsernameTest() {
+        final String username = "demo@email.com";
+        User user = userService.findByUsername(username);
 
         assertNotNull("User Account doesn't exist", user);
         assertTrue("User Account not Active!", user.getEnabled());
         assertNotNull("User's password must not be null!", user.getPassword());
+        assertTrue("Username don't match!", username.equals(user.getUsername()));
+    }
+
+    /**
+     * Test for tokens that don't exist.
+     */
+    @Test
+    public void findByToken() {
+        final String nonExistingToken = "FAKE-TOKEN";
+        Optional<User> optionalUser = userService.findByToken(nonExistingToken);
+
+        assertFalse("No user has that token: " + nonExistingToken, optionalUser.isPresent());
     }
 }
