@@ -3,11 +3,15 @@ package io.home.pi.service.impl;
 import io.home.pi.persistence.model.GrpAuth;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.UserService;
+import io.home.pi.service.UserAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,7 +33,7 @@ import static io.home.pi.constant.SpringConstants.USER_ROLE_PREFIX;
  */
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService, UserAuthService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailServiceImpl.class);
     private final UserService userService;
     private HttpServletRequest request;
@@ -67,6 +71,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Username & Password doesn't exist!");
         }
         return new org.springframework.security.core.userdetails.User(userOptional.get().getUsername(), userOptional.get().getPassword(), getGrantedAuthorities(userOptional.get()));
+    }
+
+
+    public void authWithoutPassword(User user) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, getGrantedAuthorities(user));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
 

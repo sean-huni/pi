@@ -31,7 +31,7 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @Transient
+    //    @Transient
     private String token;
 
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
