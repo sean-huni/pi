@@ -6,12 +6,6 @@ import io.home.pi.service.UserRegService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * PROJECT   : pi
@@ -41,8 +33,7 @@ public class RegConfirmation {
     private UserService userService;
     private MessageSource messageSource;
 
-    Autowired
-
+    @Autowired
     public RegConfirmation(UserRegService userRegService, UserService userService, MessageSource messageSource) {
         this.userRegService = userRegService;
         this.userService = userService;
@@ -61,7 +52,7 @@ public class RegConfirmation {
             // return "redirect:/qrcode.html?lang=" + locale.getLanguage();
             // }
             User user = optionalUser.orElseGet(User::new);
-            authWithoutPassword(user);
+//            authWithoutPassword(user);
             model.addAttribute("message", messageSource.getMessage("message.accountVerified", null, locale));
             return "redirect:/console.html?lang=" + locale.getLanguage();
         }
@@ -80,22 +71,22 @@ public class RegConfirmation {
             log.error("Error while login ", e);
         }
     }
-
-    public void authWithAuthManager(HttpServletRequest request, String username, String password) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-        authToken.setDetails(new WebAuthenticationDetails(request));
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        // request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-    }
-
-    public void authWithoutPassword(User user) {
-        List<Privilege> privileges = user.getRoles().stream().map(role -> role.getPrivileges()).flatMap(list -> list.stream()).distinct().collect(Collectors.toList());
-        List<GrantedAuthority> authorities = privileges.stream().map(p -> new SimpleGrantedAuthority(p.getName())).collect(Collectors.toList());
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+//
+//    public void authWithAuthManager(HttpServletRequest request, String username, String password) {
+//        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+//        authToken.setDetails(new WebAuthenticationDetails(request));
+//        Authentication authentication = authenticationManager.authenticate(authToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        // request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+//    }
+//
+//    public void authWithoutPassword(User user) {
+//        List<Privilege> privileges = user.getRoles().stream().map(role -> role.getPrivileges()).flatMap(list -> list.stream()).distinct().collect(Collectors.toList());
+//        List<GrantedAuthority> authorities = privileges.stream().map(p -> new SimpleGrantedAuthority(p.getName())).collect(Collectors.toList());
+//
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//    }
 
 }
