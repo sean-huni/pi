@@ -2,6 +2,8 @@ package io.home.pi.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static io.home.pi.constant.SpringConstants.HTTP_URL_PREFIX;
+
 /**
  * PROJECT   : pi
  * PACKAGE   : io.home.pi.web.controller
@@ -12,6 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SuperCtrl {
 
     final String getAppUrl(final HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        return HTTP_URL_PREFIX + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }

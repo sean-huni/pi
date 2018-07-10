@@ -33,12 +33,13 @@ public class UserDTO {
     private String firstName;
 
     @ValidEmail
-    @NotNull
-    @Size(min = 1, message = "{Size.userDto.email}")
+    @NotNull(message = "{NotNull.user.username}")
+    @Size(min = 3, max = 45, message = "{Size.userDto.email}")
     @JsonProperty("username")
     private String username;
 
-    @NotNull
+    @NotNull(message = "{NotNull.user.password}")
+    @Size(min = 3, max = 25, message = "{Size.userDto.email}")
     @JsonProperty("pass")
     private String pass;
 
@@ -54,5 +55,30 @@ public class UserDTO {
                 ", pass='" + pass + '\'' +
                 ", pass2='" + pass2 + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDTO)) return false;
+
+        UserDTO userDTO = (UserDTO) o;
+
+        if (getFirstName() != null ? !getFirstName().equals(userDTO.getFirstName()) : userDTO.getFirstName() != null)
+            return false;
+        if (getUsername() != null ? !getUsername().equals(userDTO.getUsername()) : userDTO.getUsername() != null)
+            return false;
+        if (getPass() != null ? !getPass().equals(userDTO.getPass()) : userDTO.getPass() != null) return false;
+        return getPass2() != null ? getPass2().equals(userDTO.getPass2()) : userDTO.getPass2() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getFirstName() != null ? getFirstName().hashCode() : 0;
+        result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
+        result = 31 * result + (getPass() != null ? getPass().hashCode() : 0);
+        result = 31 * result + (getPass2() != null ? getPass2().hashCode() : 0);
+        return result;
     }
 }

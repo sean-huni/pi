@@ -1,146 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
 
-<%--Modals for Popups--%>
-
-<div class="modal fade" id="successPopup" style="min-width: inherit;" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-success">
-                <button class="close" data-dismiss="modal"><i class="fa fa-times fa-3x" aria-hidden="true"></i>
-                </button>
-                <h3>
-                    <i class="fa fa-smile-o faa-flash animated" aria-hidden="true"></i>
-                    <i id="successTitle" style="font-style: inherit;"></i>
-                    * dev
-
-                </h3>
-            </div>
-            <div class="modal-body">
-                <p id="successMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success faa-parent animated-hover" data-dismiss="modal"
-                        aria-hidden="true"
-                        style="font-size: large">
-                    <i class="fa fa-thumbs-o-up faa-bounce" aria-hidden="true"></i> OK
-                </button>
+<div th:fragment="feedbackUI">
+    <!--Modals for Popups-->
+    <div class="modal fade" id="successPopup" style="min-width: inherit;" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content container-fluid modal-max-width">
+                <div class="modal-header bg-success col-auto">
+                    <h5 class="col-10">
+                        <i class="fa fa-smile-o faa-flash animated" aria-hidden="true"></i>
+                        <i id="successTitle" style="font-style: inherit;"></i>
+                    </h5>
+                    <button class="close col-2" data-dismiss="modal"><i class="fa fa-times fa-1x"
+                                                                        aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body">
+                    <p id="successMsg" style="font-size: medium;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success faa-parent animated-hover" data-dismiss="modal" aria-hidden="true">
+                        <i class="fa fa-thumbs-o-up faa-bounce" aria-hidden="true"></i> OK
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="errorPopup" style="min-width: inherit;" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <button class="close" data-dismiss="modal"><i class="fa fa-times fa-3x" aria-hidden="true"></i>
-                </button>
-                <h3>
-                    <i class="fa fa-frown-o faa-flash animated" aria-hidden="true"></i>
-                    <i id="errorTitle" style="font-style: inherit;"></i>
-                </h3>
-            </div>
-            <div class="modal-body">
-                <p id="errorMsg"></p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger faa-parent animated-hover" data-dismiss="modal" aria-hidden="true"
-                        style="font-size: large">
-                    <i class="fa fa-thumbs-o-down faa-bounce" aria-hidden="true"></i> OK
-                </button>
+    <div class="modal fade" id="errorPopup" style="min-width: inherit;" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content container-fluid modal-max-width">
+                <div class="modal-header bg-danger col-auto">
+                    <h5 class="col-10">
+                        <i class="fa fa-frown-o faa-flash animated" aria-hidden="true"></i>
+                        <i id="errorTitle" style="font-style: inherit;"></i>
+                    </h5>
+                    <button class="close col-2" data-dismiss="modal"><i class="fa fa-times fa-1x"
+                                                                        aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMsg" style="font-size: medium;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger faa-parent animated-hover" data-dismiss="modal" aria-hidden="true"
+                            style="font-size: large">
+                        <i class="fa fa-thumbs-o-down faa-bounce" aria-hidden="true"></i> OK
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal hide fade" id="genericPopup" style="min-width: 400px;">
-    <div class="modal-header btn-info">
-        <button class="close" data-dismiss="modal">x</button>
-        <h3 id="genericPopupTitle">Message</h3>
-    </div>
-    <div class="modal-body">
-        <p id="genericPopupMessage">Information</p>
-    </div>
-    <div class="modal-footer">
-        <button id="genericPopupAction" class="btn" data-dismiss="modal" aria-hidden="true"><i
-                class="icon-ok icon-white"></i> OK
-        </button>
-        <button id="genericPopupClose" class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i>
-            Cancel
-        </button>
-    </div>
-</div>
-
-<div class="modal hide fade" id="genericErrorPopup" style="min-width: 400px;">
-    <div class="modal-header btn-danger">
-        <button class="close" data-dismiss="modal">x</button>
-        <h3 id="genericErrorTitle">Error</h3>
-    </div>
-    <div class="modal-body">
-        <p id="genericErrorMessage">An error happened.</p>
-
-        <p id="genericErrorDetails">&nbsp</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><i class="icon-ok icon-white"></i> Close
-        </button>
-    </div>
-</div>
-
-<div class="modal hide fade" id="genericSuccessPopup" style="min-width: 400px;">
-    <div class="modal-header btn-success">
-        <button class="close" data-dismiss="modal">x</button>
-        <h3 id="genericSuccessTitle">Error</h3>
-    </div>
-    <div class="modal-body">
-        <p id="genericSuccessMessage">An error happened.</p>
-
-        <p id="genericSuccessDetails">&nbsp</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="icon-ok icon-white"></i> OK
-        </button>
-    </div>
-</div>
-
-<div class="modal hide" id="popupWait" style="min-width: 400px; min-height: 300px">
-    <h3 style="margin: 100px 50px 0 50px;">Please Wait</h3>
-
-    <div class="progress progress-striped active" style="margin: 0 50px 0 50px">
-        <div id="modalProgressBar" class="bar" style="width: 100%;">
-            <span class="sr-only"></span>
+    <div class="modal hide fade" id="genericPopup" style="min-width: 400px;">
+        <div class="modal-header btn-info">
+            <button class="close" data-dismiss="modal">x</button>
+            <h3 id="genericPopupTitle">Message</h3>
+        </div>
+        <div class="modal-body">
+            <p id="genericPopupMessage">Information</p>
+        </div>
+        <div class="modal-footer">
+            <button id="genericPopupAction" class="btn" data-dismiss="modal" aria-hidden="true"><i
+                    class="icon-ok icon-white"></i> OK
+            </button>
+            <button id="genericPopupClose" class="btn" data-dismiss="modal" aria-hidden="true"><i
+                    class="icon-remove"></i>
+                Cancel
+            </button>
         </div>
     </div>
 
-    <div class="modal-body span5">
-        <p id="modalProgressMessage">&nbsp</p>
+    <div class="modal hide" id="popupWait" style="min-width: 400px; min-height: 300px">
+        <h3 style="margin: 100px 50px 0 50px;">Please Wait</h3>
+
+        <div class="progress progress-striped active" style="margin: 0 50px 0 50px">
+            <div id="modalProgressBar" class="bar" style="width: 100%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <div class="modal-body span5">
+            <p id="modalProgressMessage">&nbsp</p>
+        </div>
+    </div>
+
+    <div id="alertContainer" style="clear: both;">
+        <div id="errorbox" class="alert alert-error" style="display: none;">
+            <a class="close" href="#" onclick="return false;">&times;</a>
+
+            <div id="errorhtml">some error</div>
+        </div>
+
+        <div id="successbox" class="alert alert-success" style="display: none;">
+            <a class="close" href="#" onclick="return false;">&times;</a>
+
+            <div id="successhtml">was successful</div>
+        </div>
+
+        <div id="infobox" class="alert alert-info" style="display: none;">
+            <a class="close" href="#" onclick="return false;">&times;</a>
+
+            <div id="infohtml">some information</div>
+        </div>
     </div>
 </div>
-
-<div id="alertContainer" style="clear: both;">
-    <div id="errorbox" class="alert alert-error" style="display: none;">
-        <a class="close" href="#" onclick="return false;">&times;</a>
-
-        <div id="errorhtml">some error</div>
-    </div>
-
-    <div id="successbox" class="alert alert-success" style="display: none;">
-        <a class="close" href="#" onclick="return false;">&times;</a>
-
-        <div id="successhtml">was successful</div>
-    </div>
-
-    <div id="infobox" class="alert alert-info" style="display: none;">
-        <a class="close" href="#" onclick="return false;">&times;</a>
-
-        <div id="infohtml">some information</div>
-    </div>
-</div>
-
 </body>
 </html>

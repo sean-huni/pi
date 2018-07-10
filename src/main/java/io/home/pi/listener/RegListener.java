@@ -6,6 +6,7 @@ import io.home.pi.service.UserRegService;
 import io.home.pi.web.dto.OnRegCompleteEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -35,13 +36,18 @@ public class RegListener implements ApplicationListener<OnRegCompleteEventDTO> {
     private MailGunService mailService;
 
     @Autowired
-    public RegListener(UserRegService service, MessageSource messageSource, MailGunService mailService) {
+    public RegListener(UserRegService service, MailGunService mailService) {
         this.service = service;
-        this.messageSource = messageSource;
         this.mailService = mailService;
     }
 
-// API
+    @Autowired
+    @Qualifier(value = "english")
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    // API
 
     /**
      * Handle an application event.
@@ -53,17 +59,22 @@ public class RegListener implements ApplicationListener<OnRegCompleteEventDTO> {
         log.debug(DEBUG_LINE_SEPARATOR, "Event Received!");
         log.debug(event.toString());
         log.debug(DEBUG_LINE_SEPARATOR, "Event Received!");
-        this.confirmRegistration(event);
+        this.registrationEmailRequest(event);
     }
 
-    private void confirmRegistration(final OnRegCompleteEventDTO event) {
-        final User user = event.getUser();
+    /**
+     * Send out an email tot he client to confirm registration.
+     *
+     * @param event
+     */
+    private void registrationEmailRequest(final OnRegCompleteEventDTO event) {
+        final User unregisteredUser = event.getUser();
         final String token = UUID.randomUUID().toString();
 
-        service.createVerificationTokenForUser(user, token);
+        final User savedUser = service.createVerificationTokenForUser(unregisteredUser, token);
         log.debug(DEBUG_LINE_SEPARATOR, "Token Created!");
 
-        final Map<?, String> mailProp = constructEmailMessage(event, user, token);
+        final Map<?, String> mailProp = constructEmailMessage(event, savedUser, token);
         log.debug(DEBUG_LINE_SEPARATOR, "Email Constructed!");
 
         mailService.sendEmail(mailProp.get(KEY_NAME), mailProp.get(KEY_SEND_TO), mailProp.get(KEY_BODY), mailProp.get(KEY_SUBJECT));

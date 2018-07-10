@@ -51,8 +51,11 @@ public class SpringConstants {
             URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR};
 
     public static final String SECURITY_PERMIT_ALL_URLS = Arrays.toString(
-            new String[]{URL_REG_LISTENER, URL_FORGOT_PASS, URL_REG_NEW_USER})
+            new String[]{URL_REG_LISTENER, URL_FORGOT_PASS, URL_REG_NEW_USER, PI})
             .replace("[", "").replace("]", "");
 
     public static final String URL_LOGIN_ERROR_TRUE = "/user/login?error=true";
+
+    public static final String INVALID_EMAIL = "Invalid Email";
+    public static final String HTTP_URL_PREFIX = "http://";
 }

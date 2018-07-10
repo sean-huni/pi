@@ -45,8 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(URL_LOGIN_PAGE, SECURITY_PERMIT_ALL_URLS)
                 .permitAll() //Adding this line solved it
-                .and()
-                .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)
+//                .and()
+//                .authorizeRequests().antMatchers(PI).hasRole(AUTHORITY_USER)
                 .and()
                 .formLogin().passwordParameter(PARAM_PASS_FIELD)
                 .loginPage(URL_LOGIN_PAGE)

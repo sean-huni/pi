@@ -37,6 +37,7 @@
             Logged user: <span sec:authentication="name">Bob-Test</span>
             <br>
             Roles: <span sec:authentication="principal.authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
+            <!--<span sec:authentication property="principal.authorities" ></span>-->
 
             <form th:type="hidden" th:action="${logoutUrl}" th:method="post" th:id="logoutForm">
                 <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->

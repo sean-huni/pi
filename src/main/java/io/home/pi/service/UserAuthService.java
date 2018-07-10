@@ -1,6 +1,6 @@
 package io.home.pi.service;
 
-import io.home.pi.persistence.model.User;
+import javax.servlet.http.HttpSession;
 
 /**
  * PROJECT   : pi
@@ -10,5 +10,5 @@ import io.home.pi.persistence.model.User;
  * TIME      : 15:05
  */
 public interface UserAuthService {
-    void authWithoutPassword(User user);
+    void authWithoutPassword(String username, HttpSession request);
 }

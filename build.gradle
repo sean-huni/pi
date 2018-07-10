@@ -74,12 +74,12 @@ dependencies {
     compile('org.webjars:font-awesome:5.0.13')
     compile('org.webjars:jquery:3.3.1-1')
     compile('org.projectlombok:lombok:1.18.0')
-    compile ('com.google.code.gson:gson:2.8.5')
+    compile('com.google.code.gson:gson:2.8.5')
     // https://mvnrepository.com/artifact/org.glassfish.jersey.ext/jersey-spring4
-    compile ('org.glassfish.jersey.ext:jersey-spring4:2.27')
+    compile('org.glassfish.jersey.ext:jersey-spring4:2.27')
 
     // https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2
-    compile ('org.glassfish.jersey.inject:jersey-hk2:2.27')
+    compile('org.glassfish.jersey.inject:jersey-hk2:2.27')
 
 
     runtime('org.springframework.boot:spring-boot-devtools')
@@ -89,6 +89,8 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.mockito:mockito-core:2.19.0')
+
 }
 
 dependencyManagement {

@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * PROJECT   :pi
@@ -31,21 +34,28 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    //    @Transient
-    private String token;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinColumn(name = "TOKENLOG_ID")
+    private TokenLog token;
+
+    @NotNull
+    @Column(name = "lastUpdated")
+    private Timestamp lastUpdated = new Timestamp(new Date().getTime());
+
 
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
     private Team team;
 
     @Override
     public String toString() {
+        final String tokenStr = null != token ? token.toString() : "";
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", token='" + token + '\'' +
+                ", token='" + tokenStr + '\'' +
                 ", teams=" + team +
                 '}';
     }

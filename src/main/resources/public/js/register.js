@@ -36,8 +36,10 @@ function ajxUsrRegister(jsonObjStr) {
         success: function (data) {
             console.log("SUCCESS : ", data);
             if (data.isSuccess == true) {
-                showSuccessPopup("Registration Email Sent!", data.message);
                 clearRegistrationFormData();
+                console.log("Form-Data Cleared...");
+                $('#registrationModal').modal('hide');
+                showSuccessPopup("Email Confirmation", data.message);
             } else {
                 showErrPopup("Unexpected Response", "Unexpected response from the system.");
             }

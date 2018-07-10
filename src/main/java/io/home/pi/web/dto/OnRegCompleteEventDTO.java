@@ -15,6 +15,7 @@ import java.util.Locale;
  * DATE      : 30-June-2018
  * TIME      : 16:11
  */
+//@Component
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Data

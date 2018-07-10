@@ -8,6 +8,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import static io.home.pi.constant.SpringConstants.INVALID_EMAIL;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -24,7 +25,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface ValidEmail {
 
-    String message() default "Invalid Email";
+    String message() default INVALID_EMAIL;
 
     Class<?>[] groups() default {};
 
