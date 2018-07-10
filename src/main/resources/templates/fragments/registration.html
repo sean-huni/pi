@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<body>
+
+<!--No-Auth - Landing Page-->
+<div th:fragment="register" th:class="jumbotron">
+    <div sec:authorize="!isAuthenticated()">
+        <h1 th:text="#{label.pages.home.title}">Home</h1>
+        <br/>
+        <div th:class="jumbotron"><p class="alert alert-info" th:text="#{message.regSucc}">Success</p>
+            <a th:width="token=${param.token}" th:type="hidden"></a>
+            <span th:if="${token != null}" th:text="#{token.message}">token</span>
+            <span th:text="${token}">token</span>
+            Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
+        </div>
+    </div>
+</div>
+</body>
+</html>

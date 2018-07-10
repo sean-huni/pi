@@ -59,32 +59,38 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-security')
-// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4
     compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5
-    compile ('org.thymeleaf:thymeleaf-spring5')
+    compile('org.thymeleaf:thymeleaf-spring5')
     compile('org.springframework.boot:spring-boot-starter-validation')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('de.codecentric:spring-boot-admin-starter-client')
     compile('de.codecentric:spring-boot-admin-starter-server')
-    // https://mvnrepository.com/artifact/com.google.guava/guava
+    compile('net.sargue:mailgun:1.5.0')
     compile('com.google.guava:guava:25.1-jre')
-
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('javax.xml.bind:jaxb-api')
     compile('org.webjars:bootstrap:4.1.0')
     compile('org.webjars:font-awesome:5.0.13')
-    // https://mvnrepository.com/artifact/org.webjars/jquery
-    compile ('org.webjars:jquery:3.3.1-1')
+    compile('org.webjars:jquery:3.3.1-1')
+    compile('org.projectlombok:lombok:1.18.0')
+    compile('com.google.code.gson:gson:2.8.5')
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.ext/jersey-spring4
+    compile('org.glassfish.jersey.ext:jersey-spring4:2.27')
+
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2
+    compile('org.glassfish.jersey.inject:jersey-hk2:2.27')
+
+
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
-//    runtime('mysql:mysql-connector-java')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compile('org.projectlombok:lombok')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.mockito:mockito-core:2.19.0')
+
 }
 
 dependencyManagement {

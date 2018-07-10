@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<body>
+
+<!--Login Page-->
+<div th:fragment="login" th:class="container">
+    <div class="container-fluid" sec:authorize="!isAuthenticated()">
+        <h3>Login</h3>
+        <a th:if="${param.error} and ${session}" class="col-12">
+            <div class="alert alert-dismissible alert-danger error col-xs-5 col-md-8 col-lg-6">
+                <div>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Authentication Failure</strong>. <i th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">Invalid
+                    Username and Password.</i>
+                </div>
+            </div>
+        </a>
+        <form th:action="@{/user/login}" th:method="post">
+            <div role="row" class="ml-auto">
+                <label for="username" class="hidden-sm-down">Username:</label>
+                <input type="text" id="username" name="username" autofocus="autofocus"/>
+            </div>
+            <div th:role="row" id="password-div" class="ml-auto">
+                <label th:for="passLoginTxtBox" class="ml-auto">Password:</label>
+                <input th:type="password" class="ml-1" th:id="passLoginTxtBox" th:name="passLoginTxtBox"/>
+            </div>
+            <div id="checkbox-div" th:role="row" class="ml-5">
+                <input th:id="remember-me" class="ml-auto" th:type="checkbox" th:name="remember-me"/>
+                <label th:for="remember-me" class="ml-auto">
+                    <a th:data-toggle="tooltip" id="remember-me-text"
+                       title="Remember me on this computer">Remember-Me</a>
+                </label>
+            </div>
+            <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+            <div th:id="row-btn" th:role="row" class="ml-auto">
+                <input type="button" value="Password Reset" class="btn btn-warning ml-auto" th:data-toggle="modal"
+                       th:data-target="${'#forgotPasswordModal'}"/>
+                <input th:type="submit" th:value="Login" class="btn btn-primary btn-spacing col-4 col-sm-2 ml-auto"/>
+            </div>
+            <div th:role="row">
+                <div id="btn-sign-up" class="ml-auto col-12 col-sm-12 col-md-12 col-lg-12">
+                    <button th:type="${'button'}" th:text="${'Sign-Up'}" th:data-toggle="modal"
+                            th:data-target="${'#registrationModal'}"
+                            class="btn btn-outline-primary btn-spacing ml-0 col-10 col-sm-2 col-md-5 col-lg-4">
+                        Demo-Text
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <div th:replace="~{fragments/modals/registration :: userRegFragment}"></div>
+
+        <div th:replace="~{fragments/modals/password-reset :: forgotPassFragment}"></div>
+    </div>
+</div>
+
+</body>
+</html>

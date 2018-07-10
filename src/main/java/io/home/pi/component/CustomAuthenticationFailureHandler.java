@@ -2,12 +2,12 @@ package io.home.pi.component;
 
 import io.home.pi.constant.SpringConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,20 +22,13 @@ import java.util.Locale;
  * DATE      : 29-June-2018
  * TIME      : 20:09
  */
+@Qualifier(value = "live")
 @Component("authenticationFailureHandler")
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private MessageSource messageSource;
 
     @Autowired
-    private LocaleResolver localeResolver;
-
-    @Autowired
-    public CustomAuthenticationFailureHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-
-    @Autowired
+    @Qualifier("english")
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
@@ -55,8 +48,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         setDefaultFailureUrl(SpringConstants.URL_LOGIN_ERROR_TRUE);
         super.onAuthenticationFailure(request, response, exception);
-
-        final Locale locale = localeResolver.resolveLocale(request);
+        final Locale locale = new Locale(Locale.UK.toString());
 
         String errorMessage = messageSource.getMessage("message.badCredentials", null, locale);
 
