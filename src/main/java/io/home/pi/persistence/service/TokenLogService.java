@@ -16,5 +16,7 @@ public interface TokenLogService extends CRUDService<TokenLog> {
 
     Optional<TokenLog> findBySeries(String series);
 
+    Optional<TokenLog> findByToken(String token);
+
     void deleteByUsername(String username);
 }

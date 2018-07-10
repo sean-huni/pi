@@ -21,6 +21,10 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @Slf4j
 public class UserDTOTest {
+    private final String firstName = "Sean";
+    private final String username = "sean2kay@gmail.com";
+    private final String password1 = "password1";
+    private final String password2 = "password2";
 
     @BeforeClass
     public static void init() {
@@ -32,17 +36,18 @@ public class UserDTOTest {
         log.info("userDTO Cleanup...");
     }
 
+
     @Test
     public void testJsonUserDTO() throws IOException {
         UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName("Sean");
-        userDTO.setUsername("sean2kay@gmail.com");
-        userDTO.setPass("password1");
-        userDTO.setPass2("password1");
+        userDTO.setFirstName(firstName);
+        userDTO.setUsername(username);
+        userDTO.setPass(password1);
+        userDTO.setPass2(password2);
         String jsonValue = new ObjectMapper().writeValueAsString(userDTO);
 
         System.out.println(jsonValue);
-        String jsonStr = "{\"firstName\":\"Sean\",\"username\":\"sean2kay@gmail.com\",\"pass\":\"password1\",\"pass2\":\"password1\"}";
+        String jsonStr = "{\"firstName\":\"" + firstName + "\",\"username\":\"" + username + "\",\"pass\":\"" + password1 + "\",\"pass2\":\"" + password1 + "\"}";
 
         UserDTO userDTO2 = new ObjectMapper().readValue(jsonStr, UserDTO.class);
 

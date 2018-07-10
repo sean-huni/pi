@@ -1,6 +1,7 @@
 package io.home.pi.service.impl;
 
 import io.home.pi.persistence.model.GrpAuth;
+import io.home.pi.persistence.model.Team;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.UserService;
 import io.home.pi.service.UserAuthService;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,11 +20,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static io.home.pi.constant.SpringConstants.USER_ROLE_PREFIX;
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 /**
  * PROJECT   : pi
@@ -74,19 +79,31 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
     }
 
 
-    public void authWithoutPassword(User user) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, getGrantedAuthorities(user));
+    public void authWithoutPassword(User user, HttpSession session) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + "USER"));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
+
+        ((UsernamePasswordAuthenticationToken) authenticationToken).eraseCredentials();
+
+        UserDetails userDetails = (UserDetails) authenticationToken;
+        ((UsernamePasswordAuthenticationToken) authenticationToken).setDetails(userDetails);
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authenticationToken);
+        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
     }
 
 
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {
+            Optional<User> optionalUser = Optional.of(user);
             List<GrpAuth> groupAuthorities = new ArrayList<>();
 
-            groupAuthorities.add(user.getTeam().getGrpAuth());
+            Optional<GrpAuth> optionalGrpAuth = optionalUser.map(User::getTeam).filter(Objects::nonNull).map(Team::getGrpAuth);
+            optionalGrpAuth.ifPresent(groupAuthorities::add);
 
             for (GrpAuth userAuth : groupAuthorities) {
                 LOGGER.info("User Auth: " + userAuth.toString());

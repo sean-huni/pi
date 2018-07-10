@@ -1,5 +1,6 @@
 package io.home.pi.persistence.service.impl;
 
+import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.repo.UserRepo;
 import io.home.pi.persistence.service.UserService;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByToken(String token) {
+    public Optional<User> findByToken(TokenLog token) {
         return userRepo.findByToken(token);
     }
 

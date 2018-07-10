@@ -40,6 +40,11 @@ public class TokenLogServiceImpl implements TokenLogService {
     }
 
     @Override
+    public Optional<TokenLog> findByToken(String token) {
+        return tokenLogRepo.findByToken(token);
+    }
+
+    @Override
     @Transactional
     public void deleteByUsername(String username) {
         tokenLogRepo.deleteByUsername(username);

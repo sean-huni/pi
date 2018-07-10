@@ -8,6 +8,7 @@ import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR;
 import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR_ERRORS;
@@ -37,17 +39,20 @@ import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR_ERRORS;
 public class UserRegCtrl extends SuperCtrl {
     private UserRegService userRegService;
     private ApplicationEventPublisher eventPublisher;
+    private MessageSource messageSource;
 
     @Autowired
-    public UserRegCtrl(UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
+    public UserRegCtrl(MessageSource messageSource, UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
         this.userRegService = userRegService;
         this.eventPublisher = eventPublisher;
+        this.messageSource = messageSource;
     }
 
     // Registration
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse> registerUserAccount(@Valid @RequestBody final UserDTO userDTO, final HttpServletRequest request, Errors errors) {
+        String responseMsg = "";
         log.info("Registering user account with information: {}", userDTO);
 
         if (errors.hasErrors()) {
@@ -56,13 +61,15 @@ public class UserRegCtrl extends SuperCtrl {
             return ResponseEntity.badRequest().body(new GenericResponse(errors.getAllErrors(), "Errors Found"));
         }
 
-        final User registered = userRegService.registerNewUserAccount(userDTO);
-        OnRegCompleteEventDTO onRegCompleteEventDTO = new OnRegCompleteEventDTO(registered, request.getLocale(), getAppUrl(request));
+        final User registeredUser = userRegService.registerNewUserAccount(userDTO);
+        OnRegCompleteEventDTO onRegCompleteEventDTO = new OnRegCompleteEventDTO(registeredUser, request.getLocale(), getAppUrl(request));
         log.info(DEBUG_LINE_SEPARATOR, onRegCompleteEventDTO);
         eventPublisher.publishEvent(onRegCompleteEventDTO);
         log.info("Registration Email Sent!!!");
 
-        return ResponseEntity.ok(new GenericResponse("success", true));
+        responseMsg = messageSource.getMessage("message.regConf", null, Locale.UK);
+
+        return ResponseEntity.ok(new GenericResponse(responseMsg, true));
     }
 
 

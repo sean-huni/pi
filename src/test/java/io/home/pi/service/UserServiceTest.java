@@ -1,6 +1,8 @@
 package io.home.pi.service;
 
+import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
+import io.home.pi.persistence.service.TokenLogService;
 import io.home.pi.persistence.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,12 +30,18 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 @EnableTransactionManagement
 public class UserServiceTest {
     private UserService userService;
-
-    private final String FAKE_TOKEN = "";
+    private final String FAKE_TOKEN = "fake-token";
+    private final String OG_TEST_TOKEN = "83AjDxYvEBxDgLMJLNzkaA==";
+    private TokenLogService tokenLogService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setTokenLogService(TokenLogService tokenLogService) {
+        this.tokenLogService = tokenLogService;
     }
 
     @Test
@@ -51,10 +59,17 @@ public class UserServiceTest {
      * Test for tokens that don't exist.
      */
     @Test
-    public void findByToken() {
-        final String nonExistingToken = "FAKE-TOKEN";
-        Optional<User> optionalUser = userService.findByToken(nonExistingToken);
+    public void findByTokenTest() {
+        final String nonExistingToken = FAKE_TOKEN;
+        Optional<TokenLog> optionalUser = tokenLogService.findByToken(nonExistingToken);
 
         assertFalse("No user has that token: " + nonExistingToken, optionalUser.isPresent());
     }
+
+    @Test
+    public void findExistingTokenTest() {
+        Optional<TokenLog> optionalUser = tokenLogService.findByToken(OG_TEST_TOKEN);
+        assertTrue("Token not found...", optionalUser.isPresent());
+    }
+
 }

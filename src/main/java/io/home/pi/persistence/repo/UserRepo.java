@@ -1,5 +1,6 @@
 package io.home.pi.persistence.repo;
 
+import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,5 +18,5 @@ import java.util.Optional;
 public interface UserRepo extends CrudRepository<User, Integer> {
     User findByUsername(String username);
 
-    Optional<User> findByToken(String token);
+    Optional<User> findByToken(TokenLog tokenLog);
 }

@@ -33,12 +33,13 @@ public class UserDTO {
     private String firstName;
 
     @ValidEmail
-    @NotNull
-    @Size(min = 1, message = "{Size.userDto.email}")
+    @NotNull(message = "{NotNull.user.username}")
+    @Size(min = 3, max = 45, message = "{Size.userDto.email}")
     @JsonProperty("username")
     private String username;
 
-    @NotNull
+    @NotNull(message = "{NotNull.user.password}")
+    @Size(min = 3, max = 25, message = "{Size.userDto.email}")
     @JsonProperty("pass")
     private String pass;
 

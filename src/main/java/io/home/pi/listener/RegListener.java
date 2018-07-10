@@ -53,17 +53,22 @@ public class RegListener implements ApplicationListener<OnRegCompleteEventDTO> {
         log.debug(DEBUG_LINE_SEPARATOR, "Event Received!");
         log.debug(event.toString());
         log.debug(DEBUG_LINE_SEPARATOR, "Event Received!");
-        this.confirmRegistration(event);
+        this.registrationEmailRequest(event);
     }
 
-    private void confirmRegistration(final OnRegCompleteEventDTO event) {
-        final User user = event.getUser();
+    /**
+     * Send out an email tot he client to confirm registration.
+     *
+     * @param event
+     */
+    private void registrationEmailRequest(final OnRegCompleteEventDTO event) {
+        final User unregisteredUser = event.getUser();
         final String token = UUID.randomUUID().toString();
 
-        service.createVerificationTokenForUser(user, token);
+        final User savedUser = service.createVerificationTokenForUser(unregisteredUser, token);
         log.debug(DEBUG_LINE_SEPARATOR, "Token Created!");
 
-        final Map<?, String> mailProp = constructEmailMessage(event, user, token);
+        final Map<?, String> mailProp = constructEmailMessage(event, savedUser, token);
         log.debug(DEBUG_LINE_SEPARATOR, "Email Constructed!");
 
         mailService.sendEmail(mailProp.get(KEY_NAME), mailProp.get(KEY_SEND_TO), mailProp.get(KEY_BODY), mailProp.get(KEY_SUBJECT));
