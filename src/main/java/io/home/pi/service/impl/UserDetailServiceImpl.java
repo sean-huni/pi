@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static io.home.pi.constant.SpringConstants.AUTHORITY_USER;
 import static io.home.pi.constant.SpringConstants.USER_ROLE_PREFIX;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -43,6 +44,7 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
     private final UserService userService;
     private HttpServletRequest request;
     private LoginAttemptService loginAttemptService;
+    private Boolean isNewUser = false;
 
     @Autowired
     public UserDetailServiceImpl(HttpServletRequest request, LoginAttemptService loginAttemptService, UserService userService) {
@@ -65,6 +67,7 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, SecurityException {
+        List<GrantedAuthority> authorities;
         String ip = getClientIP(request);
         if (loginAttemptService.isBlocked(ip)) {
             throw new SecurityException("blocked");
@@ -75,14 +78,22 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException("Username & Password doesn't exist!");
         }
-        return new org.springframework.security.core.userdetails.User(userOptional.get().getUsername(), userOptional.get().getPassword(), getGrantedAuthorities(userOptional.get()));
+
+        if (isNewUser) {
+            authorities = authorizeNewUser();
+        } else authorities = getGrantedAuthorities(userOptional.get());
+
+        return new org.springframework.security.core.userdetails.User(userOptional.get().getUsername(), userOptional.get().getPassword(), authorities);
     }
 
 
     public void authWithoutPassword(String username, HttpSession session) {
+        isNewUser = true;
         UserDetails userDetails = loadUserByUsername(username);
 
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails, userDetails.getAuthorities());
+
+        //ToDo: Test when the user is already registered.
         ((UsernamePasswordAuthenticationToken) authenticationToken).eraseCredentials();
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -113,14 +124,24 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
             LOGGER.error(e.getMessage(), e);
         }
 
-        if (null != authorities) {
-            LOGGER.info("\n\n*********\nClass: LoginDetailsService.\nMethod: getGrantedAuthorities.\n*********\n\n");
-            LOGGER.info("Authorities :" + authorities);
-        }
+        authorityLog(authorities);
 
         return authorities;
     }
 
+    private List<GrantedAuthority> authorizeNewUser() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + AUTHORITY_USER));
+
+        return authorities;
+    }
+
+    private void authorityLog(List<GrantedAuthority> authorities) {
+        if (null != authorities) {
+            LOGGER.info("\n\n*********\nClass: LoginDetailsService.\nMethod: Granted-Authorities.\n*********\n\n");
+            LOGGER.info("Authorities :" + authorities);
+        }
+    }
 
     private String getClientIP(HttpServletRequest request) {
         String clientIP;
@@ -135,6 +156,4 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
         LOGGER.info("Client-IP: {}", clientIP);
         return clientIP;
     }
-
-
 }

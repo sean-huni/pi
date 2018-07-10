@@ -13,11 +13,13 @@
 <!--Body-->
 <!--If Unauthorized-->
 <div sec:authorize="!isAuthenticated()">
+    <!--Not Authenticated!-->
     <div class="container" th:replace="~{fragments/landing :: no-auth}"></div>
 </div>
 
 <!--Else-->
 <div sec:authorize="isAuthenticated()">
+    <!--Authenticated!-->
     <div class="container" th:replace="~{fragments/landing :: auth}">
     </div>
 </div>
