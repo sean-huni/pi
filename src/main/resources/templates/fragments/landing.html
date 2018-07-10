@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<body>
+
+<!--No-Auth - Landing Page-->
+<div th:fragment="no-auth" th:class="jumbotron">
+    <div sec:authorize="!isAuthenticated()">
+        <h1>Home Page</h1>
+        <br/>
+        <div th:class="jumbotron"> Hello Visitor,
+            Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
+        </div>
+    </div>
+</div>
+
+<!--User-Landing/Dashboard Page-->
+<div th:fragment="auth" th:class="jumbotron">
+    <!--Loading Protected Landing page...-->
+    <div sec:authorize="hasRole('USER')">
+        <h1>Profile</h1>
+        <br/>
+        <p>
+            Hi <span sec:authentication="name">Bob</span>. You're Inn!
+        </p>
+
+        <div class="temp" th:with="logoutUrl=${'/j_spring_security_logout'}">
+            Subtitle : <a th:text="${subtitle}"></a>
+            <br>
+            Message : <a th:text="${message}"></a>
+            <br>
+            <div class="page-information" role="document">
+                <div th:inline="text">Welcome : [[${#httpServletRequest.remoteUser}]]! |
+                    <a href="javascript:logoutSubmit()">Logout</a>
+                </div>
+            </div>
+            Logged user: <span sec:authentication="name">Bob-Test</span>
+            <br>
+            Roles: <span sec:authentication="authorities">[ROLE_DEMO_1, ROLE_DEMO_2]</span>
+
+            <form th:type="hidden" th:action="${logoutUrl}" th:method="post" th:id="logoutForm">
+                <!--<input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

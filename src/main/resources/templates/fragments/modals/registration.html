@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<body>
+
+<!-- User Registration Modal -->
+<div th:fragment="userRegFragment">
+    <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content container-fluid modal-max-width">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalVerticalLabel" th:text="${'User Registration'}">Modal
+                        title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div th:if="${param.error} and ${session}"
+                         th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION']}">
+                        <div class="alert alert-dismissible alert-danger error">
+                            Reason: <span th:text="${errorMsg}">Demo Invalid input</span>
+                        </div>
+                    </div>
+                    <form th:name="registrationForm" th:id="registrationForm" class="form-horizontal"
+                          th:action="${userRegUri}" th:method="post">
+                        <fieldset>
+                            <div class="row ml-4">
+                                <label th:id="regModalNameLabel" class="control-label"
+                                       for="txtRegFirstName">Name:</label>
+                                <input type="text" name="txtRegFirstName" class="input-xlarge ml-2"
+                                       id="txtRegFirstName">
+                            </div>
+                            <div id="rowRegUsernameTxtLbl" class="row ml-4 rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegUsername">Email:</label>
+                                <input type="text" name="txtRegUsername" class="input-xlarge ml-2" id="txtRegUsername">
+                            </div>
+                            <div id="rowRegPass1TxtLbl" class="row ml-auto rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegPassword">Password:</label>
+                                <input type="password" name="txtRegPassword" class="input-xlarge ml-2"
+                                       id="txtRegPassword">
+                            </div>
+                            <div id="rowRegPass2TxtLbl" class="row ml-3 rowSpacingTxtLbl">
+                                <label class="control-label" for="txtRegPassword2">Confirm:</label>
+                                <input type="password" name="txtRegPassword2" class="input-xlarge ml-2"
+                                       id="txtRegPassword2">
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
+                    <button id="btnRegisterUser" class="btn btn-primary ml-auto" type="button">Submit</button>
+                    <!--href="javascript:registerUserSubmit()"-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

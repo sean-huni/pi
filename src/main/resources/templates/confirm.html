@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+
+<head th:replace="~{fragments/header :: head}">
+    <title>Demo Template!!!</title>
+</head>
+<body>
+
+<!--Navigation-->
+<div th:replace="~{fragments/nav :: navi}"></div>
+
+<!--Body-->
+<div class="container" th:replace="~{fragments/registration :: register}"></div>
+
+</body>
+<!--Scripts-->
+<div th:replace="~{fragments/imports :: scripts}"></div>
+</html>

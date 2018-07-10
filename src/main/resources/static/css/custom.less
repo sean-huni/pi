@@ -1,24 +1,34 @@
 @btnTopMargin: 1rem;
-@btnSpacing: 50px;
-@labelMarginSpacing: 10px;
+@btnSpacing: 30px;
+@rowTxtLblMarginSpacing: 18px;
 @checkboxSize: 20px;
 @checkboxFontSize: 18px;
+@errorMsgRow: 10px;
+@signUpBtnRow: -16px !important;
 
-#row-btn {
-  margin-top: @btnTopMargin;
+.modal-max-width {
+  max-width: 350px;
 }
 
 .btn-spacing {
   margin-left: @btnSpacing;
 }
 
+#row-btn {
+  margin-top: @btnTopMargin;
+}
+
 #error-label {
-  margin-top: @labelMarginSpacing;
-  margin-bottom: @labelMarginSpacing - 5;
+  margin-top: @errorMsgRow;
+  margin-bottom: @errorMsgRow - 5;
 }
 
 #password-div {
-  margin-top: @labelMarginSpacing;
+  margin-top: @rowTxtLblMarginSpacing;
+}
+
+.rowSpacingTxtLbl {
+  margin-top: @rowTxtLblMarginSpacing;
 }
 
 #remember-me { //Checkbox
@@ -32,7 +42,11 @@
 
 #checkbox-div {
   margin-top: 20px;
-  margin-left: 80px;
+}
+
+#btn-sign-up {
+  margin-top: 30px;
+  margin-left: @signUpBtnRow;
 }
 
 h1, h2, h3, h4, h5, h6 {
