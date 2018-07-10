@@ -79,23 +79,23 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
     }
 
 
-    public void authWithoutPassword(User user, HttpSession session) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + "USER"));
+    public void authWithoutPassword(String username, HttpSession session) {
+        UserDetails userDetails = loadUserByUsername(username);
 
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(user, null, authorities);
-
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails, userDetails.getAuthorities());
         ((UsernamePasswordAuthenticationToken) authenticationToken).eraseCredentials();
-
-        UserDetails userDetails = (UserDetails) authenticationToken;
-        ((UsernamePasswordAuthenticationToken) authenticationToken).setDetails(userDetails);
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authenticationToken);
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, securityContext);
     }
 
-
+    /**
+     * Returns a {@link List<GrantedAuthority>} of authorities that the principal belongs to.
+     *
+     * @param user
+     * @return
+     */
     private List<GrantedAuthority> getGrantedAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {

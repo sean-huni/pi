@@ -7,6 +7,7 @@ import io.home.pi.web.dto.UserDTO;
 import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
@@ -42,9 +43,14 @@ public class UserRegCtrl extends SuperCtrl {
     private MessageSource messageSource;
 
     @Autowired
-    public UserRegCtrl(MessageSource messageSource, UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
+    public UserRegCtrl(UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
         this.userRegService = userRegService;
         this.eventPublisher = eventPublisher;
+    }
+
+    @Autowired
+    @Qualifier("english")
+    public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -62,7 +68,7 @@ public class UserRegCtrl extends SuperCtrl {
         }
 
         final User registeredUser = userRegService.registerNewUserAccount(userDTO);
-        OnRegCompleteEventDTO onRegCompleteEventDTO = new OnRegCompleteEventDTO(registeredUser, request.getLocale(), getAppUrl(request));
+        OnRegCompleteEventDTO onRegCompleteEventDTO = new OnRegCompleteEventDTO(registeredUser, Locale.UK, getAppUrl(request));
         log.info(DEBUG_LINE_SEPARATOR, onRegCompleteEventDTO);
         eventPublisher.publishEvent(onRegCompleteEventDTO);
         log.info("Registration Email Sent!!!");

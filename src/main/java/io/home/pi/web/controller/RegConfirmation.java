@@ -8,8 +8,8 @@ import io.home.pi.service.UserAuthService;
 import io.home.pi.service.UserRegService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,13 +38,17 @@ public class RegConfirmation {
     private TokenLogService tokenLogService;
 
     @Autowired
-    public RegConfirmation(UserRegService userRegService, UserService userService, MessageSource messageSource, UserAuthService userAuthService) {
+    public RegConfirmation(UserRegService userRegService, UserService userService, UserAuthService userAuthService) {
         this.userRegService = userRegService;
         this.userService = userService;
-        this.messageSource = messageSource;
         this.userAuthService = userAuthService;
     }
 
+    @Autowired
+    @Qualifier("english")
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Autowired
     public void setTokenLogService(TokenLogService tokenLogService) {
@@ -55,7 +59,8 @@ public class RegConfirmation {
     //ToDo: Add the missing modelAttributes to the html pages.
     @GetMapping(value = "/confirm**")
     public String confirmRegistration(HttpServletRequest request, final Model model, @RequestParam("token") final String token) {
-        final Locale locale = request.getLocale();
+        Locale locale = new Locale(Locale.UK.toString(), request.getLocale().getCountry());
+
         final String result = userRegService.validateVerificationToken(token);
         if (result.equals("valid")) {
 
@@ -65,8 +70,7 @@ public class RegConfirmation {
                 disabledUser.setEnabled(TRUE);
 
                 final User enabledUser = userService.saveOrUpdate(disabledUser);
-                UserDetails userDetails = (UserDetails) request.getUserPrincipal();
-                userAuthService.authWithoutPassword(enabledUser, request.getSession(TRUE));
+                userAuthService.authWithoutPassword(enabledUser.getUsername(), request.getSession(TRUE));
 
                 model.addAttribute("message", messageSource.getMessage("message.accountVerified", null, locale));
                 return "redirect:/pi/dashboard?lang=" + locale.getLanguage();

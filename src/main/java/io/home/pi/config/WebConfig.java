@@ -43,11 +43,12 @@ public class WebConfig implements WebMvcConfigurer {
         return localeResolver;
     }
 
-    @Bean
+    @Bean("english")
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages/messages");
-        messageSource.setCacheSeconds(60); //reload messages every 10 seconds
+        messageSource.setCacheSeconds(10); //reload messages every 10 seconds
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 

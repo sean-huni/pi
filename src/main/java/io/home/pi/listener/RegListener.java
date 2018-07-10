@@ -6,6 +6,7 @@ import io.home.pi.service.UserRegService;
 import io.home.pi.web.dto.OnRegCompleteEventDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -35,13 +36,18 @@ public class RegListener implements ApplicationListener<OnRegCompleteEventDTO> {
     private MailGunService mailService;
 
     @Autowired
-    public RegListener(UserRegService service, MessageSource messageSource, MailGunService mailService) {
+    public RegListener(UserRegService service, MailGunService mailService) {
         this.service = service;
-        this.messageSource = messageSource;
         this.mailService = mailService;
     }
 
-// API
+    @Autowired
+    @Qualifier(value = "english")
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    // API
 
     /**
      * Handle an application event.
