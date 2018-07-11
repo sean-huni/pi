@@ -20,11 +20,12 @@ import static java.lang.Boolean.FALSE;
  * USER      : sean
  * DATE      : 19-June-2018
  * TIME      : 19:14
+ * DESCR     : Dashboard Controller
  */
 @Slf4j
 @Controller
 @RequestMapping("/pi**")
-public class UserProfileCtrl {
+public class DashboardCtrl {
 
     @GetMapping("/dashboard")
     public String userProfilePage(HttpServletRequest request, Model model, @RequestParam(value = "message", required = false) final String msg) {
@@ -35,15 +36,9 @@ public class UserProfileCtrl {
 
         session = null != request || null != request.getSession(FALSE) ? request.getSession(FALSE) : request.getSession();
 
-        if (session.isNew()) {
+        if (session != null && session.isNew()) {
             log.debug("Session is new...");
         } else log.debug("Session is NOT new...");
-
-
-//        if (session.getAttribute("username") == null) {
-//            request.getSession().invalidate();
-//            log.warn("Session is invalidated...");
-//        }
 
 
         if (request != null) {
