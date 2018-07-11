@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.home.pi.validator.PasswordMatch;
 import io.home.pi.validator.ValidEmail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ import javax.validation.constraints.Size;
 @JsonDeserialize
 @JsonRootName(value = "userDTO")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@PasswordMatch
 public class UserDTO {
 
     @NotNull
