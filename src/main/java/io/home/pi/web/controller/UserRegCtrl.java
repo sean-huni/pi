@@ -38,13 +38,13 @@ import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR_ERRORS;
 @Slf4j
 @Controller
 @RequestMapping("/register")
-public class EventPubCtrl extends SuperCtrl {
+public class UserRegCtrl extends SuperCtrl {
     private UserRegService userRegService;
     private ApplicationEventPublisher eventPublisher;
     private MessageSource messageSource;
 
     @Autowired
-    public EventPubCtrl(UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
+    public UserRegCtrl(UserRegService userRegService, ApplicationEventPublisher eventPublisher) {
         this.userRegService = userRegService;
         this.eventPublisher = eventPublisher;
     }
