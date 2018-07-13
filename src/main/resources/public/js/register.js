@@ -5,6 +5,7 @@
  * DATE    : Monday-July-2018
  */
 
+/*<![CDATA[*/
 
 $(document).ready(
     function () {
@@ -46,9 +47,42 @@ function ajxUsrRegister(jsonObjStr) {
             $("#btnRegisterUser").prop("disabled", false);
         },
         error: function (error) {
-            showErrPopup("System Failure", "Unexpected response from the system.");
+            if (error.status === 400) {
+                var popupErrorTitle = titleErrPopupMsg("Validation Error", error.responseJSON.errors.length);
+                var popupErrMsg = appendErrMessages(error);
+
+                showErrPopup(popupErrorTitle, popupErrMsg)
+            } else {
+                showErrPopup("System Failure", "Unexpected response from the system.");
+            }
+
             console.log("Error: ", error);
             $("#btnRegisterUser").prop("disabled", false);
         }
     });
+
+    function titleErrPopupMsg(errTitle, errorsLength) {
+        if (errorsLength > 1) {
+            return errTitle + "s";
+        }
+    }
+
+    function appendErrMessages(errorsObj) {
+        // var errors = $.parseJSON(errorsObj.message);
+
+        console.log(/*[[#{Size.userDto.firstName.min}]]*/);
+
+        var errMsg = "";
+        $.each(errorsObj.responseJSON.errors, function (index, item) {
+            errMsg += item.defaultMessage + "<br/>";
+        });
+        var errMsg2 = errMsg.replace(/,/g, "<br/>");
+        var errMsg3 = errMsg2.replace(/{/g, "[[#{");
+        errMsg3 = errMsg3.replace(/}/g, "}]]");
+        console.log(errMsg3);
+        return errMsg2;
+
+    }
 }
+
+/* ]]>*/

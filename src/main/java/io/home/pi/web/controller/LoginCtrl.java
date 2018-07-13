@@ -28,6 +28,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/user")
 public class LoginCtrl extends SuperCtrl {
 
+
     @RequestMapping("/login")
     public ModelAndView loginPage(ModelAndView modelAndView){
         log.debug("login-page invoked...");

@@ -1,6 +1,8 @@
 package io.home.pi.web.util;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -15,26 +17,30 @@ import java.util.stream.Collectors;
  * TIME      : 13:14
  */
 @Getter
+@Setter
 public class GenericResponse {
     private String message;
-    private String error;
-    private Boolean isSuccess;
+    private String errorMsg;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean successful;
 
-    public GenericResponse(final String message, final Boolean isSuccess) {
+    public GenericResponse(final String message, final Boolean successful) {
         super();
         this.message = message;
-        this.isSuccess = isSuccess;
+        this.successful = successful;
     }
 
-    public GenericResponse(final String message, final String error, final Boolean isSuccess) {
+    public GenericResponse(final String message, final String errorMsg, final Boolean successful) {
         super();
         this.message = message;
-        this.error = error;
-        this.isSuccess = isSuccess;
+        this.errorMsg = errorMsg;
+        this.successful = successful;
     }
 
-    public GenericResponse(List<ObjectError> allErrors, String error) {
-        this.error = error;
+    public GenericResponse(List<ObjectError> allErrors, String errorMsg) {
+        setSuccess(false);
+        this.errorMsg = errorMsg;
         String temp = allErrors.stream().map(e -> {
             if (e instanceof FieldError) {
                 return "{\"field\":\"" + ((FieldError) e).getField() + "\",\"defaultMessage\":\"" + e.getDefaultMessage() + "\"}";
@@ -46,11 +52,11 @@ public class GenericResponse {
     }
 
 
-    public void setMessage(final String message) {
-        this.message = message;
+    public Boolean isSuccess() {
+        return successful;
     }
 
-    public void setError(final String error) {
-        this.error = error;
+    public void setSuccess(Boolean successful) {
+        this.successful = successful;
     }
 }

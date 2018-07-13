@@ -16,5 +16,8 @@
 
 </body>
 <!--Scripts-->
+<div th:id="demo" th:with="firstPer=${}">
+    <p th:text="${firstPer}"></p>
+</div>
 <div th:replace="~{fragments/imports :: scripts}"></div>
 </html>
