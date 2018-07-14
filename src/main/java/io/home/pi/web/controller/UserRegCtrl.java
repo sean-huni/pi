@@ -59,7 +59,7 @@ public class UserRegCtrl extends SuperCtrl {
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse> registerUserAccount(@Valid @RequestBody final UserDTO userDTO, final HttpServletRequest request, Errors errors) {
-        String responseMsg = "";
+        String responseMsg;
         log.info("Registering user account with information: {}", userDTO);
 
         if (errors.hasErrors()) {
@@ -75,9 +75,6 @@ public class UserRegCtrl extends SuperCtrl {
         log.info("Registration Email Sent!!!");
 
         responseMsg = messageSource.getMessage("message.regConf", null, Locale.UK);
-
         return ResponseEntity.ok(new GenericResponse(responseMsg, true));
     }
-
-
 }
