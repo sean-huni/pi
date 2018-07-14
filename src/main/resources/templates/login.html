@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<!--<div th:with="messageSource = ${@webConfig.messageSource()}">...</div>-->
+<div th:hidden="true" th:with="msgSourceText = 'One-Two Testing...'"></div>
+<div th:id="msgSourceId" th:text="${msgSourceText}" th:value="${msgSourceText}"></div>
+
 <!--Navigation-->
 <div th:replace="~{fragments/nav :: navi}"></div>
 

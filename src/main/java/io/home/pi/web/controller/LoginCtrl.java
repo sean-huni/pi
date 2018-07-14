@@ -3,6 +3,9 @@ package io.home.pi.web.controller;
 import io.home.pi.web.dto.UserDTO;
 import io.home.pi.web.util.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,10 +30,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping("/user")
 public class LoginCtrl extends SuperCtrl {
+    private MessageSource messageSource;
+
+    @Autowired
+    @Qualifier("english")
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
 
     @RequestMapping("/login")
-    public ModelAndView loginPage(ModelAndView modelAndView){
+    public ModelAndView loginPage(ModelAndView modelAndView) {
         log.debug("login-page invoked...");
         ModelMap modelMap = new ModelMap();
 
@@ -39,6 +49,7 @@ public class LoginCtrl extends SuperCtrl {
         modelMap.addAttribute("password-label", "password");
         modelMap.addAttribute("forgotPassUri", URL_FORGOT_PASS);
         modelMap.addAttribute("userRegUri", URL_REG_NEW_USER);
+        modelMap.addAttribute("messageSource", messageSource);
         modelAndView.setViewName("login");
         modelAndView.addAllObjects(modelMap);
         return modelAndView;
