@@ -30,7 +30,7 @@ import static java.lang.Boolean.TRUE;
  */
 @Slf4j
 @Controller
-public class RegConfirmation {
+public class ConfirmationCtrl {
     private final UserAuthService userAuthService;
     private UserRegService userRegService;
     private UserService userService;
@@ -38,7 +38,7 @@ public class RegConfirmation {
     private TokenLogService tokenLogService;
 
     @Autowired
-    public RegConfirmation(UserRegService userRegService, UserService userService, UserAuthService userAuthService) {
+    public ConfirmationCtrl(UserRegService userRegService, UserService userService, UserAuthService userAuthService) {
         this.userRegService = userRegService;
         this.userService = userService;
         this.userAuthService = userAuthService;

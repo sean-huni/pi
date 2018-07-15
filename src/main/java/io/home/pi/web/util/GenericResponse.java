@@ -1,6 +1,9 @@
 package io.home.pi.web.util;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -14,43 +17,72 @@ import java.util.stream.Collectors;
  * DATE      : 30-June-2018
  * TIME      : 13:14
  */
+@Slf4j
 @Getter
+@Setter
 public class GenericResponse {
     private String message;
-    private String error;
-    private Boolean isSuccess;
+    private String errorMsg;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean successful;
+//    private MessageSource messageSource;
 
-    public GenericResponse(final String message, final Boolean isSuccess) {
+    public GenericResponse(final String message, final Boolean successful) {
         super();
         this.message = message;
-        this.isSuccess = isSuccess;
+        this.successful = successful;
     }
 
-    public GenericResponse(final String message, final String error, final Boolean isSuccess) {
+
+    public GenericResponse(final String message, final String errorMsg, final Boolean successful) {
         super();
         this.message = message;
-        this.error = error;
-        this.isSuccess = isSuccess;
+        this.errorMsg = errorMsg;
+        this.successful = successful;
     }
 
-    public GenericResponse(List<ObjectError> allErrors, String error) {
-        this.error = error;
+    public GenericResponse(List<ObjectError> allErrors, String errorMsg) {
+        setSuccess(false);
+        this.errorMsg = errorMsg;
         String temp = allErrors.stream().map(e -> {
             if (e instanceof FieldError) {
+//                return "{\"field\":\"" + ((FieldError) e).getField() + "\",\"defaultMessage\":\"" + stripErrorCode(e.getDefaultMessage()) + "\"}";
                 return "{\"field\":\"" + ((FieldError) e).getField() + "\",\"defaultMessage\":\"" + e.getDefaultMessage() + "\"}";
             } else {
+//                return "{\"object\":\"" + e.getObjectName() + "\",\"defaultMessage\":\"" + stripErrorCode(e.getDefaultMessage()) + "\"}";
                 return "{\"object\":\"" + e.getObjectName() + "\",\"defaultMessage\":\"" + e.getDefaultMessage() + "\"}";
             }
         }).collect(Collectors.joining(","));
         this.message = "[" + temp + "]";
     }
 
+//    @Autowired
+//    @Qualifier("english")
+//    public void setMessageSource(MessageSource messageSource) {
+//        this.messageSource = messageSource;
+//    }
 
-    public void setMessage(final String message) {
-        this.message = message;
+    public Boolean isSuccess() {
+        return successful;
     }
 
-    public void setError(final String error) {
-        this.error = error;
+    public void setSuccess(Boolean successful) {
+        this.successful = successful;
     }
+
+//    private String stripErrorCode(String errorMsg) {
+//        if (errorMsg == null) {
+//            return errorMsg;
+//        }
+//
+//        int firstBrace = errorMsg.indexOf("{");
+//        if (firstBrace == -1) {
+//            return errorMsg;
+//        }
+//
+//        final String messageSourceTxt = messageSource.getMessage(errorMsg.substring(firstBrace + 1, errorMsg.indexOf("}")), null, Locale.UK);
+//        log.info("Source-Txt: {}", messageSourceTxt);
+//        return messageSourceTxt;
+//    }
 }

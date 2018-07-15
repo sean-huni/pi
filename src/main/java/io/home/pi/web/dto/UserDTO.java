@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.home.pi.validator.PasswordMatch;
 import io.home.pi.validator.ValidEmail;
+import io.home.pi.validator.ValidPassword;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,24 +28,27 @@ import javax.validation.constraints.Size;
 @JsonDeserialize
 @JsonRootName(value = "userDTO")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@PasswordMatch
 public class UserDTO {
 
-    @NotNull
+    @NotNull(message = "{notNull.user.firstName}")
     @JsonProperty("firstName")
+    @Size(message = "{size.userDto.firstName.min}", min = 3)
+    @Size(message = "{size.userDto.firstName.max}", max = 25)
     private String firstName;
-
     @ValidEmail
-    @NotNull(message = "{NotNull.user.username}")
-    @Size(min = 3, max = 45, message = "{Size.userDto.email}")
+    @NotNull(message = "{notNull.user.username}")
+    @Size(message = "{size.userDto.email.min}", min = 3)
+    @Size(message = "{size.userDto.email.max}", max = 50)
     @JsonProperty("username")
     private String username;
-
-    @NotNull(message = "{NotNull.user.password}")
-    @Size(min = 3, max = 25, message = "{Size.userDto.email}")
+    @NotNull(message = "{notNull.user.password}")
+    @Size(message = "{size.userDto.password.min}", min = 8)
+    @Size(message = "{size.userDto.password.max}", max = 48)
     @JsonProperty("pass")
+    @ValidPassword
     private String pass;
-
-    @NotNull
+    @NotNull(message = "{notNull.user.matchingPassword}")
     @JsonProperty("pass2")
     private String pass2;
 

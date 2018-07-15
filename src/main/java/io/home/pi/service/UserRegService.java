@@ -24,4 +24,6 @@ public interface UserRegService {
     User createVerificationTokenForUser(final User user, final String token);
 
     String validateVerificationToken(String token);
+
+
 }
