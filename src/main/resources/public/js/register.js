@@ -2,14 +2,16 @@
  * PACKAGE : public.js
  * USER    : Kudzai Sean Huni.
  * TIME    : 10:48
- * DATE    : Monday-July-2018
+ * DATE    : 02-July-2018
  */
 
-var map = {};
+var popupErrorTitle = "";
+var jsonErrMsg = "";
+var errMsg = "";
+var isError = false;
 /*<![CDATA[*/
 $(document).ready(
     function () {
-
         $("#btnRegisterUser").click(
             function (e) {
                 var jsonObjStr = JSONifyREQ();
@@ -19,6 +21,7 @@ $(document).ready(
 
                 console.log("JSON REQ: ", jsonObjStr);
                 ajxUsrRegister(jsonObjStr);
+                errorProcessor();
             }
         );
     }
@@ -26,33 +29,79 @@ $(document).ready(
 
 /*]]>*/
 
+function errorProcessor() {
+
+    if (isError) {
+        errMsg = extractErrObj(jsonErrMsg);
+
+        var errMsg3 = extractErrMsg3(errMsg);
+
+        var keyMappings = extractKeyMappings(errMsg);
+
+        console.log("keyMappings Extracted: \n", keyMappings);
+
+        var reqParams = buildReqParams(keyMappings);
+
+        var hMap = ajaxCall("http://localhost:8080/register/messageSourceList?" + reqParams);
+
+        console.log("Map-Data: ", hMap);
+
+        var errorMsg = replaceErrorCodesWithMsgs(errMsg3, keyMappings, hMap);
+
+        console.log("Extract Replaced: \n", errorMsg);
+
+        showErrPopup(popupErrorTitle, errorMsg)
+    }
+    isError = false;
+}
+
+/**
+ * Strip Special characters.
+ * @param errMsg Error Message to be Stripped.
+ * @returns {*}
+ */
+function extractErrMsg3(errMsg) {
+    var errMsg2 = errMsg.replace(/,/g, "<br/>");
+    var errMsg3 = errMsg2.replace(/{/g, "");
+    errMsg3 = errMsg3.replace(/}/g, "");
+
+    return errMsg3;
+}
+
+/**
+ * Extracts Key-Mappings for the error-codes.
+ * @param errMsg
+ * @returns {*}
+ */
+function extractKeyMappings(errMsg) {
+    return extractKeyErrorMsgs(errMsg, "{", "}");
+}
+
+
 function ajxUsrRegister(jsonObjStr) {
+
     $.ajax({
         type: 'POST',
         url: '/register/user',
         dataType: 'json',
         contentType: 'application/json',
+        async: false,
         data: jsonObjStr,
         cache: false,
         timeout: 10000,
         success: function (data) {
             console.log("SUCCESS : ", data);
-            // if (data.isSuccess == true) {
             clearRegistrationFormData();
             console.log("Form-Data Cleared...");
             $('#registrationModal').modal('hide');
             showSuccessPopup("Email Confirmation", data.message);
-            // } else {
-            //     showErrPopup("Unexpected Response", "Unexpected response from the system.");
-            // }
             $("#btnRegisterUser").prop("disabled", false);
         },
         error: function (error) {
             if (error.status === 400) {
-                var popupErrorTitle = titleErrPopupMsg("Validation Error", error.responseJSON.errors.length);
-                var popupErrMsg = appendErrMessages(error);
-
-                showErrPopup(popupErrorTitle, popupErrMsg)
+                isError = true;
+                popupErrorTitle = titleErrPopupMsg("Validation Error", error.responseJSON.errors.length);
+                jsonErrMsg = error;
             } else {
                 console.log("Error: \n" + error.responseJSON);
                 showErrPopup("System Failure", "Unexpected response from the system.");
@@ -66,12 +115,13 @@ function ajxUsrRegister(jsonObjStr) {
 
 
 function ajaxCall(urlWithData) {
-
+    var mapData;
     $.ajax({
         type: 'GET',
         url: urlWithData,
         dataType: 'json',
         contentType: 'application/json',
+        async: false,
         cache: false,
         timeout: 10000,
         success: function (data) {
@@ -79,41 +129,31 @@ function ajaxCall(urlWithData) {
             $.each(data, function (key, val) {
                 console.log("Key: " + key + "\nVal: " + val);
                 getResp.set(key, val);
+                mapData = getResp;
                 $('#map').hide().append("<li id='" + key + "'>" + val + "</li>");
             });
         },
         error: function (error) {
-            showErrPopup("System Failure", "Unexpected response from the system.");
+            console.log("Key-Mappings Error: ", error);
+            showErrPopup("System Failure", "Unexpected response from the system.<br/> Failed to get Reason-Codes.");
             $("#btnRegisterUser").prop("disabled", false);
         }
     });
 
-
+    return mapData;
 }
 
-function findSourceMatch(source) {
+function findSourceMatch(source, hMap) {
     var vResp = "";
-    // $('#map li').each(function () {
-    //     if ($(this).attr('id') === source) {
-    //         // $(this).attr('id');
-    //         return $(this).text();
-    //     } else {
-    //         console.log("MAP is Null/Empty...");
-    //     }
-    //     return "";
-    // });
 
-    for (var i = 0; i < $('#map li').length; i++) {
-        if ($('#map li').eq(i).attr('id') == source) {
-            vResp = $('#map li').eq(i).text();
-        }
+    if (hMap.has(source)) {
+        vResp = hMap.get(source);
     }
-
     return vResp;
 }
 
 
-function messageSourceSubstitute(codes) {
+function buildReqParams(codes) {
     var codesUrl = "";
     // var resp = new Map();
     var firstIter = true;
@@ -127,22 +167,7 @@ function messageSourceSubstitute(codes) {
         }
     });
 
-    ajaxCall("http://localhost:8080/register/messageSourceList?" + codesUrl);
-
-
-    // $.get("http://localhost:8080/register/messageSourceList?" + codesUrl,
-    //     {async: false},
-    //     function (data, status, xhr) {
-    //         var getResp = new Map();
-    //         $.each(data, function (key, val) {
-    //             console.log("Key: " + key + "\nVal: " + val);
-    //             getResp.set(key, val);
-    //         });
-    //
-    //         resp = getResp;
-    //     }).done(function () {
-    //     alert(resp);
-    // });
+    return codesUrl;
 }
 
 
@@ -152,22 +177,14 @@ function titleErrPopupMsg(errTitle, errorsLength) {
     }
 }
 
-function appendErrMessages(errorsObj) {
+function extractErrObj(errorsObj) {
 
     var errMsg = "";
     $.each(errorsObj.responseJSON.errors, function (index, item) {
         errMsg += item.defaultMessage + "<br/>";
     });
-    var errMsg2 = errMsg.replace(/,/g, "<br/>");
-    var errMsg3 = errMsg2.replace(/{/g, "");
-    errMsg3 = errMsg3.replace(/}/g, "");
-    console.log("Msg: \n", errMsg3);
 
-    var keyMappings = extractKeyErrorMsgs(errMsg2, "{", "}");
-    console.log("Extract: \n", keyMappings);
-    var errorMsg = replaceErrorCodesWithMsgs(errMsg3, keyMappings);
-    console.log("Extract Replaced: \n", errorMsg);
-    return errorMsg;
+    return errMsg;
 }
 
 function extractKeyErrorMsgs(str, start, end) {
@@ -219,15 +236,14 @@ function extractKeyErrorMsgs(str, start, end) {
 }
 
 
-function replaceErrorCodesWithMsgs(strMsg, arrayCodes) {
+function replaceErrorCodesWithMsgs(strMsg, arrayCodes, hMap) {
     var newMsgs = strMsg;
-
-    messageSourceSubstitute(arrayCodes);
 
     $.each(arrayCodes, function (index, item) {
         var re = new RegExp(item.toString(), "ig");
-        $("#msgSourceId").text(item.toString());
-        newMsgs = newMsgs.replace(re, findSourceMatch(item.toString())); //FixMe replace match with messageSource.
+        // $("#msgSourceId").text(item.toString());
+        var sourceMsg = findSourceMatch(item.toString(), hMap);
+        newMsgs = newMsgs.replace(re, sourceMsg);
     });
 
     return newMsgs;
