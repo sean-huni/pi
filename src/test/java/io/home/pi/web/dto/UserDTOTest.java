@@ -21,10 +21,6 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @Slf4j
 public class UserDTOTest {
-    private final String firstName = "Sean";
-    private final String username = "sean2kay@gmail.com";
-    private final String password1 = "password1";
-    private final String password2 = "password2";
 
     @BeforeClass
     public static void init() {
@@ -39,15 +35,22 @@ public class UserDTOTest {
 
     @Test
     public void testJsonUserDTO() throws IOException {
+        final String firstName = "Sean";
+        final String username = "sean2kay@gmail.com";
+        final String password1 = "password1";
+        final String password2 = "password2";
+
         UserDTO userDTO = new UserDTO();
+
         userDTO.setFirstName(firstName);
         userDTO.setUsername(username);
         userDTO.setPass(password1);
         userDTO.setPass2(password2);
-        String jsonValue = new ObjectMapper().writeValueAsString(userDTO);
 
-        System.out.println(jsonValue);
-        String jsonStr = "{\"firstName\":\"" + firstName + "\",\"username\":\"" + username + "\",\"pass\":\"" + password1 + "\",\"pass2\":\"" + password1 + "\"}";
+        final String jsonValue = new ObjectMapper().writeValueAsString(userDTO);
+
+        log.debug(jsonValue);
+        final String jsonStr = "{\"firstName\":\"" + firstName + "\",\"username\":\"" + username + "\",\"pass\":\"" + password1 + "\",\"pass2\":\"" + password2 + "\"}";
 
         UserDTO userDTO2 = new ObjectMapper().readValue(jsonStr, UserDTO.class);
 

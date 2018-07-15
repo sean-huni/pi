@@ -84,7 +84,7 @@ public class RegListener implements ApplicationListener<OnRegCompleteEventDTO> {
 
     private final Map<String, String> constructEmailMessage(final OnRegCompleteEventDTO event, final User user, final String token) {
         final String recipientAddress = user.getUsername();
-        final String signature = "\n\nKind regards,\nProject Pi Admin,";
+        final String signature = "\n\nKind regards,\nProject Pi Admin.";
         final String subject = "Registration Confirmation";
         final String confirmationUrl = event.getAppUrl() + "/confirm.html?token=" + token;
         final String message = messageSource.getMessage("message.regSucc", null, event.getLocale());

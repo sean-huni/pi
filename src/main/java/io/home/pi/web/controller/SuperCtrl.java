@@ -11,7 +11,7 @@ import static io.home.pi.constant.SpringConstants.HTTP_URL_PREFIX;
  * DATE      : 01-July-2018
  * TIME      : 14:00
  */
-public class SuperCtrl {
+class SuperCtrl {
 
     final String getAppUrl(final HttpServletRequest request) {
         return HTTP_URL_PREFIX + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

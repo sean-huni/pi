@@ -1,9 +1,11 @@
 package io.home.pi.service.impl;
 
 import io.home.pi.converter.UserDtoToUserDomComponent;
+import io.home.pi.persistence.model.Team;
 import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.repo.TokenLogRepo;
+import io.home.pi.persistence.service.TeamService;
 import io.home.pi.persistence.service.UserService;
 import io.home.pi.service.UserRegService;
 import io.home.pi.web.dto.UserDTO;
@@ -28,7 +30,9 @@ public class UserRegServiceImpl implements UserRegService {
     private static final String TOKEN_INVALID = "invalidToken";
     private static final String TOKEN_EXPIRED = "expired";
     private static final String TOKEN_VALID = "valid";
+    private static final Integer DEFAULT_USER_PROFILE_ID = 1;
 
+    private TeamService teamService;
     private TokenLogRepo tokenLogRepo;
     private UserDtoToUserDomComponent userDtoToUserDomComponent;
     private UserService userService;
@@ -41,13 +45,20 @@ public class UserRegServiceImpl implements UserRegService {
         this.tokenLogRepo = tokenLogRepo;
     }
 
+    @Autowired
+    public void setTeamService(TeamService teamService) {
+        this.teamService = teamService;
+    }
+
     @Override
     public User registerNewUserAccount(UserDTO userAccount) throws UserAlreadyExistException {
         if (emailExist(userAccount.getUsername())) {
             throw new UserAlreadyExistException("There is an account with that email address: " + userAccount.getUsername());
         }
 
-        final User user = userDtoToUserDomComponent.convert(userAccount);
+        User user = userDtoToUserDomComponent.convert(userAccount);
+        Optional<Team> team = (Optional<Team>) teamService.findById(DEFAULT_USER_PROFILE_ID);
+        team.ifPresent(user::setTeam);
 
         return userService.saveOrUpdate(user);
     }

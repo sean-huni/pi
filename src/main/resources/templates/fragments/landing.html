@@ -27,7 +27,7 @@
         <div class="temp" th:with="logoutUrl=${'/j_spring_security_logout'}">
             Subtitle : <a th:text="${subtitle}"></a>
             <br>
-            Message : <a th:text="${message}"></a>
+            Message : <a th:text="${param.message}"></a>
             <br>
             <div class="page-information" role="document">
                 <div th:inline="text">Welcome : [[${#httpServletRequest.remoteUser}]]! |
