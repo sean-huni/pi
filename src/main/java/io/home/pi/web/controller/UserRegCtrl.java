@@ -10,19 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Locale;
+import java.util.*;
 
 import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR;
 import static io.home.pi.constant.SpringConstants.DEBUG_LINE_SEPARATOR_ERRORS;
@@ -49,6 +46,19 @@ public class UserRegCtrl extends SuperCtrl {
         this.eventPublisher = eventPublisher;
     }
 
+    @GetMapping(value = "/messageSourceList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, String>> getMessageSourceList(@RequestParam(value = "code") List<String> codes) {
+
+        log.info("Codes-Array: {}", codes);
+
+        Map<String, String> hashMap = new HashMap<>();
+        for (String code : codes) {
+            hashMap.put(code, getMessage(code));
+        }
+        return ResponseEntity.ok().body(hashMap);
+    }
+
+
     @Autowired
     @Qualifier("english")
     public void setMessageSource(MessageSource messageSource) {
@@ -74,7 +84,18 @@ public class UserRegCtrl extends SuperCtrl {
         eventPublisher.publishEvent(onRegCompleteEventDTO);
         log.info("Registration Email Sent!!!");
 
-        responseMsg = messageSource.getMessage("message.regConf", null, Locale.UK);
+        responseMsg = getMessage("message.regConf");
         return ResponseEntity.ok(new GenericResponse(responseMsg, true));
+    }
+
+
+    private String getMessage(String code) {
+        String msg = "";
+        try {
+            msg = messageSource.getMessage(code, null, Locale.UK);
+        } catch (NoSuchMessageException e) {
+            return msg;
+        }
+        return msg;
     }
 }

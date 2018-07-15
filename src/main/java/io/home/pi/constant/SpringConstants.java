@@ -22,6 +22,7 @@ public class SpringConstants {
     public static final String URL_LOGIN_PAGE = "/user/login";
     public static final String URL_REG_LISTENER = "/confirm.html";
     public static final String URL_REG_NEW_USER = "/register/user";
+    public static final String URL_REG_MESSAGE_SOURCE = "/register/messageSourceList";
     public static final String URL_FORGOT_PASS = "/user/forgot-pass";
     public static final String URL_DEFAULT_AUTH_USER_PAGE = "/pi/dashboard";
     public static final String URL_INVALID_SESSION = "/user/login";
@@ -51,7 +52,7 @@ public class SpringConstants {
             URL_INTERNAL_RESOURCES_PUB, URL_INTERNAL_RESOURCES_STATIC, URL_INTERNAL_RESOURCES_WEBJAR};
 
     public static final String SECURITY_PERMIT_ALL_URLS = Arrays.toString(
-            new String[]{URL_REG_LISTENER, URL_FORGOT_PASS, URL_REG_NEW_USER, PI})
+            new String[]{URL_REG_LISTENER, URL_FORGOT_PASS, URL_REG_NEW_USER, PI, URL_REG_MESSAGE_SOURCE})
             .replace("[", "").replace("]", "");
 
     public static final String URL_LOGIN_ERROR_TRUE = "/user/login?error=true";
