@@ -7,8 +7,9 @@
 <body>
 
 <!--<div th:with="messageSource = ${@webConfig.messageSource()}">...</div>-->
+<div id="map" th:hidden="true"></div>
 <div th:hidden="true" th:with="msgSourceText = 'One-Two Testing...'"></div>
-<div th:id="msgSourceId" th:text="${msgSourceText}" th:value="${msgSourceText}"></div>
+<div th:hidden="true" th:id="msgSourceId" th:text="${msgSourceText}" th:value="${msgSourceText}"></div>
 
 <!--Navigation-->
 <div th:replace="~{fragments/nav :: navi}"></div>
