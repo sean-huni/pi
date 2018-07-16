@@ -6,9 +6,9 @@ import java.util.Optional;
 
 @Service
 public interface CRUDService<T> {
-    Iterable<?> findAll();
+    Iterable<T> findAll();
 
-    Optional<?> findById(Integer id);
+    Optional<T> findById(Integer id);
 
     void delete(Integer id);
 

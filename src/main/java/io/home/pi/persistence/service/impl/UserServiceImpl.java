@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<?> findAll() {
+    public Iterable<User> findAll() {
         return userRepo.findAll();
     }
 
