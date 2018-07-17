@@ -4,7 +4,7 @@ import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.TokenLogService;
 import io.home.pi.persistence.service.UserService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +51,7 @@ public class UserServiceTest {
 
         assertNotNull("User Account doesn't exist", user);
         assertTrue("User Account not Active!", user.getEnabled());
-        assertNotNull("User's password must not be null!", user.getPassword());
+        assertNotNull("User's password must not be null!", Optional.ofNullable(user.getPassword()));
         assertTrue("Username don't match!", username.equals(user.getUsername()));
     }
 

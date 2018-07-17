@@ -57,7 +57,7 @@ public class UserRegServiceImpl implements UserRegService {
         }
 
         User user = userDtoToUserDomComponent.convert(userAccount);
-        Optional<Team> team = (Optional<Team>) teamService.findById(DEFAULT_USER_PROFILE_ID);
+        Optional<Team> team = teamService.findById(DEFAULT_USER_PROFILE_ID);
         team.ifPresent(user::setTeam);
 
         return userService.saveOrUpdate(user);

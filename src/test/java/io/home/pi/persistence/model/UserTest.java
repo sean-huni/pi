@@ -1,8 +1,8 @@
 package io.home.pi.persistence.model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class UserTest {
     private final String uuid = UUID.randomUUID().toString();
     private User user;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         user = new User();
         user.setName(name);
@@ -36,7 +36,7 @@ public class UserTest {
         user.setToken(new TokenLog(uuid));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
