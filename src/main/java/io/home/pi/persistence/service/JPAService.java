@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public interface CRUDService<T> {
+public interface JPAService<T> {
     Iterable<T> findAll();
 
     Optional<T> findById(Integer id);
