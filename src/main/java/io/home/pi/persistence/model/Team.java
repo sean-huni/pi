@@ -1,7 +1,6 @@
 package io.home.pi.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,8 +12,7 @@ import java.util.Set;
  * DATE      :2018/06/14
  * TIME      :21:40
  */
-@Setter
-@Getter
+@Data
 @Entity
 @Table(schema = "rpi", name = "team")
 public class Team {
@@ -23,21 +21,27 @@ public class Team {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    private Grp grp;
+    @Column(name = "fk_auth_id")
+    private Integer fk_auth_id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private GrpAuth grpAuth;
+    @Column(name = "fk_grp_id")
+    private Integer fk_grp_id;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
-    private Set<User> users;
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grp_authority")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Auth.class)
+    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "fk_auth_id"))
+    private Set<Auth> authorities;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Grp.class)
+    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "fk_grp_id"))
+    private Set<Grp> grps;
 
     @Override
     public String toString() {
         return "Team{" +
                 "id=" + id +
-                ", grp=" + grp +
-                ", grpAuth=" + grpAuth +
+                ", fk_auth_id=" + fk_auth_id +
+                ", fk_grp_id=" + fk_grp_id +
                 '}';
     }
 }

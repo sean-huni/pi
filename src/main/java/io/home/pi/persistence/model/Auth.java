@@ -26,10 +26,6 @@ public class Auth {
     @Column(name = "level", nullable = false, length = 50)
     private String level;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
-    private GrpAuth grpAuth;
-
     @Override
     public String toString() {
         return "Auth{" +

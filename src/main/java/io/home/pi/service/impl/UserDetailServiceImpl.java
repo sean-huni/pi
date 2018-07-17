@@ -1,6 +1,5 @@
 package io.home.pi.service.impl;
 
-import io.home.pi.persistence.model.GrpAuth;
 import io.home.pi.persistence.model.Team;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.UserService;
@@ -112,12 +111,12 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
         List<GrantedAuthority> authorities = new ArrayList<>();
         try {
             Optional<User> optionalUser = Optional.of(user);
-            List<GrpAuth> groupAuthorities = new ArrayList<>();
+            List<Team> groupAuthorities = new ArrayList<>();
 
-            Optional<GrpAuth> optionalGrpAuth = optionalUser.map(User::getTeam).filter(Objects::nonNull).map(Team::getGrpAuth);
+            Optional<Team> optionalGrpAuth = optionalUser.map(User::getTeam).filter(Objects::nonNull);
             optionalGrpAuth.ifPresent(groupAuthorities::add);
 
-            for (GrpAuth userAuth : groupAuthorities) {
+            for (Team userAuth : groupAuthorities) {
                 LOGGER.info("User Auth: " + userAuth.toString());
                 authorities.add(new SimpleGrantedAuthority(USER_ROLE_PREFIX + userAuth.getAuthorities().iterator().next().getLevel()));
             }
