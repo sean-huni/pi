@@ -93,6 +93,7 @@ public class UserDetailServiceImpl implements UserDetailsService, UserAuthServic
 
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails, userDetails.getAuthorities());
 
+
         //ToDo: Test when the user is already registered.
         ((UsernamePasswordAuthenticationToken) authenticationToken).eraseCredentials();
 

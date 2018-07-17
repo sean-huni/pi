@@ -1,7 +1,7 @@
 package io.home.pi.persistence.repo;
 
 import io.home.pi.persistence.model.Team;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * TIME      : 20:16
  */
 @Repository
-public interface GroupRepo extends CrudRepository<Team, Integer> {
+public interface GroupRepo extends JpaRepository<Team, Integer> {
 
 }
