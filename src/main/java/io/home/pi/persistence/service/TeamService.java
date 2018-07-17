@@ -9,5 +9,5 @@ import io.home.pi.persistence.model.Team;
  * DATE      : 15-July-2018
  * TIME      : 04:02
  */
-public interface TeamService extends CRUDService<Team> {
+public interface TeamService extends JPAService<Team> {
 }

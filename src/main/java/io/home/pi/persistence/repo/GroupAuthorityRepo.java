@@ -1,7 +1,7 @@
 package io.home.pi.persistence.repo;
 
 import io.home.pi.persistence.model.GrpAuth;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * PROJECT   : pi
@@ -10,6 +10,6 @@ import org.springframework.data.repository.CrudRepository;
  * DATE      : 19-June-2018
  * TIME      : 23:24
  */
-public interface GroupAuthorityRepo extends CrudRepository<GrpAuth, Integer> {
+public interface GroupAuthorityRepo extends JpaRepository<GrpAuth, Integer> {
 
 }

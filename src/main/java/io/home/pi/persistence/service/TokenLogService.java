@@ -11,7 +11,7 @@ import java.util.Optional;
  * DATE      : 29-June-2018
  * TIME      : 01:21
  */
-public interface TokenLogService extends CRUDService<TokenLog> {
+public interface TokenLogService extends JPAService<TokenLog> {
     Optional<TokenLog> findByUsername(String username);
 
     Optional<TokenLog> findBySeries(String series);
