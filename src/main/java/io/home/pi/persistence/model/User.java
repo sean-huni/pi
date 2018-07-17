@@ -34,7 +34,7 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "TOKENLOG_ID")
     private TokenLog token;
 

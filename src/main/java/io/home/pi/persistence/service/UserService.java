@@ -13,7 +13,7 @@ import java.util.Optional;
  * TIME      : 20:46
  */
 
-public interface UserService extends CRUDService<User> {
+public interface UserService extends JPAService<User> {
     User findByUsername(String username);
 
     Optional<User> findByToken(TokenLog token);

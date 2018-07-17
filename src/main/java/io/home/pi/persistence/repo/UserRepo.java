@@ -2,7 +2,7 @@ package io.home.pi.persistence.repo;
 
 import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -15,8 +15,10 @@ import java.util.Optional;
  * TIME      : 20:16
  */
 @Repository
-public interface UserRepo extends CrudRepository<User, Integer> {
+public interface UserRepo extends JpaRepository<User, Integer> {
     User findByUsername(String username);
 
     Optional<User> findByToken(TokenLog tokenLog);
+
+
 }

@@ -68,6 +68,7 @@ public class ConfirmationCtrl {
             if (optionalToken.isPresent()) {
                 User disabledUser = optionalToken.get().getUser();
                 disabledUser.setEnabled(TRUE);
+                disabledUser.setToken(null);  //Delete the token & prevent it from being reused.
 
                 final User enabledUser = userService.saveOrUpdate(disabledUser);
                 userAuthService.authWithoutPassword(enabledUser.getUsername(), request.getSession(TRUE));

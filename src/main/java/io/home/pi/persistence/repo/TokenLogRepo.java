@@ -1,9 +1,9 @@
 package io.home.pi.persistence.repo;
 
 import io.home.pi.persistence.model.TokenLog;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * TIME      : 01:19
  */
 @Repository
-public interface TokenLogRepo extends CrudRepository<TokenLog, Integer> {
+public interface TokenLogRepo extends JpaRepository<TokenLog, Integer> {
     TokenLog findByUsername(String username);
 
     TokenLog findBySeries(String series);
