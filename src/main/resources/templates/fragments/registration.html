@@ -9,9 +9,9 @@
         <h1 th:text="#{label.pages.home.title}">Home</h1>
         <br/>
         <div th:class="jumbotron"><p class="alert alert-info" th:text="#{message.regSucc}">Success</p>
-            <a th:width="token=${param.token}" th:type="hidden"></a>
-            <span th:if="${token != null}" th:text="#{token.message}">token</span>
-            <span th:text="${token}">token</span>
+            <a th:width="tokenLog=${param.tokenLog}" th:type="hidden"></a>
+            <span th:if="${tokenLog != null}" th:text="#{tokenLog.message}">tokenLog</span>
+            <span th:text="${tokenLog}">tokenLog</span>
             Please <a th:href="@{/user/login}" href="/user/login">click here</a> to login.
         </div>
     </div>

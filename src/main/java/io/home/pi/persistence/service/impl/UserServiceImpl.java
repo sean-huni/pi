@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByToken(TokenLog token) {
-        return userRepo.findByToken(token);
+    public Optional<User> findByTokenLog(TokenLog token) {
+        return userRepo.findByTokenLog(token);
     }
 
     @Override

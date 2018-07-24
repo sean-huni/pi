@@ -20,19 +20,19 @@ class GrpTest {
     private Grp grp;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         grp = new Grp();
         grp.setId(GRP_ID);
         grp.setName(NAME);
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         grp = null;
     }
 
     @Test
-    void settersAndGetters() {
+    public void settersAndGetters() {
         assertNotNull(grp);
         assertEquals(GRP_ID, grp.getId());
         assertEquals(NAME, grp.getName());

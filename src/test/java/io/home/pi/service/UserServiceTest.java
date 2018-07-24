@@ -4,18 +4,21 @@ import io.home.pi.persistence.model.TokenLog;
 import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.TokenLogService;
 import io.home.pi.persistence.service.UserService;
-import org.junit.jupiter.api.Test;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
+
+//import org.junit.jupiter.api.Test;
 
 /**
  * PROJECT   : pi
@@ -25,9 +28,10 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
  * TIME      : 00:40
  */
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@EnableTransactionManagement
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserServiceTest {
     private UserService userService;
     private final String FAKE_TOKEN = "fake-token";
@@ -45,7 +49,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findByUsernameTest() {
+    public void afindByUsernameTest() {
         final String username = "demo@email.com";
         User user = userService.findByUsername(username);
 
@@ -59,16 +63,16 @@ public class UserServiceTest {
      * Test for tokens that don't exist.
      */
     @Test
-    public void findByTokenTest() {
+    public void bfindByTokenTest() {
         final String nonExistingToken = FAKE_TOKEN;
-        Optional<TokenLog> optionalUser = tokenLogService.findByToken(nonExistingToken);
+        Optional<TokenLog> optionalUser = tokenLogService.findByTokenLog(nonExistingToken);
 
         assertFalse("No user has that token: " + nonExistingToken, optionalUser.isPresent());
     }
 
     @Test
-    public void findExistingTokenTest() {
-        Optional<TokenLog> optionalUser = tokenLogService.findByToken(OG_TEST_TOKEN);
+    public void bfindExistingTokenTest() {
+        Optional<TokenLog> optionalUser = tokenLogService.findByTokenLog(OG_TEST_TOKEN);
         assertTrue("Token not found...", optionalUser.isPresent());
     }
 

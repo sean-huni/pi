@@ -1,7 +1,9 @@
 package io.home.pi.persistence.service.impl;
 
 import io.home.pi.persistence.model.TokenLog;
+import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.repo.TokenLogRepo;
+import io.home.pi.persistence.repo.UserRepo;
 import io.home.pi.persistence.service.TokenLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static junit.framework.TestCase.assertNotNull;
 
 /**
  * PROJECT   : pi
@@ -20,18 +21,23 @@ import static junit.framework.TestCase.assertNotNull;
  */
 @Service
 public class TokenLogServiceImpl implements TokenLogService {
-
+    private UserRepo userRepo;
     private TokenLogRepo tokenLogRepo;
 
     @Autowired
-    public TokenLogServiceImpl(TokenLogRepo tokenLogRepo) {
+    public TokenLogServiceImpl(TokenLogRepo tokenLogRepo, UserRepo userRepo) {
         this.tokenLogRepo = tokenLogRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
     public Optional<TokenLog> findByUsername(String username) {
-        assertNotNull(username);
-        return Optional.of(tokenLogRepo.findByUsername(username));
+        if (!Optional.of(username).isPresent()) {
+            throw new NullPointerException("Username cannot be null.");
+        }
+
+        User user = userRepo.findByUsername(username);
+        return Optional.of(user.getTokenLog());
     }
 
     @Override
@@ -40,14 +46,16 @@ public class TokenLogServiceImpl implements TokenLogService {
     }
 
     @Override
-    public Optional<TokenLog> findByToken(String token) {
+    public Optional<TokenLog> findByTokenLog(String token) {
         return tokenLogRepo.findByToken(token);
     }
 
     @Override
     @Transactional
     public void deleteByUsername(String username) {
-        tokenLogRepo.deleteByUsername(username);
+        User user = userRepo.findByUsername(username);
+        user.setTokenLog(null);
+        userRepo.save(user);
     }
 
     @Override

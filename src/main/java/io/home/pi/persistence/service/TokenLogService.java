@@ -16,7 +16,7 @@ public interface TokenLogService extends JPAService<TokenLog> {
 
     Optional<TokenLog> findBySeries(String series);
 
-    Optional<TokenLog> findByToken(String token);
+    Optional<TokenLog> findByTokenLog(String token);
 
     void deleteByUsername(String username);
 }

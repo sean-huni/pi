@@ -2,6 +2,7 @@ package io.home.pi.converter.impl;
 
 import io.home.pi.converter.PersistentTokenToTokenLogComponent;
 import io.home.pi.persistence.model.TokenLog;
+import io.home.pi.persistence.model.User;
 import io.home.pi.persistence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -37,7 +38,9 @@ public class PersistentTokenToTokenLogImpl implements Converter<PersistentRememb
     @Override
     public TokenLog convert(PersistentRememberMeToken source) throws IllegalArgumentException{
         Timestamp timestamp = new Timestamp(source.getDate().getTime());
-        TokenLog tokenLog = new TokenLog(source.getUsername(), source.getSeries(), source.getTokenValue(), timestamp);
+        User tokenizeUser;
+        tokenizeUser = userService.findByUsername(source.getUsername());
+        TokenLog tokenLog = new TokenLog(tokenizeUser, source.getSeries(), source.getTokenValue(), timestamp);
         tokenLog.setUser(userService.findByUsername(source.getUsername()));
         return tokenLog;
     }

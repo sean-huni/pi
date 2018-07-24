@@ -19,19 +19,16 @@ import java.util.stream.Stream;
  */
 @Repository
 public interface TokenLogRepo extends JpaRepository<TokenLog, Integer> {
-    TokenLog findByUsername(String username);
 
     TokenLog findBySeries(String series);
 
     Optional<TokenLog> findByToken(String token);
 
-    void deleteByUsername(String username);
+    Stream<TokenLog> findAllByExpiryLessThan(Timestamp now);
 
-    Stream<TokenLog> findAllByExpiryDateLessThan(Timestamp now);
-
-    void deleteByExpiryDateLessThan(Timestamp now);
+    void deleteByExpiryLessThan(Timestamp now);
 
     @Modifying
-    @Query("delete from TokenLog t where t.expiryDate <= ?1")
+    @Query("delete from TokenLog t where t.expiry <= ?1")
     void deleteAllExpiredSince(Timestamp now);
 }

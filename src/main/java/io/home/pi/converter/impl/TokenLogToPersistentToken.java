@@ -25,6 +25,6 @@ public class TokenLogToPersistentToken implements Converter<TokenLog, Persistent
      */
     @Override
     public PersistentRememberMeToken convert(TokenLog source) throws IllegalArgumentException{
-        return new PersistentRememberMeToken(source.getUsername(), source.getSeries(), source.getToken(), source.getLastUpdated());
+        return new PersistentRememberMeToken(source.getUser().getUsername(), source.getSeries(), source.getToken(), source.getLastUpdated());
     }
 }

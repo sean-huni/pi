@@ -50,11 +50,11 @@ public class GenericResponseTest {
         final Boolean isSuccessful = false;
         GenericResponse response = new GenericResponse(message, errorMsg, isSuccessful);
 
-        assertNull("Error-Message is expected to be null.", response.getErrorMsg());
+        assertNotNull("Error-Message is expected to be null.", response.getErrorMsg());
         assertNotNull("Response Message must not be null.", response.getMessage());
-        assertTrue("GenericResponse, isSuccess must be true.", response.isSuccess());
-        assertTrue(isSuccessful == response.isSuccess());
-        assertTrue(message.equals(response.getMessage()));
+        assertFalse("GenericResponse, isSuccess must be false.", response.isSuccess());
+        assertSame(false, response.isSuccess());
+        assertEquals(message, response.getMessage());
     }
 
     @Test
