@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.home.pi.validator.PasswordMatch;
 import io.home.pi.validator.ValidEmail;
 import io.home.pi.validator.ValidPassword;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,9 +19,6 @@ import javax.validation.constraints.Size;
  * TIME      : 13:00
  * DESCR     : User registration model.
  */
-@Getter
-@Setter
-@NoArgsConstructor
 @JsonDeserialize
 @JsonRootName(value = "userDTO")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -51,6 +45,9 @@ public class UserDTO {
     @NotNull(message = "{notNull.user.matchingPassword}")
     @JsonProperty("pass2")
     private String pass2;
+
+    public UserDTO() {
+    }
 
     @Override
     public String toString() {
@@ -85,5 +82,37 @@ public class UserDTO {
         result = 31 * result + (getPass() != null ? getPass().hashCode() : 0);
         result = 31 * result + (getPass2() != null ? getPass2().hashCode() : 0);
         return result;
+    }
+
+    public @NotNull(message = "{notNull.user.firstName}") @Size(message = "{size.userDto.firstName.min}", min = 3) @Size(message = "{size.userDto.firstName.max}", max = 25) String getFirstName() {
+        return this.firstName;
+    }
+
+    public @NotNull(message = "{notNull.user.username}") @Size(message = "{size.userDto.email.min}", min = 3) @Size(message = "{size.userDto.email.max}", max = 50) String getUsername() {
+        return this.username;
+    }
+
+    public @NotNull(message = "{notNull.user.password}") @Size(message = "{size.userDto.password.min}", min = 8) @Size(message = "{size.userDto.password.max}", max = 48) String getPass() {
+        return this.pass;
+    }
+
+    public @NotNull(message = "{notNull.user.matchingPassword}") String getPass2() {
+        return this.pass2;
+    }
+
+    public void setFirstName(@NotNull(message = "{notNull.user.firstName}") @Size(message = "{size.userDto.firstName.min}", min = 3) @Size(message = "{size.userDto.firstName.max}", max = 25) String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setUsername(@NotNull(message = "{notNull.user.username}") @Size(message = "{size.userDto.email.min}", min = 3) @Size(message = "{size.userDto.email.max}", max = 50) String username) {
+        this.username = username;
+    }
+
+    public void setPass(@NotNull(message = "{notNull.user.password}") @Size(message = "{size.userDto.password.min}", min = 8) @Size(message = "{size.userDto.password.max}", max = 48) String pass) {
+        this.pass = pass;
+    }
+
+    public void setPass2(@NotNull(message = "{notNull.user.matchingPassword}") String pass2) {
+        this.pass2 = pass2;
     }
 }

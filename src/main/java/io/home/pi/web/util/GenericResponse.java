@@ -35,11 +35,11 @@ public class GenericResponse {
     }
 
 
-    public GenericResponse(final String message, final String errorMsg, final Boolean successful) {
+    public GenericResponse(final String message, final String errorMsg, final Boolean isSuccessful) {
         super();
         this.message = message;
         this.errorMsg = errorMsg;
-        this.successful = successful;
+        this.successful = isSuccessful;
     }
 
     public GenericResponse(List<ObjectError> allErrors, String errorMsg) {

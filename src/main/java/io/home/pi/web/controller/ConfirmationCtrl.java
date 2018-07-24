@@ -64,11 +64,11 @@ public class ConfirmationCtrl {
         final String result = userRegService.validateVerificationToken(token);
         if (result.equals("valid")) {
 
-            final Optional<TokenLog> optionalToken = tokenLogService.findByToken(token);
+            final Optional<TokenLog> optionalToken = tokenLogService.findByTokenLog(token);
             if (optionalToken.isPresent()) {
                 User disabledUser = optionalToken.get().getUser();
                 disabledUser.setEnabled(TRUE);
-                disabledUser.setToken(null);  //Delete the token & prevent it from being reused.
+                disabledUser.setTokenLog(null);  //Delete the token & prevent it from being reused.
 
                 final User enabledUser = userService.saveOrUpdate(disabledUser);
                 userAuthService.authWithoutPassword(enabledUser.getUsername(), request.getSession(TRUE));

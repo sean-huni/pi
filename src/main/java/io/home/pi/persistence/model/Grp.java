@@ -1,7 +1,6 @@
 package io.home.pi.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -12,8 +11,7 @@ import javax.persistence.*;
  * DATE      : 25-June-2018
  * TIME      : 20:38
  */
-@Setter
-@Getter
+@Data
 @Entity
 @Table(schema = "rpi", name = "grp")
 public class Grp {

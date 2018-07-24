@@ -1,22 +1,20 @@
-insert into rpi.g_auth (id) values (1);
-insert into rpi.g_auth (id) values (2);
-insert into rpi.g_auth (id) values (3);
-insert into rpi.g_auth (id) values (4);
+insert into rpi.team (fk_auth_id, fk_grp_id) values (1, 1);
+insert into rpi.team (fk_auth_id, fk_grp_id) values (2, 2);
+insert into rpi.team (fk_auth_id, fk_grp_id) values (3, 3);
+insert into rpi.team (fk_auth_id, fk_grp_id) values (4, 4);
 
-insert into rpi.auth (id, level) values (1, 'USER');
-insert into rpi.auth (id, level) values (2, 'ADMIN');
-insert into rpi.auth (id, level) values (3, 'SUPER');
-insert into rpi.auth (id, level) values (4, 'ANONYMOUS');
+insert into rpi.auth (level) values ('USER');
+insert into rpi.auth (level) values ('ADMIN');
+insert into rpi.auth (level) values ('SUPER');
+insert into rpi.auth (level) values ('ANONYMOUS');
 
 insert into rpi.grp (name) values ('GREEN');
 insert into rpi.grp (name) values ('ORANGE');
 insert into rpi.grp (name) values ('RED');
 insert into rpi.grp (name) values ('YELLOW');
 
-insert into rpi.team (grp_id, grp_auth_id) values (1, 1);
+insert into rpi.v_token(id, series, token, expiry) values(1,'BEmkUUdVegl', '83AjDxYvEBxDgLMJLNzkaA==', TIMESTAMPADD(DAY,1,'2018-01-01'));
 
-insert into rpi.user (name, username, password, enabled, team_id)
-values ('Sean', 'demo@email.com', '$2a$10$.R9eHFOfpQDa.BEmkUUdVegl/5XUQ8ELXaKFz/7QJmqunjbVyg/0y', true, 1); -- password=password
-
-insert into rpi.v_token (id, user_id, series, token, username, last_Updated)
-values (1, 1, 'KDRbKsElGjpY0abA1vwZUQ==', '83AjDxYvEBxDgLMJLNzkaA==', 'demo@email.com', CURRENT_TIMESTAMP());
+insert into rpi.user (name, username, password, enabled, team_id, last_updated, token_id)
+values ('Sean', 'demo@email.com', '$2a$10$.R9eHFOfpQDa.BEmkUUdVegl/5XUQ8ELXaKFz/7QJmqunjbVyg/0y', true, 1,
+        CURRENT_TIMESTAMP(), 1); -- password=password

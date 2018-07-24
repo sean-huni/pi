@@ -35,7 +35,7 @@ class AuthTest {
         auth.setLevel(AUTH_LEVEL);
 
         assert AUTH_LEVEL.equals(auth.getLevel());
-        assert AUTH_ID == auth.getId();
+        assert AUTH_ID.equals(auth.getId());
     }
 
     @Test

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         jcenter()
@@ -47,7 +47,7 @@ artifactory {
 }
 
 configurations {
-    providedRuntime
+    provided
 }
 
 ext {
@@ -55,6 +55,11 @@ ext {
 }
 
 dependencies {
+
+
+// https://mvnrepository.com/artifact/org.projectlombok/lombok
+    provided group: 'org.projectlombok', name: 'lombok', version: '1.18.0'
+
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-aop')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -87,11 +92,12 @@ dependencies {
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 
     testCompile('org.junit.jupiter:junit-jupiter-engine')
+    testCompile('org.junit.jupiter:junit-jupiter-api')
+//    testCompile('org.junit.platform:junit-platform-surefire-provider:')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile('org.springframework.security:spring-security-test')
     testCompile('org.mockito:mockito-core:2.19.0')
-
 }
 
 dependencyManagement {

@@ -56,7 +56,7 @@ public class OnRegCompleteEventDTOTest {
         user.setUsername(username);
         user.setId(id);
         final TokenLog tokenLog = new TokenLog(uuid, user);
-        user.setToken(tokenLog);
+        user.setTokenLog(tokenLog);
 
         onRegCompleteEventDTO = new OnRegCompleteEventDTO(user, locale, appUrl);
 

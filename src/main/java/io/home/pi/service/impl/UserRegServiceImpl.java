@@ -76,7 +76,7 @@ public class UserRegServiceImpl implements UserRegService {
         final TokenLog myToken = new TokenLog(token, user);
 
         user.setEnabled(FALSE);
-        user.setToken(myToken);
+        user.setTokenLog(myToken);
         return userService.saveOrUpdate(user);
     }
 
@@ -89,7 +89,7 @@ public class UserRegServiceImpl implements UserRegService {
 
         final User user = verifyToken.map(TokenLog::getUser).orElse(new User());
         final Calendar cal = Calendar.getInstance();
-        if ((verifyToken.get().getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+        if ((verifyToken.get().getExpiry().getTime() - cal.getTime().getTime()) <= 0) {
             tokenLogRepo.delete(verifyToken.get());
             return TOKEN_EXPIRED;
         }

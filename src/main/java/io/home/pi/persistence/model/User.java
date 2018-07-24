@@ -1,12 +1,12 @@
 package io.home.pi.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * PROJECT   :pi
@@ -15,8 +15,7 @@ import java.util.Date;
  * DATE      :2018/06/14
  * TIME      :21:40
  */
-@Setter
-@Getter
+@Data
 @Entity
 @Table(schema = "rpi", name = "user")
 public class User {
@@ -34,13 +33,20 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "TOKENLOG_ID")
-    private TokenLog token;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "TOKEN_ID")
+    private TokenLog tokenLog;
+
 
     @NotNull
+    @UpdateTimestamp
     @Column(name = "lastUpdated")
-    private Timestamp lastUpdated = new Timestamp(new Date().getTime());
+    private Timestamp lastUpdated;
+
+//    @NotNull
+    @CreationTimestamp
+    @Column(name = "created")
+    private Timestamp createdDate;
 
 
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
@@ -48,14 +54,14 @@ public class User {
 
     @Override
     public String toString() {
-        final String tokenStr = null != token ? token.toString() : "";
+        final String tokenStr = null != tokenLog ? tokenLog.toString() : "";
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", token='" + tokenStr + '\'' +
+                ", tokenLog='" + tokenStr + '\'' +
                 ", teams=" + team +
                 '}';
     }
