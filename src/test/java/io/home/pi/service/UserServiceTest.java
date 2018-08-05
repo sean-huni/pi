@@ -71,7 +71,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void bfindExistingTokenTest() {
+    public void cfindExistingTokenTest() {
         Optional<TokenLog> optionalUser = tokenLogService.findByTokenLog(OG_TEST_TOKEN);
         assertTrue("Token not found...", optionalUser.isPresent());
     }
