@@ -1,6 +1,7 @@
 package io.home.pi.constant;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * PROJECT   : pi
@@ -59,4 +60,10 @@ public class SpringConstants {
 
     public static final String INVALID_EMAIL = "Invalid Email";
     public static final String HTTP_URL_PREFIX = "http://";
+
+
+    public static void main(String[] args) {
+        String test = UUID.randomUUID().toString();
+        System.out.println(test);
+    }
 }

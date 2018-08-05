@@ -21,7 +21,7 @@ public class HomeCtrl {
     @RequestMapping("/")
     public String homePage(Model model) {
         log.debug("Home Page Invoked...");
-        ModelMap objectMap = new ModelMap();
+        final ModelMap objectMap = new ModelMap();
 
         objectMap.put("title", SpringConstants.HOME_PAGE_TITLE);
         model.addAllAttributes(objectMap);
