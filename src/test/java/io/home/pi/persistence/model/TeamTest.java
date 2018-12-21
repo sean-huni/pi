@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * DATE      : 18-July-2018
  * TIME      : 00:23
  */
-class TeamTest {
+public class TeamTest {
     private static final Integer ID = 101;
     private static final Integer FK_AUTH = 102;
     private static final Integer FK_GRP = 103;

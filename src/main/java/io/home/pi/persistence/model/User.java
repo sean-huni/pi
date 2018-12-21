@@ -45,7 +45,7 @@ public class User {
 
 //    @NotNull
     @CreationTimestamp
-    @Column(name = "created")
+    @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdDate;
 
 

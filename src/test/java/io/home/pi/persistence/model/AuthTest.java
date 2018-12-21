@@ -13,18 +13,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * DATE      : 17-July-2018
  * TIME      : 22:58
  */
-class AuthTest {
+public class AuthTest {
     private static final Integer AUTH_ID = 1;
     private static final String AUTH_LEVEL = "CLASSIFIED";
     private Auth auth;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         auth = new Auth();
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         auth = null;
     }
 

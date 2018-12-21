@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * DATE      : 18-July-2018
  * TIME      : 00:15
  */
-class GrpTest {
+public class GrpTest {
     private static final Integer GRP_ID = 130;
     private static final String NAME = "DELTA-FORCE";
     private Grp grp;
